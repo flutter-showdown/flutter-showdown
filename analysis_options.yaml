@@ -38,6 +38,7 @@ analyzer:
     sdk_version_async_exported_from_core: ignore
   exclude:
     - "bin/cache/**"
+    - "lib/**/*.g.dart"
     # the following two are relative to the stocks example and the flutter package respectively
     # see https://github.com/dart-lang/sdk/issues/28463
     - "lib/i18n/messages_*.dart"
@@ -52,7 +53,8 @@ linter:
     - always_put_control_body_on_new_line
     # - always_put_required_named_parameters_first # we prefer having parameters in the same order as fields https://github.com/flutter/flutter/issues/10219
     - always_require_non_null_named_parameters
-    - always_specify_types
+    # Excuse me what the fuck
+    # - always_specify_types
     - annotate_overrides
     # - avoid_annotating_with_dynamic # conflicts with always_specify_types
     # - avoid_as # required for implicit-casts: true

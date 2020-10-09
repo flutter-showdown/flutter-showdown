@@ -7,37 +7,36 @@ import 'package:web_socket_channel/io.dart';
 ///
 /// Singleton
 ///
-WebSocketsNotifications sockets = new WebSocketsNotifications();
+WebSocketsNotifications sockets = WebSocketsNotifications();
 
+//https://github.com/smogon/pokemon-showdown/blob/master/PROTOCOL.md
 class WebSocketsNotifications {
-  //https://github.com/smogon/pokemon-showdown/blob/master/PROTOCOL.md
-  static const String _SERVER_ADDRESS = "ws://sim.smogon.com:8000/showdown/websocket";
-  static final WebSocketsNotifications _sockets = new WebSocketsNotifications._internal();
+  factory WebSocketsNotifications() => _sockets;
+  WebSocketsNotifications._internal();
 
-  factory WebSocketsNotifications() {
-    return _sockets;
-  }
+  static const String _SERVER_ADDRESS =
+      'ws://sim.smogon.com:8000/showdown/websocket';
+  static final WebSocketsNotifications _sockets =
+      WebSocketsNotifications._internal();
 
   bool _isOn = false;
 
   IOWebSocketChannel _channel;
 
-  WebSocketsNotifications._internal();
+  final ObserverList<Function> _listeners = ObserverList<Function>();
 
-  ObserverList<Function> _listeners = new ObserverList<Function>();
-
-  initCommunication() async {
+  Future<void> initCommunication() async {
     reset();
 
     try {
-      _channel = new IOWebSocketChannel.connect(_SERVER_ADDRESS);
+      _channel = IOWebSocketChannel.connect(_SERVER_ADDRESS);
       _channel.stream.listen(_onReceptionOfMessageFromServer);
     } catch (e) {
-      /// TODO
+      // TODO(reno): Catch
     }
   }
 
-  reset() {
+  void reset() {
     if (_channel != null) {
       if (_channel.sink != null) {
         _channel.sink.close();
@@ -46,28 +45,28 @@ class WebSocketsNotifications {
     }
   }
 
-  send(String message) {
+  void send(String message) {
     if (_channel != null) {
       if (_channel.sink != null && _isOn) {
-        log(message, name: "SEND");
+        log(message, name: 'SEND');
         _channel.sink.add(message);
       }
     }
   }
 
-  addListener(Function callback) {
+  void addListener(Function callback) {
     _listeners.add(callback);
   }
 
-  removeListener(Function callback) {
+  void removeListener(Function callback) {
     _listeners.remove(callback);
   }
 
-  _onReceptionOfMessageFromServer(message) {
+  void _onReceptionOfMessageFromServer(dynamic message) {
     _isOn = true;
-    log(message, name: "RECEIVE");
-    _listeners.forEach((Function callback) {
-      callback(message.toString());
-    });
+    log(message.toString(), name: 'RECEIVE');
+    for (final cb in _listeners) {
+      cb(message.toString());
+    }
   }
 }

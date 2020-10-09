@@ -40,7 +40,7 @@ class _LoginDialogState extends State<LoginDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Change Name"),
+      title: const Text('Change Name'),
       content: FutureBuilder(
         future: _nameFuture,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -48,7 +48,7 @@ class _LoginDialogState extends State<LoginDialog> {
             if (snapshot.data == null) {
               //Ask for new username
               return TextField(
-                decoration: InputDecoration(labelText: 'Username'),
+                decoration: const InputDecoration(labelText: 'Username'),
                 onSubmitted: (String username) => _setUsername(username),
               );
             } else if (snapshot.data) {
@@ -62,7 +62,7 @@ class _LoginDialogState extends State<LoginDialog> {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data == null) {
                       return TextField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Password',
                           suffixIcon: Icon(Icons.visibility_off),
                         ),
@@ -70,22 +70,22 @@ class _LoginDialogState extends State<LoginDialog> {
                         onSubmitted: (String password) => _logUser(password),
                       );
                     } else if (snapshot.data) {
-                      return Text("Success");
+                      return const Text('Success');
                     } else {
-                      return Text("Failed");
+                      return const Text('Failed');
                     }
                   }
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 },
               );
             }
           }
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         },
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text("Close"),
+          child: const Text('Close'),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],
