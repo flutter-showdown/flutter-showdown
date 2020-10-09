@@ -1,7 +1,7 @@
 import 'package:super_enum/super_enum.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part "global_messages_enums.g.dart";
+part 'global_messages_enums.g.dart';
 
 // **************************************************************************
 // Run: flutter pub run build_runner build
@@ -12,19 +12,21 @@ part "global_messages_enums.g.dart";
 
 @JsonSerializable()
 class UserDetails {
+  UserDetails();
+
+  factory UserDetails.fromJson(Map<String, dynamic> json) {
+    json['avatar'] = json['avatar'].toString();
+    return _$UserDetailsFromJson(json);
+  }
+
   String id;
-  String userId = "guest";
-  String name = "Guest";
+  String userId = 'guest';
+  String name = 'Guest';
   String avatar;
   String groups;
   bool autoConfirmed;
   String status;
   //List<String> rooms;
-  UserDetails();
-  factory UserDetails.fromJson(Map<String, dynamic> json) {
-    json["avatar"] = json["avatar"].toString();
-    return _$UserDetailsFromJson(json);
-  }
 }
 
 class User {
@@ -32,7 +34,7 @@ class User {
   String username;
   bool named = false;
   String avatar;
-  Map settings; //TODO STRUCT SETTINGS
+  Map settings; // TODO(reno): STRUCT SETTINGS
   String registerTime;
 }
 

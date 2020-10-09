@@ -1,17 +1,19 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+import '../utils.dart';
+import 'login_dialog.dart';
 import 'websockets/global_messages.dart';
 import 'websockets/global_messages_enums.dart';
 
-import 'login_dialog.dart';
-import '../utils.dart';
-import '../constants.dart';
-
 class AvatarChoiceDialog extends StatelessWidget {
-  static final Future<List<Image>> _trainerList = compute(splitImages, SplitParameters("https://play.pokemonshowdown.com/sprites/trainers-sheet.png", 16, 19));
+  static final Future<List<Image>> _trainerList = compute(
+      splitImages,
+      SplitParameters(
+          'https://play.pokemonshowdown.com/sprites/trainers-sheet.png',
+          16,
+          19));
 
   List<Widget> _getTiles(BuildContext context, List<Image> list) {
     final List<Widget> tiles = <Widget>[];
@@ -30,7 +32,7 @@ class AvatarChoiceDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Choose Avatar"),
+      title: const Text('Choose Avatar'),
       content: Container(
         width: MediaQuery.of(context).size.width * 0.90,
         height: MediaQuery.of(context).size.height * 0.60,
@@ -43,13 +45,13 @@ class AvatarChoiceDialog extends StatelessWidget {
                 children: _getTiles(context, snapshot.data),
               );
             }
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text("Close"),
+          child: const Text('Close'),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],
@@ -58,7 +60,7 @@ class AvatarChoiceDialog extends StatelessWidget {
 }
 
 class RegisterDialog extends StatefulWidget {
-  RegisterDialog(this._username, {Key key}) : super(key: key);
+  const RegisterDialog(this._username, {Key key}) : super(key: key);
 
   final String _username;
 
@@ -80,13 +82,14 @@ class _RegisterDialogState extends State<RegisterDialog> {
   void initState() {
     super.initState();
 
-    _registerFuture = Future.value("");
+    _registerFuture = Future<String>.value('');
   }
 
   void _registerUser() {
     if (_formKey.currentState.validate()) {
       setState(() {
-        _registerFuture = globalMessages.registerUser(_username, _passwordController.text, _captchaController.text.trim());
+        _registerFuture = globalMessages.registerUser(_username,
+            _passwordController.text, _captchaController.text.trim());
       });
     }
   }
@@ -104,30 +107,30 @@ class _RegisterDialogState extends State<RegisterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Register your account"),
-      content: FutureBuilder(
+      title: const Text('Register your account'),
+      content: FutureBuilder<String>(
         future: _registerFuture,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data != "success") {
+            if (snapshot.data != 'success') {
               return Form(
                 key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                        snapshot.data.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.redAccent,
-                        ),
+                      snapshot.data.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.redAccent,
+                      ),
                     ),
                     TextFormField(
                       obscureText: true,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(labelText: 'Password'),
+                      decoration: const InputDecoration(labelText: 'Password'),
                       controller: _passwordController,
-                      validator: (value) {
+                      validator: (String value) {
                         if (value.length < 5) {
                           return 'Must be at least 5 characters long';
                         }
@@ -137,9 +140,10 @@ class _RegisterDialogState extends State<RegisterDialog> {
                     TextFormField(
                       obscureText: true,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(labelText: 'Confirm Password'),
+                      decoration:
+                          const InputDecoration(labelText: 'Confirm Password'),
                       controller: _cpasswordController,
-                      validator: (value) {
+                      validator: (String value) {
                         if (value.length < 5) {
                           return 'Must be at least 5 characters long';
                         } else if (value != _passwordController.text) {
@@ -148,9 +152,11 @@ class _RegisterDialogState extends State<RegisterDialog> {
                         return null;
                       },
                     ),
-                    Image.network("https://play.pokemonshowdown.com/sprites/gen5ani/pikachu.gif"),
+                    Image.network(
+                        'https://play.pokemonshowdown.com/sprites/gen5ani/pikachu.gif'),
                     TextFormField(
-                      decoration: InputDecoration(labelText: "Who's That Pokémon?"),
+                      decoration: const InputDecoration(
+                          labelText: "Who's That Pokémon?"),
                       controller: _captchaController,
                       onFieldSubmitted: (_) => _registerUser(),
                     ),
@@ -158,20 +164,20 @@ class _RegisterDialogState extends State<RegisterDialog> {
                 ),
               );
             } else {
-              return Text("Registered");
+              return const Text('Registered');
             }
           }
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         },
       ),
       actions: <Widget>[
         FlatButton(
           onPressed: () => _registerUser(),
-          child: Text("Register"),
+          child: const Text('Register'),
         ),
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text("Cancel"),
+          child: const Text('Cancel'),
         ),
       ],
     );
@@ -179,15 +185,16 @@ class _RegisterDialogState extends State<RegisterDialog> {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  User _user = new User();
-  final String _avatarLinkPrefix = "https://play.pokemonshowdown.com/sprites/trainers/";
+  User _user = User();
+  final String _avatarLinkPrefix =
+      'https://play.pokemonshowdown.com/sprites/trainers/';
 
   @override
   void initState() {
@@ -196,7 +203,7 @@ class _HomePageState extends State<HomePage> {
     globalMessages.addListener(_globalMessageReceived);
   }
 
-  _globalMessageReceived(GlobalMessage message) {
+  void _globalMessageReceived(GlobalMessage message) {
     message.when(
         updateUser: (User newUser) {
           setState(() {
@@ -213,44 +220,59 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ListView(
-        children: [
-          SizedBox(height: 20),
+        children: <Widget>[
+          const SizedBox(height: 20),
           Container(
-            child: _user.avatar != null ?
-            Column(
-              children: [
-                InkWell(
-                  borderRadius: BorderRadius.circular(100),
-                  onTap: () async {
-                    int newAvatar = await showDialog(context: context, builder: (_) => AvatarChoiceDialog());
+            child: _user.avatar != null
+                ? Column(
+                    children: <Widget>[
+                      InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () async {
+                          final int newAvatar = await showDialog(
+                              context: context,
+                              builder: (_) => AvatarChoiceDialog());
 
-                    if (newAvatar != null) {
-                      globalMessages.setAvatar(battleAvatarNumbers[newAvatar.toString()]);
-                    }
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(image: Image.network(_avatarLinkPrefix + _user.avatar + ".png").image, fit: BoxFit.fill),
-                      border: Border.all(width: 1),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(_user.username),
-                FlatButton(
-                  onPressed: () => showDialog(context: context, builder: (_) => LoginDialog()),
-                  child: Text("Change Name"),
-                ),
-                _user.named && _user.registerTime == null ? FlatButton(
-                  onPressed: () => showDialog(context: context, builder: (_) => RegisterDialog(_user.username)),
-                  child: Text("Register"),
-                ) : Container(width: 0, height: 0),
-              ],
-            ) :
-            Center(child: CircularProgressIndicator()),
+                          if (newAvatar != null) {
+                            globalMessages.setAvatar(
+                                battleAvatarNumbers[newAvatar.toString()]);
+                          }
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: Image.network(_avatarLinkPrefix +
+                                        _user.avatar +
+                                        '.png')
+                                    .image,
+                                fit: BoxFit.fill),
+                            border: Border.all(width: 1),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(_user.username),
+                      FlatButton(
+                        onPressed: () => showDialog<LoginDialog>(
+                            context: context, builder: (_) => LoginDialog()),
+                        child: const Text('Change Name'),
+                      ),
+                      if (_user.named && _user.registerTime == null)
+                        FlatButton(
+                          onPressed: () => showDialog<RegisterDialog>(
+                              context: context,
+                              builder: (_) => RegisterDialog(_user.username)),
+                          child: const Text('Register'),
+                        )
+                      else
+                        // TODO(anyone): Hmmmmmmm
+                        Container(width: 0, height: 0),
+                    ],
+                  )
+                : const Center(child: CircularProgressIndicator()),
           ),
         ],
       ),

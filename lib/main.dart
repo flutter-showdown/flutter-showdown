@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/pages/pokedex/pokedex.dart';
 
-import 'pages/main_page.dart';
 import 'pages/home_page.dart';
+import 'pages/main_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
     );
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
 
 /// This is the stateful widget that the main application instantiates.
 class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
+  const MyStatefulWidget({Key key}) : super(key: key);
 
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
@@ -28,8 +29,6 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,14 +39,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-      ),
       body: IndexedStack(
         children: <Widget>[
-          HomePage(),
-          Text('Index 1: Business', style: optionStyle),
-          MainPage(),
+          const HomePage(),
+          Pokedex(),
+          const MainPage(),
         ],
         index: _selectedIndex,
       ),
@@ -58,7 +54,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             label: 'Arena',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.pets),
             label: 'Team Builder',
           ),
           BottomNavigationBarItem(
