@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'websockets/global_messages.dart';
+import '../websockets/global_messages.dart';
 
 class LoginDialog extends StatefulWidget {
   @override
