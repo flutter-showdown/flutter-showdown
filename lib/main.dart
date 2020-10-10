@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/pages/pokedex/pokedex.dart';
 
-import 'pages/home_page.dart';
+import 'pages/home/home.dart';
 import 'pages/main_page.dart';
 
 void main() => runApp(MyApp());
@@ -41,9 +41,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       body: IndexedStack(
         children: <Widget>[
-          const HomePage(),
-          Pokedex(),
           const MainPage(),
+          Pokedex(),
+          const Home(),
         ],
         index: _selectedIndex,
       ),
