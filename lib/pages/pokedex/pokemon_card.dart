@@ -9,7 +9,6 @@ class PokemonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sprite = pokemon.sprites.frontDefault;
     return Card(
         child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
