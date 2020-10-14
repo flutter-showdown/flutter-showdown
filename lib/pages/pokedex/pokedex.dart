@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import './pokemon.dart';
+import 'pokemon_card.dart';
 
 const LIMIT = 20;
 
@@ -51,7 +52,7 @@ class _PokedexState extends State<Pokedex> {
             return ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: snapshot.data.length,
-                itemBuilder: (_, idx) => Text(snapshot.data[idx].name));
+                itemBuilder: (_, idx) => PokemonCard(snapshot.data[idx]));
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
