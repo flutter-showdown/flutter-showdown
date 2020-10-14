@@ -7,6 +7,18 @@ part 'pokemon.g.dart';
 //   final Ability ability;
 //   final bool is_hidden;
 // }
+@JsonSerializable()
+class Sprites {
+  Sprites();
+
+  factory Sprites.fromJson(Map<String, dynamic> json) =>
+      _$SpritesFromJson(json);
+
+  @JsonKey(name: 'back_default', nullable: true)
+  String backDefault;
+  @JsonKey(name: 'front_default', nullable: true)
+  String frontDefault;
+}
 
 @JsonSerializable()
 class Pokemon {
@@ -17,6 +29,7 @@ class Pokemon {
 
   int id;
   String name;
+  Sprites sprites;
 
   // @JsonKey(
   //   fromJson: _parseAbility,

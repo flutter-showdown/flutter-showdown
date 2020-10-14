@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/pages/pokedex/pokedex.dart';
+import 'package:flutter_showdown/pages/pokedex/pokedex.dart';
 
 import 'pages/home/home.dart';
 import 'pages/main_page.dart';
