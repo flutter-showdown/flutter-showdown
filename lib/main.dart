@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/pages/team_builder/team_builder.dart';
+import 'package:flutter_showdown/pages/pokedex/pokedex.dart';
 import 'package:flutter_showdown/presentation/custom_icons_icons.dart';
 
 import 'pages/home/home.dart';
@@ -43,7 +43,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       body: IndexedStack(
         children: <Widget>[
           const MainPage(),
-          TeamBuilder(),
+          Pokedex(),
           const Home(),
         ],
         index: _selectedIndex,
@@ -56,7 +56,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(CustomIcons.pokeball),
-            label: 'Team Builder',
+            label: 'Pokedex',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
