@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import './pokemon.dart';
 import 'pokemon_card.dart';
+import '../components/input_speech_to_to_text.dart';
 
 const LIMIT = 20;
 
@@ -45,21 +46,22 @@ class _PokedexState extends State<Pokedex> {
       appBar: AppBar(
         title: const Text('Pokedex'),
       ),
-      body: FutureBuilder<List<Pokemon>>(
-        future: futurePokemons,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: snapshot.data.length,
-                itemBuilder: (_, idx) => PokemonCard(snapshot.data[idx]));
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-          // By default, show a loading spinner.
-          return const CircularProgressIndicator();
-        },
-      ),
+      body: SpeechToText(),
+      // body: FutureBuilder<List<Pokemon>>(
+      //   future: futurePokemons,
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasData) {
+      //       return ListView.builder(
+      //           padding: const EdgeInsets.all(8),
+      //           itemCount: snapshot.data.length,
+      //           itemBuilder: (_, idx) => PokemonCard(snapshot.data[idx]));
+      //     } else if (snapshot.hasError) {
+      //       return Text('${snapshot.error}');
+      //     }
+      //     // By default, show a loading spinner.
+      //     return const CircularProgressIndicator();
+      //   },
+      // ),
     );
   }
 }
