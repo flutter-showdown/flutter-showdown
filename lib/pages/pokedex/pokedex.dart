@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import './pokemon.dart';
+import 'package:flutter_showdown/models/pokemon.dart';
 import 'pokemon_card.dart';
 
 const LIMIT = 20;

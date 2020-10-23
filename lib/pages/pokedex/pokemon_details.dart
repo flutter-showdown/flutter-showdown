@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/extensions/string_extension.dart';
-import '../../../models/pokemon.dart';
+import 'package:flutter_showdown/models/pokemon.dart';
 
 class PokemonDetails extends StatelessWidget {
   const PokemonDetails(this.pokemon);
