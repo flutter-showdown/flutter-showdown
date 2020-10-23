@@ -1,4 +1,4 @@
-package com.example.flutter_project
+package com.flutter.showdown
 
 import io.flutter.embedding.android.FlutterActivity
 
