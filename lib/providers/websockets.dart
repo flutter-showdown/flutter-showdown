@@ -14,10 +14,8 @@ class WebSocketsNotifications {
   factory WebSocketsNotifications() => _sockets;
   WebSocketsNotifications._internal();
 
-  static const String _SERVER_ADDRESS =
-      'ws://sim.smogon.com:8000/showdown/websocket';
-  static final WebSocketsNotifications _sockets =
-      WebSocketsNotifications._internal();
+  static final WebSocketsNotifications _sockets = WebSocketsNotifications._internal();
+  static const String _SERVER_ADDRESS = 'ws://sim.smogon.com:8000/showdown/websocket';
 
   bool _isOn = false;
 
@@ -62,11 +60,14 @@ class WebSocketsNotifications {
     _listeners.remove(callback);
   }
 
-  void _onReceptionOfMessageFromServer(dynamic message) {
+  void _onReceptionOfMessageFromServer(dynamic messageReceived) {
     _isOn = true;
-    log(message.toString(), name: 'RECEIVE');
+    String msg = messageReceived.toString();
+
+    //log(msg, name: 'RECEIVED');
+    msg = msg.endsWith('\n') ? msg.substring(0, msg.length - 1) : msg;
     for (final cb in _listeners) {
-      cb(message.toString());
+      cb(msg);
     }
   }
 }
