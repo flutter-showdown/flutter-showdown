@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/extensions/string_extension.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
+import 'package:flutter_showdown/parser.dart';
 
 class PokemonDetails extends StatelessWidget {
   const PokemonDetails(this.pokemon);
@@ -8,16 +8,18 @@ class PokemonDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = pokemon.name.capitalize();
+    final resourceId = pokemon.forme != null
+        ? '${Parser.toId(pokemon.baseSpecies)}-${Parser.toId(pokemon.forme.replaceFirst('-Totem', ''))}'
+        : Parser.toId(pokemon.name);
     return Scaffold(
       appBar: AppBar(
-        title: Text('$name Details'),
+        title: Text('${pokemon.name} Details'),
       ),
       body: Column(
         children: [
           Center(
             child: Image.network(
-              'https://play.pokemonshowdown.com/sprites/ani/${pokemon.name}.gif',
+              'https://play.pokemonshowdown.com/sprites/gen5/$resourceId.png',
             ),
           ),
         ],

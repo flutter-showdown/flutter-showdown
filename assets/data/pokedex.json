@@ -1438,8 +1438,7 @@
     "color": "Blue",
     "evos": ["Nidorina"],
     "eggGroups": ["Monster", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "nidorina": {
     "num": 30,
@@ -1462,8 +1461,7 @@
     "evoLevel": 16,
     "evos": ["Nidoqueen"],
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "nidoqueen": {
     "num": 31,
@@ -1486,8 +1484,7 @@
     "evoType": "useItem",
     "evoItem": "Moon Stone",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "nidoranm": {
     "num": 32,
@@ -1508,8 +1505,7 @@
     "color": "Purple",
     "evos": ["Nidorino"],
     "eggGroups": ["Monster", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "nidorino": {
     "num": 33,
@@ -1532,8 +1528,7 @@
     "evoLevel": 16,
     "evos": ["Nidoking"],
     "eggGroups": ["Monster", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "nidoking": {
     "num": 34,
@@ -1556,8 +1551,7 @@
     "evoType": "useItem",
     "evoItem": "Moon Stone",
     "eggGroups": ["Monster", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "clefairy": {
     "num": 35,
@@ -1765,8 +1759,7 @@
     "color": "Purple",
     "evos": ["Golbat"],
     "eggGroups": ["Flying"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "golbat": {
     "num": 42,
@@ -1788,8 +1781,7 @@
     "evoLevel": 22,
     "evos": ["Crobat"],
     "eggGroups": ["Flying"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "oddish": {
     "num": 43,
@@ -2924,7 +2916,7 @@
     "heightm": 1.2,
     "weightkg": 36,
     "color": "Pink",
-    "evos": ["Slowbro-Galar"],
+    "evos": ["Slowbro-Galar", "Slowking-Galar"],
     "eggGroups": ["Monster", "Water 1"],
     "tier": "LC"
   },
@@ -3654,7 +3646,7 @@
     "eggGroups": ["Grass"],
     "otherFormes": ["Exeggutor-Alola"],
     "formeOrder": ["Exeggutor", "Exeggutor-Alola"],
-    "tier": "PU"
+    "tier": "PUBL"
   },
   "exeggutoralola": {
     "num": 103,
@@ -4268,8 +4260,7 @@
     "prevo": "Smoochum",
     "evoLevel": 30,
     "eggGroups": ["Human-Like"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "electabuzz": {
     "num": 125,
@@ -4292,8 +4283,7 @@
     "evoLevel": 30,
     "evos": ["Electivire"],
     "eggGroups": ["Human-Like"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "magmar": {
     "num": 126,
@@ -4316,8 +4306,7 @@
     "evoLevel": 30,
     "evos": ["Magmortar"],
     "eggGroups": ["Human-Like"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "pinsir": {
     "num": 127,
@@ -4701,8 +4690,7 @@
     "color": "Blue",
     "evos": ["Omastar"],
     "eggGroups": ["Water 1", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "omastar": {
     "num": 139,
@@ -4724,8 +4712,7 @@
     "prevo": "Omanyte",
     "evoLevel": 40,
     "eggGroups": ["Water 1", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "kabuto": {
     "num": 140,
@@ -4746,8 +4733,7 @@
     "color": "Brown",
     "evos": ["Kabutops"],
     "eggGroups": ["Water 1", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "kabutops": {
     "num": 141,
@@ -4769,8 +4755,7 @@
     "prevo": "Kabuto",
     "evoLevel": 40,
     "eggGroups": ["Water 1", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "aerodactyl": {
     "num": 142,
@@ -4792,8 +4777,7 @@
     "eggGroups": ["Flying"],
     "otherFormes": ["Aerodactyl-Mega"],
     "formeOrder": ["Aerodactyl", "Aerodactyl-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "aerodactylmega": {
     "num": 142,
@@ -4885,8 +4869,31 @@
     "weightkg": 55.4,
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "otherFormes": ["Articuno-Galar"],
+    "formeOrder": ["Articuno", "Articuno-Galar"],
+    "tier": "OU"
+  },
+  "articunogalar": {
+    "num": 144,
+    "name": "Articuno-Galar",
+    "baseSpecies": "Articuno",
+    "forme": "Galar",
+    "types": ["Psychic", "Flying"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 90,
+      "atk": 85,
+      "def": 85,
+      "spa": 125,
+      "spd": 100,
+      "spe": 95
+    },
+    "abilities": { "0": "Competitive" },
+    "heightm": 1.7,
+    "weightkg": 50.9,
+    "color": "Purple",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
   },
   "zapdos": {
     "num": 145,
@@ -4906,8 +4913,31 @@
     "weightkg": 52.6,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "otherFormes": ["Zapdos-Galar"],
+    "formeOrder": ["Zapdos", "Zapdos-Galar"],
+    "tier": "OU"
+  },
+  "zapdosgalar": {
+    "num": 145,
+    "name": "Zapdos-Galar",
+    "baseSpecies": "Zapdos",
+    "forme": "Galar",
+    "types": ["Fighting", "Flying"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 90,
+      "atk": 125,
+      "def": 90,
+      "spa": 85,
+      "spd": 90,
+      "spe": 100
+    },
+    "abilities": { "0": "Defiant" },
+    "heightm": 1.6,
+    "weightkg": 58.2,
+    "color": "Yellow",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
   },
   "moltres": {
     "num": 146,
@@ -4927,8 +4957,31 @@
     "weightkg": 60,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "otherFormes": ["Moltres-Galar"],
+    "formeOrder": ["Moltres", "Moltres-Galar"],
+    "tier": "OU"
+  },
+  "moltresgalar": {
+    "num": 146,
+    "name": "Moltres-Galar",
+    "baseSpecies": "Moltres",
+    "forme": "Galar",
+    "types": ["Dark", "Flying"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 90,
+      "atk": 85,
+      "def": 90,
+      "spa": 100,
+      "spd": 125,
+      "spe": 90
+    },
+    "abilities": { "0": "Berserk" },
+    "heightm": 2,
+    "weightkg": 66,
+    "color": "Red",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
   },
   "dratini": {
     "num": 147,
@@ -4948,8 +5001,7 @@
     "color": "Blue",
     "evos": ["Dragonair"],
     "eggGroups": ["Water 1", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "dragonair": {
     "num": 148,
@@ -4971,8 +5023,7 @@
     "evoLevel": 30,
     "evos": ["Dragonite"],
     "eggGroups": ["Water 1", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "dragonite": {
     "num": 149,
@@ -4993,8 +5044,7 @@
     "prevo": "Dragonair",
     "evoLevel": 55,
     "eggGroups": ["Water 1", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "mewtwo": {
     "num": 150,
@@ -5482,8 +5532,7 @@
     "prevo": "Golbat",
     "evoType": "levelFriendship",
     "eggGroups": ["Flying"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "chinchou": {
     "num": 170,
@@ -6184,7 +6233,37 @@
     "evoType": "trade",
     "evoItem": "King's Rock",
     "eggGroups": ["Monster", "Water 1"],
+    "otherFormes": ["Slowking-Galar"],
+    "formeOrder": ["Slowking", "Slowking-Galar"],
     "tier": "UU"
+  },
+  "slowkinggalar": {
+    "num": 199,
+    "name": "Slowking-Galar",
+    "baseSpecies": "Slowking",
+    "forme": "Galar",
+    "types": ["Poison", "Psychic"],
+    "baseStats": {
+      "hp": 95,
+      "atk": 65,
+      "def": 80,
+      "spa": 110,
+      "spd": 110,
+      "spe": 30
+    },
+    "abilities": {
+      "0": "Curious Medicine",
+      "1": "Own Tempo",
+      "H": "Regenerator"
+    },
+    "heightm": 1.8,
+    "weightkg": 79.5,
+    "color": "Pink",
+    "prevo": "Slowpoke-Galar",
+    "evoType": "trade",
+    "evoItem": "King's Rock",
+    "eggGroups": ["Monster", "Water 1"],
+    "tier": "OU"
   },
   "misdreavus": {
     "num": 200,
@@ -7191,8 +7270,7 @@
     "evos": ["Jynx"],
     "eggGroups": ["Undiscovered"],
     "canHatch": true,
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "elekid": {
     "num": 239,
@@ -7214,8 +7292,7 @@
     "evos": ["Electabuzz"],
     "eggGroups": ["Undiscovered"],
     "canHatch": true,
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "magby": {
     "num": 240,
@@ -7237,8 +7314,7 @@
     "evos": ["Magmar"],
     "eggGroups": ["Undiscovered"],
     "canHatch": true,
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "miltank": {
     "num": 241,
@@ -7300,8 +7376,7 @@
     "weightkg": 178,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "entei": {
     "num": 244,
@@ -7321,8 +7396,7 @@
     "weightkg": 198,
     "color": "Brown",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "suicune": {
     "num": 245,
@@ -7342,8 +7416,7 @@
     "weightkg": 187,
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "larvitar": {
     "num": 246,
@@ -7451,8 +7524,7 @@
     "weightkg": 216,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "hooh": {
     "num": 250,
@@ -7472,8 +7544,7 @@
     "weightkg": 199,
     "color": "Red",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "celebi": {
     "num": 251,
@@ -7514,8 +7585,7 @@
     "color": "Green",
     "evos": ["Grovyle"],
     "eggGroups": ["Monster", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "grovyle": {
     "num": 253,
@@ -7538,8 +7608,7 @@
     "evoLevel": 16,
     "evos": ["Sceptile"],
     "eggGroups": ["Monster", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "sceptile": {
     "num": 254,
@@ -7563,8 +7632,7 @@
     "eggGroups": ["Monster", "Dragon"],
     "otherFormes": ["Sceptile-Mega"],
     "formeOrder": ["Sceptile", "Sceptile-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "sceptilemega": {
     "num": 254,
@@ -7609,8 +7677,7 @@
     "color": "Red",
     "evos": ["Combusken"],
     "eggGroups": ["Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "combusken": {
     "num": 256,
@@ -7633,8 +7700,7 @@
     "evoLevel": 16,
     "evos": ["Blaziken"],
     "eggGroups": ["Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "blaziken": {
     "num": 257,
@@ -7658,8 +7724,7 @@
     "eggGroups": ["Field"],
     "otherFormes": ["Blaziken-Mega"],
     "formeOrder": ["Blaziken", "Blaziken-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "blazikenmega": {
     "num": 257,
@@ -7704,8 +7769,7 @@
     "color": "Blue",
     "evos": ["Marshtomp"],
     "eggGroups": ["Monster", "Water 1"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "marshtomp": {
     "num": 259,
@@ -7728,8 +7792,7 @@
     "evoLevel": 16,
     "evos": ["Swampert"],
     "eggGroups": ["Monster", "Water 1"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "swampert": {
     "num": 260,
@@ -7753,8 +7816,7 @@
     "eggGroups": ["Monster", "Water 1"],
     "otherFormes": ["Swampert-Mega"],
     "formeOrder": ["Swampert", "Swampert-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "swampertmega": {
     "num": 260,
@@ -8844,8 +8906,7 @@
     "color": "Gray",
     "evos": ["Lairon"],
     "eggGroups": ["Monster"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "lairon": {
     "num": 305,
@@ -8867,8 +8928,7 @@
     "evoLevel": 32,
     "evos": ["Aggron"],
     "eggGroups": ["Monster"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "aggron": {
     "num": 306,
@@ -8891,8 +8951,7 @@
     "eggGroups": ["Monster"],
     "otherFormes": ["Aggron-Mega"],
     "formeOrder": ["Aggron", "Aggron-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "aggronmega": {
     "num": 306,
@@ -9585,8 +9644,7 @@
     "color": "Blue",
     "evos": ["Altaria"],
     "eggGroups": ["Flying", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "altaria": {
     "num": 334,
@@ -9609,8 +9667,7 @@
     "eggGroups": ["Flying", "Dragon"],
     "otherFormes": ["Altaria-Mega"],
     "formeOrder": ["Altaria", "Altaria-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "altariamega": {
     "num": 334,
@@ -9867,8 +9924,7 @@
     "color": "Purple",
     "evos": ["Cradily"],
     "eggGroups": ["Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "cradily": {
     "num": 346,
@@ -9890,8 +9946,7 @@
     "prevo": "Lileep",
     "evoLevel": 40,
     "eggGroups": ["Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "anorith": {
     "num": 347,
@@ -9912,8 +9967,7 @@
     "color": "Gray",
     "evos": ["Armaldo"],
     "eggGroups": ["Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "armaldo": {
     "num": 348,
@@ -9935,8 +9989,7 @@
     "prevo": "Anorith",
     "evoLevel": 40,
     "eggGroups": ["Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "feebas": {
     "num": 349,
@@ -10269,8 +10322,7 @@
     "eggGroups": ["Field"],
     "otherFormes": ["Absol-Mega"],
     "formeOrder": ["Absol", "Absol-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "absolmega": {
     "num": 359,
@@ -10400,8 +10452,7 @@
     "color": "Blue",
     "evos": ["Sealeo"],
     "eggGroups": ["Water 1", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "sealeo": {
     "num": 364,
@@ -10423,8 +10474,7 @@
     "evoLevel": 32,
     "evos": ["Walrein"],
     "eggGroups": ["Water 1", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "walrein": {
     "num": 365,
@@ -10445,8 +10495,7 @@
     "prevo": "Sealeo",
     "evoLevel": 44,
     "eggGroups": ["Water 1", "Field"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "clamperl": {
     "num": 366,
@@ -10533,8 +10582,7 @@
     "weightkg": 23.4,
     "color": "Gray",
     "eggGroups": ["Water 1", "Water 2"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "luvdisc": {
     "num": 370,
@@ -10575,8 +10623,7 @@
     "color": "Blue",
     "evos": ["Shelgon"],
     "eggGroups": ["Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "shelgon": {
     "num": 372,
@@ -10598,8 +10645,7 @@
     "evoLevel": 30,
     "evos": ["Salamence"],
     "eggGroups": ["Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "salamence": {
     "num": 373,
@@ -10622,8 +10668,7 @@
     "eggGroups": ["Dragon"],
     "otherFormes": ["Salamence-Mega"],
     "formeOrder": ["Salamence", "Salamence-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "salamencemega": {
     "num": 373,
@@ -10667,8 +10712,7 @@
     "color": "Blue",
     "evos": ["Metang"],
     "eggGroups": ["Mineral"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "metang": {
     "num": 375,
@@ -10691,8 +10735,7 @@
     "evoLevel": 20,
     "evos": ["Metagross"],
     "eggGroups": ["Mineral"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "metagross": {
     "num": 376,
@@ -10716,8 +10759,7 @@
     "eggGroups": ["Mineral"],
     "otherFormes": ["Metagross-Mega"],
     "formeOrder": ["Metagross", "Metagross-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "metagrossmega": {
     "num": 376,
@@ -10761,8 +10803,7 @@
     "weightkg": 230,
     "color": "Brown",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "regice": {
     "num": 378,
@@ -10782,8 +10823,7 @@
     "weightkg": 175,
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "registeel": {
     "num": 379,
@@ -10803,8 +10843,7 @@
     "weightkg": 205,
     "color": "Gray",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "latias": {
     "num": 380,
@@ -10826,8 +10865,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Latias-Mega"],
     "formeOrder": ["Latias", "Latias-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "latiasmega": {
     "num": 380,
@@ -10873,8 +10911,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Latios-Mega"],
     "formeOrder": ["Latios", "Latios-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "latiosmega": {
     "num": 381,
@@ -10920,8 +10957,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Kyogre-Primal"],
     "formeOrder": ["Kyogre", "Kyogre-Primal"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "kyogreprimal": {
     "num": 382,
@@ -10944,6 +10980,7 @@
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Blue Orb",
+    "tier": "Illegal",
     "isNonstandard": "Past"
   },
   "groudon": {
@@ -10966,8 +11003,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Groudon-Primal"],
     "formeOrder": ["Groudon", "Groudon-Primal"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "groudonprimal": {
     "num": 383,
@@ -10990,6 +11026,7 @@
     "color": "Red",
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Red Orb",
+    "tier": "Illegal",
     "isNonstandard": "Past"
   },
   "rayquaza": {
@@ -11012,8 +11049,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Rayquaza-Mega"],
     "formeOrder": ["Rayquaza", "Rayquaza-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "rayquazamega": {
     "num": 384,
@@ -12492,8 +12528,7 @@
     "weightkg": 108,
     "color": "Purple",
     "eggGroups": ["Amorphous"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "gible": {
     "num": 443,
@@ -12513,8 +12548,7 @@
     "color": "Blue",
     "evos": ["Gabite"],
     "eggGroups": ["Monster", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "gabite": {
     "num": 444,
@@ -12536,8 +12570,7 @@
     "evoLevel": 24,
     "evos": ["Garchomp"],
     "eggGroups": ["Monster", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "garchomp": {
     "num": 445,
@@ -12560,8 +12593,7 @@
     "eggGroups": ["Monster", "Dragon"],
     "otherFormes": ["Garchomp-Mega"],
     "formeOrder": ["Garchomp", "Garchomp-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "garchompmega": {
     "num": 445,
@@ -13084,8 +13116,7 @@
     "evoType": "trade",
     "evoItem": "Electirizer",
     "eggGroups": ["Human-Like"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "magmortar": {
     "num": 467,
@@ -13108,8 +13139,7 @@
     "evoType": "trade",
     "evoItem": "Magmarizer",
     "eggGroups": ["Human-Like"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "togekiss": {
     "num": 468,
@@ -13557,8 +13587,7 @@
     "weightkg": 0.3,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "mesprit": {
     "num": 481,
@@ -13578,8 +13607,7 @@
     "weightkg": 0.3,
     "color": "Pink",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "azelf": {
     "num": 482,
@@ -13599,8 +13627,7 @@
     "weightkg": 0.3,
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "dialga": {
     "num": 483,
@@ -13620,8 +13647,7 @@
     "weightkg": 683,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "palkia": {
     "num": 484,
@@ -13641,8 +13667,7 @@
     "weightkg": 336,
     "color": "Purple",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "heatran": {
     "num": 485,
@@ -13661,8 +13686,7 @@
     "weightkg": 430,
     "color": "Brown",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "regigigas": {
     "num": 486,
@@ -13682,8 +13706,7 @@
     "weightkg": 420,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "giratina": {
     "num": 487,
@@ -13706,8 +13729,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Giratina-Origin"],
     "formeOrder": ["Giratina", "Giratina-Origin"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "giratinaorigin": {
     "num": 487,
@@ -13731,8 +13753,7 @@
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Griseous Orb",
     "changesFrom": "Giratina",
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "cresselia": {
     "num": 488,
@@ -13752,8 +13773,7 @@
     "weightkg": 85.6,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "phione": {
     "num": 489,
@@ -14354,8 +14374,7 @@
     "weightkg": 4,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "snivy": {
     "num": 495,
@@ -15169,8 +15188,7 @@
     "eggGroups": ["Fairy"],
     "otherFormes": ["Audino-Mega"],
     "formeOrder": ["Audino", "Audino-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "audinomega": {
     "num": 531,
@@ -16042,8 +16060,7 @@
     "color": "Blue",
     "evos": ["Carracosta"],
     "eggGroups": ["Water 1", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "carracosta": {
     "num": 565,
@@ -16065,8 +16082,7 @@
     "prevo": "Tirtouga",
     "evoLevel": 37,
     "eggGroups": ["Water 1", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "archen": {
     "num": 566,
@@ -16087,8 +16103,7 @@
     "color": "Yellow",
     "evos": ["Archeops"],
     "eggGroups": ["Flying", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "archeops": {
     "num": 567,
@@ -16110,8 +16125,7 @@
     "prevo": "Archen",
     "evoLevel": 37,
     "eggGroups": ["Flying", "Water 3"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "trubbish": {
     "num": 568,
@@ -17164,8 +17178,7 @@
     "weightkg": 148,
     "color": "Blue",
     "eggGroups": ["Mineral"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "shelmet": {
     "num": 616,
@@ -17723,8 +17736,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Tornadus-Therian"],
     "formeOrder": ["Tornadus", "Tornadus-Therian"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "tornadustherian": {
     "num": 641,
@@ -17747,8 +17759,7 @@
     "color": "Green",
     "eggGroups": ["Undiscovered"],
     "changesFrom": "Tornadus",
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "thundurus": {
     "num": 642,
@@ -17771,8 +17782,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Thundurus-Therian"],
     "formeOrder": ["Thundurus", "Thundurus-Therian"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "thundurustherian": {
     "num": 642,
@@ -17795,8 +17805,7 @@
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
     "changesFrom": "Thundurus",
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "reshiram": {
     "num": 643,
@@ -17859,8 +17868,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Landorus-Therian"],
     "formeOrder": ["Landorus", "Landorus-Therian"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "landorustherian": {
     "num": 645,
@@ -17883,8 +17891,7 @@
     "color": "Brown",
     "eggGroups": ["Undiscovered"],
     "changesFrom": "Landorus",
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "kyurem": {
     "num": 646,
@@ -17929,7 +17936,7 @@
     "color": "Gray",
     "eggGroups": ["Undiscovered"],
     "changesFrom": "Kyurem",
-    "tier": "Uber"
+    "tier": "OU"
   },
   "kyuremwhite": {
     "num": 646,
@@ -18079,8 +18086,7 @@
       "Genesect-Burn",
       "Genesect-Chill"
     ],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "genesectdouse": {
     "num": 649,
@@ -18104,7 +18110,7 @@
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Douse Drive",
     "changesFrom": "Genesect",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "genesectshock": {
     "num": 649,
@@ -18128,7 +18134,7 @@
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Shock Drive",
     "changesFrom": "Genesect",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "genesectburn": {
     "num": 649,
@@ -18152,7 +18158,7 @@
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Burn Drive",
     "changesFrom": "Genesect",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "genesectchill": {
     "num": 649,
@@ -18176,7 +18182,7 @@
     "eggGroups": ["Undiscovered"],
     "requiredItem": "Chill Drive",
     "changesFrom": "Genesect",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "chespin": {
     "num": 650,
@@ -19463,8 +19469,7 @@
     "color": "Brown",
     "evos": ["Tyrantrum"],
     "eggGroups": ["Monster", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "tyrantrum": {
     "num": 697,
@@ -19486,8 +19491,7 @@
     "prevo": "Tyrunt",
     "evoLevel": 39,
     "eggGroups": ["Monster", "Dragon"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "amaura": {
     "num": 698,
@@ -19508,8 +19512,7 @@
     "color": "Blue",
     "evos": ["Aurorus"],
     "eggGroups": ["Monster"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "LC"
   },
   "aurorus": {
     "num": 699,
@@ -19531,8 +19534,7 @@
     "prevo": "Amaura",
     "evoLevel": 39,
     "eggGroups": ["Monster"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "sylveon": {
     "num": 700,
@@ -19613,8 +19615,7 @@
     "weightkg": 5.7,
     "color": "Gray",
     "eggGroups": ["Fairy", "Mineral"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "goomy": {
     "num": 704,
@@ -19787,7 +19788,6 @@
     "color": "Brown",
     "evos": ["Gourgeist-Small"],
     "eggGroups": ["Amorphous"],
-    "unreleasedHidden": true,
     "tier": "LC"
   },
   "pumpkaboolarge": {
@@ -19810,7 +19810,6 @@
     "color": "Brown",
     "evos": ["Gourgeist-Large"],
     "eggGroups": ["Amorphous"],
-    "unreleasedHidden": true,
     "tier": "LC"
   },
   "pumpkaboosuper": {
@@ -19885,7 +19884,6 @@
     "prevo": "Pumpkaboo-Small",
     "evoType": "trade",
     "eggGroups": ["Amorphous"],
-    "unreleasedHidden": true,
     "tier": "PU"
   },
   "gourgeistlarge": {
@@ -19909,7 +19907,6 @@
     "prevo": "Pumpkaboo-Large",
     "evoType": "trade",
     "eggGroups": ["Amorphous"],
-    "unreleasedHidden": true,
     "tier": "(PU)"
   },
   "gourgeistsuper": {
@@ -20038,8 +20035,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Xerneas-Neutral"],
     "formeOrder": ["Xerneas-Neutral", "Xerneas"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "xerneasneutral": {
     "num": 716,
@@ -20082,8 +20078,7 @@
     "weightkg": 203,
     "color": "Red",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "zygarde": {
     "num": 718,
@@ -20112,8 +20107,7 @@
       "Zygarde",
       "Zygarde-Complete"
     ],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "zygarde10": {
     "num": 718,
@@ -20137,8 +20131,7 @@
     "eggGroups": ["Undiscovered"],
     "changesFrom": "Zygarde",
     "gen": 7,
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "zygardecomplete": {
     "num": 718,
@@ -20163,8 +20156,7 @@
     "requiredAbility": "Power Construct",
     "battleOnly": ["Zygarde", "Zygarde-10%"],
     "gen": 7,
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "Uber"
   },
   "diancie": {
     "num": 719,
@@ -20186,8 +20178,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Diancie-Mega"],
     "formeOrder": ["Diancie", "Diancie-Mega"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "dianciemega": {
     "num": 719,
@@ -20279,8 +20270,7 @@
     "weightkg": 195,
     "color": "Brown",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "rowlet": {
     "num": 722,
@@ -22549,8 +22539,7 @@
     "weightkg": 20.5,
     "color": "Yellow",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "tapulele": {
     "num": 786,
@@ -22570,8 +22559,7 @@
     "weightkg": 18.6,
     "color": "Pink",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "tapubulu": {
     "num": 787,
@@ -22591,8 +22579,7 @@
     "weightkg": 45.5,
     "color": "Red",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "tapufini": {
     "num": 788,
@@ -22612,8 +22599,7 @@
     "weightkg": 21.2,
     "color": "Purple",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "cosmog": {
     "num": 789,
@@ -22721,8 +22707,7 @@
     "weightkg": 55.5,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "buzzwole": {
     "num": 794,
@@ -22742,8 +22727,7 @@
     "weightkg": 333.6,
     "color": "Red",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "pheromosa": {
     "num": 795,
@@ -22763,8 +22747,7 @@
     "weightkg": 25,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "xurkitree": {
     "num": 796,
@@ -22784,8 +22767,7 @@
     "weightkg": 100,
     "color": "Black",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "celesteela": {
     "num": 797,
@@ -22805,8 +22787,7 @@
     "weightkg": 999.9,
     "color": "Green",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "kartana": {
     "num": 798,
@@ -22826,8 +22807,7 @@
     "weightkg": 0.1,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "guzzlord": {
     "num": 799,
@@ -22847,8 +22827,7 @@
     "weightkg": 888,
     "color": "Black",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "necrozma": {
     "num": 800,
@@ -22972,7 +22951,7 @@
     "eggGroups": ["Undiscovered"],
     "otherFormes": ["Magearna-Original"],
     "formeOrder": ["Magearna", "Magearna-Original"],
-    "tier": "Uber"
+    "tier": "OU"
   },
   "magearnaoriginal": {
     "num": 801,
@@ -22994,7 +22973,7 @@
     "weightkg": 80.5,
     "color": "Red",
     "eggGroups": ["Undiscovered"],
-    "tier": "Uber"
+    "tier": "OU"
   },
   "marshadow": {
     "num": 802,
@@ -23035,8 +23014,7 @@
     "color": "Purple",
     "evos": ["Naganadel"],
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "NFE"
   },
   "naganadel": {
     "num": 804,
@@ -23059,8 +23037,7 @@
     "evoType": "levelMove",
     "evoMove": "Dragon Pulse",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "stakataka": {
     "num": 805,
@@ -23080,8 +23057,7 @@
     "weightkg": 820,
     "color": "Gray",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "blacephalon": {
     "num": 806,
@@ -23101,8 +23077,7 @@
     "weightkg": 13,
     "color": "White",
     "eggGroups": ["Undiscovered"],
-    "tier": "Illegal",
-    "isNonstandard": "Past"
+    "tier": "OU"
   },
   "zeraora": {
     "num": 807,
@@ -23163,7 +23138,7 @@
     "color": "Gray",
     "eggGroups": ["Undiscovered"],
     "canGigantamax": "G-Max Meltdown",
-    "tier": "Uber"
+    "tier": "OU"
   },
   "melmetalgmax": {
     "num": 809,
@@ -23345,7 +23320,7 @@
     "evoLevel": 35,
     "eggGroups": ["Field", "Human-Like"],
     "canGigantamax": "G-Max Fireball",
-    "tier": "Uber"
+    "tier": "OU"
   },
   "cinderacegmax": {
     "num": 815,
@@ -23368,7 +23343,7 @@
     "color": "White",
     "eggGroups": ["Field", "Human-Like"],
     "changesFrom": "Cinderace",
-    "tier": "Uber",
+    "tier": "(Uber)",
     "isNonstandard": "Gigantamax"
   },
   "sobble": {
@@ -24553,7 +24528,6 @@
     "color": "Purple",
     "evos": ["Polteageist-Antique"],
     "eggGroups": ["Undiscovered"],
-    "unreleasedHidden": true,
     "tier": "LC"
   },
   "polteageist": {
@@ -24605,7 +24579,6 @@
     "evoType": "useItem",
     "evoItem": "Chipped Pot",
     "eggGroups": ["Undiscovered"],
-    "unreleasedHidden": true,
     "tier": "UU"
   },
   "hatenna": {
@@ -25337,7 +25310,6 @@
     "weightkg": 190,
     "color": "Green",
     "eggGroups": ["Undiscovered"],
-    "unreleasedHidden": true,
     "tier": "UUBL"
   },
   "arctozolt": {
@@ -25358,7 +25330,6 @@
     "weightkg": 150,
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
-    "unreleasedHidden": true,
     "tier": "PUBL"
   },
   "dracovish": {
@@ -25379,7 +25350,6 @@
     "weightkg": 215,
     "color": "Green",
     "eggGroups": ["Undiscovered"],
-    "unreleasedHidden": true,
     "tier": "Uber"
   },
   "arctovish": {
@@ -25400,7 +25370,6 @@
     "weightkg": 175,
     "color": "Blue",
     "eggGroups": ["Undiscovered"],
-    "unreleasedHidden": true,
     "tier": "PUBL"
   },
   "duraludon": {
@@ -25819,6 +25788,154 @@
     "eggGroups": ["Undiscovered"],
     "tier": "Unreleased",
     "isNonstandard": "Unobtainable"
+  },
+  "regieleki": {
+    "num": 894,
+    "name": "Regieleki",
+    "types": ["Electric"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 80,
+      "atk": 100,
+      "def": 50,
+      "spa": 100,
+      "spd": 50,
+      "spe": 200
+    },
+    "abilities": { "0": "Transistor" },
+    "heightm": 1.2,
+    "weightkg": 145,
+    "color": "Yellow",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
+  },
+  "regidrago": {
+    "num": 895,
+    "name": "Regidrago",
+    "types": ["Dragon"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 200,
+      "atk": 100,
+      "def": 50,
+      "spa": 100,
+      "spd": 50,
+      "spe": 80
+    },
+    "abilities": { "0": "Dragon's Maw" },
+    "heightm": 2.1,
+    "weightkg": 200,
+    "color": "Green",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
+  },
+  "glastrier": {
+    "num": 896,
+    "name": "Glastrier",
+    "types": ["Ice"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 100,
+      "atk": 145,
+      "def": 130,
+      "spa": 65,
+      "spd": 110,
+      "spe": 30
+    },
+    "abilities": { "0": "Chilling Neigh" },
+    "heightm": 2.2,
+    "weightkg": 800,
+    "color": "White",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
+  },
+  "spectrier": {
+    "num": 897,
+    "name": "Spectrier",
+    "types": ["Ghost"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 100,
+      "atk": 65,
+      "def": 60,
+      "spa": 145,
+      "spd": 80,
+      "spe": 130
+    },
+    "abilities": { "0": "Grim Neigh" },
+    "heightm": 2,
+    "weightkg": 44.5,
+    "color": "Black",
+    "eggGroups": ["Undiscovered"],
+    "tier": "OU"
+  },
+  "calyrex": {
+    "num": 898,
+    "name": "Calyrex",
+    "types": ["Psychic", "Grass"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 100,
+      "atk": 80,
+      "def": 80,
+      "spa": 80,
+      "spd": 80,
+      "spe": 80
+    },
+    "abilities": { "0": "Unnerve" },
+    "heightm": 1.1,
+    "weightkg": 7.7,
+    "color": "White",
+    "eggGroups": ["Undiscovered"],
+    "otherFormes": ["Calyrex-Ice", "Calyrex-Shadow"],
+    "formeOrder": ["Calyrex", "Calyrex-Ice", "Calyrex-Shadow"],
+    "tier": "OU"
+  },
+  "calyrexice": {
+    "num": 898,
+    "name": "Calyrex-Ice",
+    "baseSpecies": "Calyrex",
+    "forme": "Ice",
+    "types": ["Psychic", "Ice"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 100,
+      "atk": 165,
+      "def": 150,
+      "spa": 85,
+      "spd": 130,
+      "spe": 50
+    },
+    "abilities": { "0": "As One (Glastrier)" },
+    "heightm": 2.4,
+    "weightkg": 809.1,
+    "color": "White",
+    "eggGroups": ["Undiscovered"],
+    "changesFrom": "Calyrex",
+    "tier": "Uber"
+  },
+  "calyrexshadow": {
+    "num": 898,
+    "name": "Calyrex-Shadow",
+    "baseSpecies": "Calyrex",
+    "forme": "Shadow",
+    "types": ["Psychic", "Ghost"],
+    "gender": "N",
+    "baseStats": {
+      "hp": 100,
+      "atk": 85,
+      "def": 80,
+      "spa": 165,
+      "spd": 100,
+      "spe": 150
+    },
+    "abilities": { "0": "As One (Spectrier)" },
+    "heightm": 2.4,
+    "weightkg": 53.6,
+    "color": "Black",
+    "eggGroups": ["Undiscovered"],
+    "changesFrom": "Calyrex",
+    "tier": "Uber"
   },
   "missingno": {
     "num": 0,
@@ -27181,6 +27298,27 @@
     "prevo": "Solotl",
     "evoLevel": 36,
     "eggGroups": ["Dragon", "Fairy"],
+    "gen": 8,
+    "tier": "CAP",
+    "isNonstandard": "CAP"
+  },
+  "miasmaw": {
+    "num": -59,
+    "name": "Miasmaw",
+    "types": ["Bug", "Dragon"],
+    "baseStats": {
+      "hp": 85,
+      "atk": 135,
+      "def": 60,
+      "spa": 115,
+      "spd": 85,
+      "spe": 89
+    },
+    "abilities": { "0": "Neutralizing Gas", "H": "Compound Eyes" },
+    "heightm": 1.2,
+    "weightkg": 57,
+    "color": "Green",
+    "eggGroups": ["Bug", "Dragon"],
     "gen": 8,
     "tier": "CAP",
     "isNonstandard": "CAP"
