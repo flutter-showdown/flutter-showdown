@@ -4,12 +4,7 @@ import 'package:flutter/material.dart';
 import '../../utils.dart';
 
 class AvatarDialog extends StatelessWidget {
-  static final Future<List<Image>> _trainerList = compute(
-      splitImages,
-      SplitParameters(
-          'https://play.pokemonshowdown.com/sprites/trainers-sheet.png',
-          16,
-          19));
+  static final Future<List<Image>> _trainerList = compute(splitImages, SplitParameters('https://play.pokemonshowdown.com/sprites/trainers-sheet.png', 16, 19));
 
   List<Widget> _getTiles(BuildContext context, List<Image> list) {
     final List<Widget> tiles = <Widget>[];
