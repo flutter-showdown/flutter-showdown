@@ -1,22 +1,24 @@
-const String AVATARLINKPREFIX = 'https://play.pokemonshowdown.com/sprites/trainers/';
-const String CUSTOMAVATARLINKPREFIX = 'https://play.pokemonshowdown.com/sprites/trainers-custom/';
+const String AVATARLINKPREFIX =
+    'https://play.pokemonshowdown.com/sprites/trainers/';
+const String CUSTOMAVATARLINKPREFIX =
+    'https://play.pokemonshowdown.com/sprites/trainers-custom/';
 
 //https://github.com/smogon/pokemon-showdown-client/blob/master/website/pages/staff.md
 const Map<String, String> GROUPS = {
-  '~' : 'Administrator (~)',
-  '#' : 'Room Owner (#)',
-  '&' : 'Administrator (&)',
-  '★' : 'Host (★)',
-  '@' : 'Moderator (@)',
-  '%' : 'Driver (%)',
-  '^' : '^', //TODO (anyone) find the name of this group
-  '*' : 'Bot (*)',
-  '☆' : 'Player (☆)',
-  '+' : 'Voice (+)',
-  ' ' : '',
-  '!' : 'Muted (!)',
-  '✖' : 'Namelocked (✖)',
-  '‽' : 'Locked (‽)'
+  '~': 'Administrator (~)',
+  '#': 'Room Owner (#)',
+  '&': 'Administrator (&)',
+  '★': 'Host (★)',
+  '@': 'Moderator (@)',
+  '%': 'Driver (%)',
+  '^': '^', // TODO(anyone): find the name of this group
+  '*': 'Bot (*)',
+  '☆': 'Player (☆)',
+  '+': 'Voice (+)',
+  ' ': '',
+  '!': 'Muted (!)',
+  '✖': 'Namelocked (✖)',
+  '‽': 'Locked (‽)'
 };
 
 //https://github.com/smogon/pokemon-showdown-client/blob/f1252eed1f23d67a2fa7a0e67cccd9e5b98e9b80/src/battle-dex-data.ts#L619

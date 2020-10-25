@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter_showdown/pages/common/user_details_dialog.dart';
-import 'package:flutter_showdown/parser.dart';
 import 'package:flutter_showdown/providers/global_messages_enums.dart';
 import 'package:flutter_showdown/providers/room_messages.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +50,6 @@ class _RoomsState extends State<Rooms> {
                       onJoin: (roomInfo) => _joinRoom(roomInfo),
                     ),
                   ),
-
                   Expanded(
                     child: Scaffold(
                       appBar: AppBar(
@@ -84,51 +81,68 @@ class _RoomsState extends State<Rooms> {
                           )
                         ],
                       ),
-                      body: currentRoom != null ?
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8, left: 16),
-                            child: Text(
-                              'Users - ${currentRoom.users.length}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-
-                          Flexible(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: currentRoom.users.length,
-                              itemBuilder: (BuildContext context, int idx) {
-                                final user = currentRoom.users[idx];
-                                final details = context.read<RoomMessages>().getUserDetails(user.name);
-
-                                return ListTile(
-                                  title: Text(
-                                    user.name,
-                                    style: TextStyle(color: user.status.startsWith('!') ? Colors.grey : Colors.black),
+                      body: currentRoom != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 8, left: 16),
+                                  child: Text(
+                                    'Users - ${currentRoom.users.length}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                  visualDensity: VisualDensity.compact,
-                                  subtitle: Text(GROUPS[user.group]),
-                                  leading: details != null ? CircleAvatar(
-                                    backgroundColor: user.status.startsWith('!') ? Colors.grey : Colors.blue,
-                                    backgroundImage: CachedNetworkImageProvider(getAvatarLink(details.avatar)),
-                                  ) : const CircularProgressIndicator(),
-                                  onTap: () {
-                                    showDialog<UserDetailsDialog>(context: context, builder: (_) => UserDetailsDialog(user.group, details));
-                                  },
-                                );
-                              },
-                            ),
-                          )
+                                ),
+                                Flexible(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: currentRoom.users.length,
+                                    itemBuilder:
+                                        (BuildContext context, int idx) {
+                                      final user = currentRoom.users[idx];
+                                      final details = context
+                                          .read<RoomMessages>()
+                                          .getUserDetails(user.name);
 
-                        ],
-                      ) : const Text('Home Private Messages'),
+                                      return ListTile(
+                                        title: Text(
+                                          user.name,
+                                          style: TextStyle(
+                                              color: user.status.startsWith('!')
+                                                  ? Colors.grey
+                                                  : Colors.black),
+                                        ),
+                                        visualDensity: VisualDensity.compact,
+                                        subtitle: Text(GROUPS[user.group]),
+                                        leading: details != null
+                                            ? CircleAvatar(
+                                                backgroundColor:
+                                                    user.status.startsWith('!')
+                                                        ? Colors.grey
+                                                        : Colors.blue,
+                                                backgroundImage:
+                                                    CachedNetworkImageProvider(
+                                                        getAvatarLink(
+                                                            details.avatar)),
+                                              )
+                                            : const CircularProgressIndicator(),
+                                        onTap: () {
+                                          showDialog<UserDetailsDialog>(
+                                              context: context,
+                                              builder: (_) => UserDetailsDialog(
+                                                  user.group, details));
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )
+                              ],
+                            )
+                          : const Text('Home Private Messages'),
                     ),
                   ),
                 ],

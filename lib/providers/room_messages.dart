@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 
@@ -42,7 +41,9 @@ class RoomMessages with ChangeNotifier {
           break;
 
         case ':':
-          rooms[_from].timeOffset = (DateTime.now().millisecondsSinceEpoch / 1000).round() - (int.parse(args[1]));
+          rooms[_from].timeOffset =
+              (DateTime.now().millisecondsSinceEpoch / 1000).round() -
+                  (int.parse(args[1]));
           break;
         case 'c:':
           final message = UserMessage();
@@ -64,7 +65,7 @@ class RoomMessages with ChangeNotifier {
           usersArgs.removeAt(0);
           for (final String user in usersArgs) {
             final nameArgs = Parser.parseName(user);
-            
+
             users.add(RoomUser(nameArgs[0], nameArgs[1], nameArgs[2]));
           }
 
@@ -76,7 +77,8 @@ class RoomMessages with ChangeNotifier {
             if (groupCompare == 0) {
               if (l.status.startsWith('!') && !r.status.startsWith('!')) {
                 return 1;
-              } else if (r.status.startsWith('!') && !l.status.startsWith('!')) {
+              } else if (r.status.startsWith('!') &&
+                  !l.status.startsWith('!')) {
                 return -1;
               }
               return l.name.compareTo(r.name);
@@ -93,14 +95,17 @@ class RoomMessages with ChangeNotifier {
 
           switch (args[0]) {
             case 'userdetails':
-              final newDetails = UserDetails.fromJson(jsonDecode(args[1]) as Map<String, dynamic>);
+              final newDetails = UserDetails.fromJson(
+                  jsonDecode(args[1]) as Map<String, dynamic>);
 
               _users[newDetails.id] = newDetails;
               notifyListeners();
               break;
             case 'rooms':
-              availableRooms = AvailableRooms.fromJson(jsonDecode(args[1]) as Map<String, dynamic>);
-              availableRooms.chat.sort((RoomInfo l, RoomInfo r) => r.userCount.compareTo(l.userCount));
+              availableRooms = AvailableRooms.fromJson(
+                  jsonDecode(args[1]) as Map<String, dynamic>);
+              availableRooms.chat.sort((RoomInfo l, RoomInfo r) =>
+                  r.userCount.compareTo(l.userCount));
               notifyListeners();
               break;
           }

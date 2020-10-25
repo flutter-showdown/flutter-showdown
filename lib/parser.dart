@@ -1,6 +1,6 @@
 class Parser {
-  static String toId(String username) {
-    return username.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '');
+  static String toId(String s) {
+    return s.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '');
   }
 
   static List<String> parseRoomMessage(String text) {
