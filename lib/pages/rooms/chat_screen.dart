@@ -19,7 +19,8 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateMixin {
+class _ChatScreenState extends State<ChatScreen>
+    with SingleTickerProviderStateMixin {
   Animation<Offset> _animation;
   AnimationController _controller;
   double _dragStartX;
@@ -53,12 +54,15 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
           if (details != null)
             InkWell(
               onTap: () {
-                showDialog<UserDetailsDialog>(context: context, builder: (_) => UserDetailsDialog(nameArgs[1], details));
+                showDialog<UserDetailsDialog>(
+                    context: context,
+                    builder: (_) => UserDetailsDialog(nameArgs[1], details));
               },
               child: CircleAvatar(
                 radius: 16,
                 backgroundColor: Colors.blue,
-                backgroundImage: CachedNetworkImageProvider(getAvatarLink(details.avatar)),
+                backgroundImage:
+                    CachedNetworkImageProvider(getAvatarLink(details.avatar)),
               ),
             )
           else
@@ -110,11 +114,14 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
               ),
             ),
             leading: IconButton(
-              icon: Icon(closed ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
+              icon:
+                  Icon(closed ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
               splashRadius: 24.0,
               onPressed: () {
-                const description = SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
-                final simulation = SpringSimulation(description, _controller.value, 1.0, 1.0);
+                const description =
+                    SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
+                final simulation =
+                    SpringSimulation(description, _controller.value, 1.0, 1.0);
 
                 _controller.animateWith(simulation).then<void>((_) {
                   // TODO(anyone): This is called after ~1 second can lead to problems
@@ -127,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                 });
               },
             ),
-            title: Text('Lobby'),
+            title: const Text('Lobby'),
           ),
           body: SizedBox.expand(
             child: Container(
@@ -160,14 +167,18 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
     }
 
     setState(() {
-      _controller.value = (details.localPosition.dx - _dragStartX).abs() / context.size.width;
+      _controller.value =
+          (details.localPosition.dx - _dragStartX).abs() / context.size.width;
     });
   }
 
   void _dragEnd(DragEndDetails details) {
-    const description = SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
-    final velocity = (details.velocity.pixelsPerSecond.dx / context.size.width).abs();
-    final simulation = SpringSimulation(description, _controller.value, _controller.value >= 0.4 ? 1 : 0, velocity);
+    const description =
+        SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
+    final velocity =
+        (details.velocity.pixelsPerSecond.dx / context.size.width).abs();
+    final simulation = SpringSimulation(description, _controller.value,
+        _controller.value >= 0.4 ? 1 : 0, velocity);
 
     _controller.animateWith(simulation).then<void>((_) {
       // TODO(anyone): This is called after ~1 second can lead to problems
