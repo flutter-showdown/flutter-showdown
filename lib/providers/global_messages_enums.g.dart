@@ -9,23 +9,64 @@ part of 'global_messages_enums.dart';
 UserDetails _$UserDetailsFromJson(Map<String, dynamic> json) {
   return UserDetails()
     ..id = json['id'] as String
-    ..userId = json['userId'] as String
+    ..userid = json['userid'] as String
     ..name = json['name'] as String
     ..avatar = json['avatar'] as String
-    ..groups = json['groups'] as String
-    ..autoConfirmed = json['autoConfirmed'] as bool
+    ..group = json['group'] as String
     ..status = json['status'] as String;
 }
 
 Map<String, dynamic> _$UserDetailsToJson(UserDetails instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
+      'userid': instance.userid,
       'name': instance.name,
       'avatar': instance.avatar,
-      'groups': instance.groups,
-      'autoConfirmed': instance.autoConfirmed,
+      'group': instance.group,
       'status': instance.status,
+    };
+
+AvailableRooms _$AvailableRoomsFromJson(Map<String, dynamic> json) {
+  return AvailableRooms()
+    ..official = (json['official'] as List)
+        ?.map((e) =>
+            e == null ? null : RoomInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..pspl = (json['pspl'] as List)
+        ?.map((e) =>
+            e == null ? null : RoomInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..chat = (json['chat'] as List)
+        ?.map((e) =>
+            e == null ? null : RoomInfo.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..userCount = json['userCount'] as int
+    ..battleCount = json['battleCount'] as int;
+}
+
+Map<String, dynamic> _$AvailableRoomsToJson(AvailableRooms instance) =>
+    <String, dynamic>{
+      'official': instance.official,
+      'pspl': instance.pspl,
+      'chat': instance.chat,
+      'userCount': instance.userCount,
+      'battleCount': instance.battleCount,
+    };
+
+RoomInfo _$RoomInfoFromJson(Map<String, dynamic> json) {
+  return RoomInfo()
+    ..title = json['title'] as String
+    ..desc = json['desc'] as String
+    ..userCount = json['userCount'] as int
+    ..subRooms =
+        (json['subRooms'] as List)?.map((e) => e as String)?.toList() ?? [];
+}
+
+Map<String, dynamic> _$RoomInfoToJson(RoomInfo instance) => <String, dynamic>{
+      'title': instance.title,
+      'desc': instance.desc,
+      'userCount': instance.userCount,
+      'subRooms': instance.subRooms,
     };
 
 // **************************************************************************
@@ -38,17 +79,12 @@ abstract class GlobalMessage extends Equatable {
 
   factory GlobalMessage.updateUser(User user) = UserWrapper;
 
-  factory GlobalMessage.userDetails(UserDetails userDetails) =
-      UserDetailsWrapper;
-
   final _GlobalMessage _type;
 
 //ignore: missing_return
-  R when<R>(
-      {@required R Function(User) updateUser,
-      @required R Function(UserDetails) userDetails}) {
+  R when<R>({@required R Function(User) updateUser}) {
     assert(() {
-      if (updateUser == null || userDetails == null) {
+      if (updateUser == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -56,17 +92,13 @@ abstract class GlobalMessage extends Equatable {
     switch (this._type) {
       case _GlobalMessage.updateUser:
         return updateUser((this as UserWrapper).user);
-      case _GlobalMessage.userDetails:
-        return userDetails((this as UserDetailsWrapper).userDetails);
     }
   }
 
 //ignore: missing_return
-  Future<R> asyncWhen<R>(
-      {@required FutureOr<R> Function(User) updateUser,
-      @required FutureOr<R> Function(UserDetails) userDetails}) {
+  Future<R> asyncWhen<R>({@required FutureOr<R> Function(User) updateUser}) {
     assert(() {
-      if (updateUser == null || userDetails == null) {
+      if (updateUser == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -74,14 +106,11 @@ abstract class GlobalMessage extends Equatable {
     switch (this._type) {
       case _GlobalMessage.updateUser:
         return updateUser((this as UserWrapper).user);
-      case _GlobalMessage.userDetails:
-        return userDetails((this as UserDetailsWrapper).userDetails);
     }
   }
 
   R whenOrElse<R>(
       {R Function(User) updateUser,
-      R Function(UserDetails) userDetails,
       @required R Function(GlobalMessage) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -93,16 +122,12 @@ abstract class GlobalMessage extends Equatable {
       case _GlobalMessage.updateUser:
         if (updateUser == null) break;
         return updateUser((this as UserWrapper).user);
-      case _GlobalMessage.userDetails:
-        if (userDetails == null) break;
-        return userDetails((this as UserDetailsWrapper).userDetails);
     }
     return orElse(this);
   }
 
   Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(User) updateUser,
-      FutureOr<R> Function(UserDetails) userDetails,
       @required FutureOr<R> Function(GlobalMessage) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -114,19 +139,14 @@ abstract class GlobalMessage extends Equatable {
       case _GlobalMessage.updateUser:
         if (updateUser == null) break;
         return updateUser((this as UserWrapper).user);
-      case _GlobalMessage.userDetails:
-        if (userDetails == null) break;
-        return userDetails((this as UserDetailsWrapper).userDetails);
     }
     return orElse(this);
   }
 
 //ignore: missing_return
-  Future<void> whenPartial(
-      {FutureOr<void> Function(User) updateUser,
-      FutureOr<void> Function(UserDetails) userDetails}) {
+  Future<void> whenPartial({FutureOr<void> Function(User) updateUser}) {
     assert(() {
-      if (updateUser == null && userDetails == null) {
+      if (updateUser == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -135,9 +155,6 @@ abstract class GlobalMessage extends Equatable {
       case _GlobalMessage.updateUser:
         if (updateUser == null) break;
         return updateUser((this as UserWrapper).user);
-      case _GlobalMessage.userDetails:
-        if (userDetails == null) break;
-        return userDetails((this as UserDetailsWrapper).userDetails);
     }
   }
 
@@ -155,17 +172,4 @@ class UserWrapper extends GlobalMessage {
   String toString() => 'UserWrapper($user)';
   @override
   List get props => [user];
-}
-
-@immutable
-class UserDetailsWrapper extends GlobalMessage {
-  const UserDetailsWrapper(this.userDetails)
-      : super(_GlobalMessage.userDetails);
-
-  final UserDetails userDetails;
-
-  @override
-  String toString() => 'UserDetailsWrapper($userDetails)';
-  @override
-  List get props => [userDetails];
 }

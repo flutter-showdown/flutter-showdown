@@ -1,34 +1,46 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_showdown/providers/room_messages.dart';
+import 'package:flutter_showdown/providers/websockets.dart';
+import 'package:provider/provider.dart';
+
 import 'package:flutter_showdown/pages/pokedex/pokedex.dart';
 import 'package:flutter_showdown/presentation/custom_icons_icons.dart';
-
 import 'pages/home/home.dart';
-import 'pages/main_page.dart';
+import 'pages/rooms/rooms.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  sockets.initCommunication();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => RoomMessages()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
 
 /// This is the main application widget.
 class MyApp extends StatelessWidget {
-  static const String _title = 'Showdown';
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
+      home: MyHomePage(),
     );
   }
 }
 
 /// This is the stateful widget that the main application instantiates.
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key key}) : super(key: key);
 
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -42,7 +54,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       body: IndexedStack(
         children: <Widget>[
-          const MainPage(),
+          Rooms(),
           Pokedex(),
           const Home(),
         ],
