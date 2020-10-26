@@ -34,42 +34,41 @@ class PokemonCard extends StatelessWidget {
                 ),
               ),
               Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.network(
-                      'https://play.pokemonshowdown.com/sprites/bwicons/${pokemon.id}.png',
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.network(
-                          'https://play.pokemonshowdown.com/sprites/types/${pokemon.types[0]}.png',
-                        ),
-                        if (pokemon.types.length > 1)
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(1, 0, 0, 0),
-                            child: Image.network(
-                              'https://play.pokemonshowdown.com/sprites/types/${pokemon.types[1]}.png',
-                            ),
-                          )
-                      ],
-                    ),
-                  ],
+                child: Image.network(
+                  'https://play.pokemonshowdown.com/sprites/bwicons/${pokemon.id}.png',
                 ),
               ),
-              if (pokemon.forme != null)
-                Row(
-                  children: [
-                    Text(pokemon.baseSpecies),
-                    Text(
-                      '-' + pokemon.forme,
-                      style: const TextStyle(fontSize: 11),
-                    ),
-                  ],
-                )
-              else
-                Text(pokemon.name),
+              Column(
+                children: [
+                  if (pokemon.forme != null)
+                    Row(
+                      children: [
+                        Text(pokemon.baseSpecies),
+                        Text(
+                          '-' + pokemon.forme,
+                          style: const TextStyle(fontSize: 11),
+                        ),
+                      ],
+                    )
+                  else
+                    Text(pokemon.name),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.network(
+                        'https://play.pokemonshowdown.com/sprites/types/${pokemon.types[0]}.png',
+                      ),
+                      if (pokemon.types.length > 1)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(1, 0, 0, 0),
+                          child: Image.network(
+                            'https://play.pokemonshowdown.com/sprites/types/${pokemon.types[1]}.png',
+                          ),
+                        )
+                    ],
+                  ),
+                ],
+              ),
               StatsBox(pokemon.baseStats),
             ],
           ),
@@ -93,11 +92,11 @@ class StatBox extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 12, color: Color(0xff888888)),
+            style: const TextStyle(fontSize: 11, color: Color(0xff888888)),
           ),
           Text(
             '$stat',
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 11),
           ),
         ],
       ),
@@ -121,18 +120,16 @@ class StatsBox extends StatelessWidget {
           StatBox('SpD', stats.spd),
           StatBox('Spe', stats.spe),
           Padding(
-            padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+            padding: const EdgeInsets.only(left: 2),
             child: StatBox(
                 'BST',
-                [
-                  stats.hp,
-                  stats.atk,
-                  stats.def,
-                  stats.spa,
-                  stats.spd,
-                  stats.spe
-                ].fold(0, (a, b) => a + b)),
-          )
+                stats.hp +
+                    stats.atk +
+                    stats.def +
+                    stats.spa +
+                    stats.spd +
+                    stats.spe),
+          ),
         ],
       ),
     );
