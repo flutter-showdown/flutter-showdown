@@ -154,7 +154,7 @@ class StatsBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 114,
+      width: 112,
       child: Row(
         children: [
           Column(
@@ -177,15 +177,10 @@ class StatsBox extends StatelessWidget {
             ],
           ),
           Container(
-            padding: const EdgeInsets.only(left: 4),
+            padding: const EdgeInsets.only(left: 2),
             child: StatBox(
               'BST',
-              stats.hp +
-                  stats.atk +
-                  stats.def +
-                  stats.spa +
-                  stats.spd +
-                  stats.spe,
+              stats.bst,
               width: 24,
               labelColor: const Color(0xff666666),
             ),
