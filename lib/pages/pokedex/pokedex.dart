@@ -46,7 +46,7 @@ class _PokedexState extends State<Pokedex> {
       appBar: AppBar(
         title: const Text('Pokedex'),
       ),
-      body: SpeechToText(),
+      body: MySpeechToText(),
       // body: FutureBuilder<List<Pokemon>>(
       //   future: futurePokemons,
       //   builder: (context, snapshot) {
