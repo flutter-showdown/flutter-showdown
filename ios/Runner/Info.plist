@@ -7,7 +7,7 @@
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Privacy - Speech Recognition Usage Description</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Privacy - Microphone Usage Description</string>
+	<string>Microphone Usage Description</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>flutter_project</string>
+	<string>flutter_showdown</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
