@@ -7,6 +7,8 @@ class Stats {
   Stats();
   factory Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
 
+  int get bst => hp + atk + def + spa + spd + spe;
+
   int hp;
   int atk;
   int def;

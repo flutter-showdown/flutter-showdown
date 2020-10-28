@@ -31,8 +31,6 @@ class _PokedexState extends State<Pokedex> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          // backgroundColor: const Color(0x00ffffff),
-          // foregroundColor: const Color(0xff000000),
           onPressed: () => _scrollToTop(),
           child: const Icon(Icons.arrow_upward),
         ),
