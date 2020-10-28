@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_showdown/providers/global_messages.dart';
 
-import '../websockets/global_messages.dart';
 
 class RegisterDialog extends StatefulWidget {
   const RegisterDialog(this._username, {Key key}) : super(key: key);
@@ -9,13 +9,10 @@ class RegisterDialog extends StatefulWidget {
   final String _username;
 
   @override
-  _RegisterDialogState createState() => _RegisterDialogState(_username);
+  _RegisterDialogState createState() => _RegisterDialogState();
 }
 
 class _RegisterDialogState extends State<RegisterDialog> {
-  _RegisterDialogState(this._username);
-
-  final String _username;
   Future<String> _registerFuture;
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
@@ -32,8 +29,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
   void _registerUser() {
     if (_formKey.currentState.validate()) {
       setState(() {
-        _registerFuture = globalMessages.registerUser(_username,
-            _passwordController.text, _captchaController.text.trim());
+        _registerFuture = globalMessages.registerUser(widget._username, _passwordController.text, _captchaController.text.trim());
       });
     }
   }
@@ -45,8 +41,6 @@ class _RegisterDialogState extends State<RegisterDialog> {
     _captchaController.dispose();
     super.dispose();
   }
-
-  //static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +90,9 @@ class _RegisterDialogState extends State<RegisterDialog> {
                         return null;
                       },
                     ),
-                    Image.network(
-                        'https://play.pokemonshowdown.com/sprites/gen5ani/pikachu.gif'),
+                    Image.network('https://play.pokemonshowdown.com/sprites/gen5ani/pikachu.gif'),
                     TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: "Who's That Pokémon?"),
+                      decoration: const InputDecoration(labelText: "Who's That Pokémon?"),
                       controller: _captchaController,
                       onFieldSubmitted: (_) => _registerUser(),
                     ),

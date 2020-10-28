@@ -4,10 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Privacy - Speech Recognition Usage Description</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone Usage Description</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
