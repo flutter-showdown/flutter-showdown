@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_showdown/constants.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
+import 'package:flutter_showdown/parser.dart';
 import './pokemon_details.dart';
+
+int getIconIndex(Pokemon pokemon) {
+  // if (pokemon.id < 0 || pokemon.id > 893) {
+  //   return 0;
+  // }
+
+  final id = Parser.toId(pokemon.name);
+
+  if (BattlePokemonIconIndexes.containsKey(id))
+    return BattlePokemonIconIndexes[id];
+  return pokemon.id;
+}
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard(this.pokemon);
@@ -21,7 +35,6 @@ class PokemonCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -39,22 +52,21 @@ class PokemonCard extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                 child: Column(
                   children: [
-                    Image.network(
-                      'https://play.pokemonshowdown.com/sprites/bwicons/${pokemon.id}.png',
-                    ),
+                    Image.asset(
+                        'assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.network(
-                            'https://play.pokemonshowdown.com/sprites/types/${pokemon.types[0]}.png',
+                          Image.asset(
+                            'assets/types/${pokemon.types[0]}.png',
                           ),
                           if (pokemon.types.length > 1)
                             Padding(
                               padding: const EdgeInsets.fromLTRB(1, 0, 0, 0),
-                              child: Image.network(
-                                'https://play.pokemonshowdown.com/sprites/types/${pokemon.types[1]}.png',
+                              child: Image.asset(
+                                'assets/types/${pokemon.types[1]}.png',
                               ),
                             )
                         ],
