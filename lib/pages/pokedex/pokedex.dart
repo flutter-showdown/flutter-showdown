@@ -40,28 +40,17 @@ class _PokedexState extends State<Pokedex> {
         .toList();
   }
 
-  void _scrollToTop() {
-    controller.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _scrollToTop(),
-          child: const Icon(Icons.arrow_upward),
-        ),
-        body: Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              children: [
-                Row(
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
                   children: [
                     Flexible(
                       flex: 5,
@@ -89,14 +78,14 @@ class _PokedexState extends State<Pokedex> {
                             child: const Icon(Icons.filter_list)))
                   ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      controller: controller,
-                      itemCount: pokedex.length,
-                      itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
-                ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                    controller: controller,
+                    itemCount: pokedex.length,
+                    itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
+              ),
+            ],
           ),
         ),
       ),
