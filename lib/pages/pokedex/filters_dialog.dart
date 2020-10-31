@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_showdown/models/pokemon.dart';
 
 const List<String> tiers = [
   'All',
@@ -25,6 +26,17 @@ const List<String> tiers = [
   'Unreleased',
 ];
 
+Map<String, int Function(Pokemon, Pokemon)> sorts = {
+  'None': (l, r) => 0,
+  'Hp': (l, r) => r.baseStats.hp - l.baseStats.hp,
+  'Atk': (l, r) => r.baseStats.atk - l.baseStats.atk,
+  'Def': (l, r) => r.baseStats.def - l.baseStats.def,
+  'SpA': (l, r) => r.baseStats.spa - l.baseStats.spa,
+  'SpD': (l, r) => r.baseStats.spd - l.baseStats.spd,
+  'Spe': (l, r) => r.baseStats.spe - l.baseStats.spe,
+  'BST': (l, r) => r.baseStats.bst - l.baseStats.bst,
+};
+
 const Map<String, bool> defaultTypesFilters = {
   'Bird': true,
   'Bug': true,
@@ -47,16 +59,19 @@ const Map<String, bool> defaultTypesFilters = {
   'Water': true,
 };
 
-Filters defaultFilters = Filters(defaultTypesFilters, tiers.first);
+Filters defaultFilters =
+    Filters(defaultTypesFilters, tiers.first, sorts.keys.first);
 
 class Filters {
-  Filters(this.typesFilters, this.tier);
+  Filters(this.typesFilters, this.tier, this.sortBy);
   Filters.clone(Filters copy)
       : typesFilters = Map.from(copy.typesFilters),
-        tier = copy.tier;
+        tier = copy.tier,
+        sortBy = copy.sortBy;
 
   Map<String, bool> typesFilters;
   String tier;
+  String sortBy;
 }
 
 class ActionButton extends StatelessWidget {
@@ -165,7 +180,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                   ),
                   Container(
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const Text('Tier : '),
                         DropdownButton<String>(
@@ -179,6 +194,27 @@ class _FiltersDialogState extends State<FiltersDialog> {
                             onChanged: (newValue) {
                               setState(() {
                                 filters.tier = newValue;
+                              });
+                            })
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text('Sort by : '),
+                        DropdownButton<String>(
+                            value: filters.sortBy,
+                            icon: const Icon(Icons.arrow_downward),
+                            iconSize: 18,
+                            items: sorts.keys.map((value) {
+                              return DropdownMenuItem<String>(
+                                  value: value, child: Text(value));
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                filters.sortBy = newValue;
                               });
                             })
                       ],
@@ -200,7 +236,8 @@ class _FiltersDialogState extends State<FiltersDialog> {
                           filters = Filters(
                               filters.typesFilters
                                   .map((key, value) => MapEntry(key, false)),
-                              tiers.first);
+                              tiers.first,
+                              sorts.keys.first);
                         });
                       }),
                       ActionButton('Save', onPressed: () {

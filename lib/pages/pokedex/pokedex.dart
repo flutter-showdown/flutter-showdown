@@ -13,6 +13,7 @@ class Pokedex extends StatefulWidget {
 class _PokedexState extends State<Pokedex> {
   List<Pokemon> fullPokedex;
   List<Pokemon> pokedex;
+  String currentSearch = '';
   Filters currentFilters = Filters.clone(defaultFilters);
   final ScrollController controller = ScrollController();
 
@@ -24,27 +25,32 @@ class _PokedexState extends State<Pokedex> {
   }
 
   void _onSearch(String s) {
-    final search = s.toLowerCase();
     setState(() {
-      pokedex = fullPokedex
-          .where((p) => p.name.toLowerCase().contains(search))
-          .toList();
+      currentSearch = s.toLowerCase();
     });
   }
 
-  List<Pokemon> _applyFilters(Filters filters) {
-    return fullPokedex
+  List<Pokemon> _applyFilters(Filters filters, String search) {
+    final res = fullPokedex
+        // Apply search
+        .where((p) => p.name.toLowerCase().contains(search))
+        // Apply types filters
         .where((p) =>
             filters.typesFilters.entries
-                    .where((e) => e.value && p.types.contains(e.key))
-                    .isNotEmpty &&
-                (filters.tier == tiers.first) ||
-            p.tier == filters.tier)
+                .where((e) => e.value && p.types.contains(e.key))
+                .isNotEmpty &&
+            // Tier filter
+            ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
+    if (filters.sortBy != sorts.keys.first) {
+      res.sort(sorts[filters.sortBy]);
+    }
+    return res;
   }
 
   @override
   Widget build(BuildContext context) {
+    pokedex = _applyFilters(currentFilters, currentSearch);
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -73,7 +79,6 @@ class _PokedexState extends State<Pokedex> {
                                       FiltersDialog(currentFilters));
                               if (data != null) {
                                 setState(() {
-                                  pokedex = _applyFilters(data);
                                   currentFilters = data;
                                 });
                               }
