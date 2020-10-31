@@ -34,9 +34,12 @@ class _PokedexState extends State<Pokedex> {
 
   List<Pokemon> _applyFilters(Filters filters) {
     return fullPokedex
-        .where((p) => filters.typesFilters.entries
-            .where((e) => e.value && p.types.contains(e.key))
-            .isNotEmpty)
+        .where((p) =>
+            filters.typesFilters.entries
+                    .where((e) => e.value && p.types.contains(e.key))
+                    .isNotEmpty &&
+                (filters.tier == tiers.first) ||
+            p.tier == filters.tier)
         .toList();
   }
 

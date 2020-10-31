@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+const List<String> tiers = [
+  'All',
+  '(PU)',
+  '(Uber)',
+  'CAP',
+  'CAP LC',
+  'CAP NFE',
+  'Illegal',
+  'LC',
+  'LC Uber',
+  'NFE',
+  'NU',
+  'NUBL',
+  'OU',
+  'PU',
+  'PUBL',
+  'RU',
+  'RUBL',
+  'UU',
+  'UUBL',
+  'Uber',
+  'Unreleased',
+];
+
 const Map<String, bool> defaultTypesFilters = {
   'Bird': true,
   'Bug': true,
@@ -23,12 +47,16 @@ const Map<String, bool> defaultTypesFilters = {
   'Water': true,
 };
 
-const Filters defaultFilters = Filters(defaultTypesFilters);
+Filters defaultFilters = Filters(defaultTypesFilters, tiers.first);
 
 class Filters {
-  const Filters(this.typesFilters);
-  Filters.clone(Filters copy) : typesFilters = Map.from(copy.typesFilters);
-  final Map<String, bool> typesFilters;
+  Filters(this.typesFilters, this.tier);
+  Filters.clone(Filters copy)
+      : typesFilters = Map.from(copy.typesFilters),
+        tier = copy.tier;
+
+  Map<String, bool> typesFilters;
+  String tier;
 }
 
 class ActionButton extends StatelessWidget {
@@ -120,8 +148,6 @@ class _FiltersDialogState extends State<FiltersDialog> {
                               },
                               child: Container(
                                   decoration: BoxDecoration(
-                                    // border:
-                                    //     Border.all(width: 1, color: Colors.blue),
                                     color: e.value
                                         ? Colors.blue
                                         : Colors.transparent,
@@ -141,7 +167,20 @@ class _FiltersDialogState extends State<FiltersDialog> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text('Another filter'),
+                        const Text('Tier : '),
+                        DropdownButton<String>(
+                            value: filters.tier,
+                            icon: const Icon(Icons.arrow_downward),
+                            iconSize: 18,
+                            items: tiers.map((value) {
+                              return DropdownMenuItem<String>(
+                                  value: value, child: Text(value));
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                filters.tier = newValue;
+                              });
+                            })
                       ],
                     ),
                   ),
@@ -158,8 +197,10 @@ class _FiltersDialogState extends State<FiltersDialog> {
                       }),
                       ActionButton('Clear', onPressed: () {
                         setState(() {
-                          filters = Filters(filters.typesFilters
-                              .map((key, value) => MapEntry(key, false)));
+                          filters = Filters(
+                              filters.typesFilters
+                                  .map((key, value) => MapEntry(key, false)),
+                              tiers.first);
                         });
                       }),
                       ActionButton('Save', onPressed: () {
