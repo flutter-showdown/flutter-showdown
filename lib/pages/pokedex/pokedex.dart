@@ -37,11 +37,10 @@ class _PokedexState extends State<Pokedex> {
         // APply types filters
         .where((p) =>
             filters.typesFilters.entries
-                    .where((e) => e.value && p.types.contains(e.key))
-                    .isNotEmpty &&
-                // Tier filter
-                (filters.tier == tiers.first) ||
-            p.tier == filters.tier)
+                .where((e) => e.value && p.types.contains(e.key))
+                .isNotEmpty &&
+            // Tier filter
+            ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
   }
 
