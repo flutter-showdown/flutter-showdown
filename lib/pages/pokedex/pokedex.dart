@@ -31,10 +31,10 @@ class _PokedexState extends State<Pokedex> {
   }
 
   List<Pokemon> _applyFilters(Filters filters, String search) {
-    return fullPokedex
+    final res = fullPokedex
         // Apply search
         .where((p) => p.name.toLowerCase().contains(search))
-        // APply types filters
+        // Apply types filters
         .where((p) =>
             filters.typesFilters.entries
                 .where((e) => e.value && p.types.contains(e.key))
@@ -42,6 +42,10 @@ class _PokedexState extends State<Pokedex> {
             // Tier filter
             ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
+    if (filters.sortBy != sorts.keys.first) {
+      res.sort(sorts[filters.sortBy]);
+    }
+    return res;
   }
 
   @override
