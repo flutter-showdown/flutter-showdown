@@ -35,7 +35,7 @@ class _PokedexState extends State<Pokedex> {
             onPressed: () => _scrollToTop(),
             child: const Icon(Icons.arrow_upward),
           ),
-          body: MySpeechToText()
+          body: Center(child: Container(child: MySpeechToText()))
           // body: ListView.builder(
           //     controller: controller,
           //     padding: const EdgeInsets.all(8),
