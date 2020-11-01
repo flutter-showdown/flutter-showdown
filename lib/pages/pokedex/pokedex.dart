@@ -37,13 +37,13 @@ class _PokedexState extends State<Pokedex> {
         // Apply types filters
         .where((p) =>
             // Does nothing if all filters are unset
-            filters.typesFilters.values.every((e) => e == false) ||
-            // Filter by pokemon containing specified types
-            filters.typesFilters.entries
+            (filters.typesFilters.values.every((e) => e == false) ||
+                // Filter by pokemon containing specified types
+                filters.typesFilters.entries
                     .where((e) => e.value && p.types.contains(e.key))
-                    .isNotEmpty &&
-                // Tier filter
-                ((filters.tier == tiers.first) || p.tier == filters.tier))
+                    .isNotEmpty) &&
+            // Tier filter
+            ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
     if (filters.sortBy != sorts.keys.first) {
       res.sort(sorts[filters.sortBy]);
@@ -90,10 +90,12 @@ class _PokedexState extends State<Pokedex> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                    controller: controller,
-                    itemCount: pokedex.length,
-                    itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
+                child: pokedex.isEmpty
+                    ? const Center(child: Text('No match found :('))
+                    : ListView.builder(
+                        controller: controller,
+                        itemCount: pokedex.length,
+                        itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
               ),
             ],
           ),
