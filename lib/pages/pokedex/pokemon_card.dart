@@ -193,7 +193,7 @@ class StatsBox extends StatelessWidget {
             child: StatBox(
               'BST',
               stats.bst,
-              width: 24,
+              width: 26,
               labelColor: const Color(0xff666666),
             ),
           ),

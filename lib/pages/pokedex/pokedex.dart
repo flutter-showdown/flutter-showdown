@@ -36,11 +36,14 @@ class _PokedexState extends State<Pokedex> {
         .where((p) => p.name.toLowerCase().contains(search))
         // Apply types filters
         .where((p) =>
+            // Does nothing if all filters are unset
+            filters.typesFilters.values.every((e) => e == false) ||
+            // Filter by pokemon containing specified types
             filters.typesFilters.entries
-                .where((e) => e.value && p.types.contains(e.key))
-                .isNotEmpty &&
-            // Tier filter
-            ((filters.tier == tiers.first) || p.tier == filters.tier))
+                    .where((e) => e.value && p.types.contains(e.key))
+                    .isNotEmpty &&
+                // Tier filter
+                ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
     if (filters.sortBy != sorts.keys.first) {
       res.sort(sorts[filters.sortBy]);
@@ -66,7 +69,6 @@ class _PokedexState extends State<Pokedex> {
                       child: SearchBar(
                         onSearch: _onSearch,
                         placeholder: 'Search pokemon here...',
-                        autofillHints: pokedex.map((p) => p.name),
                       ),
                     ),
                     Flexible(

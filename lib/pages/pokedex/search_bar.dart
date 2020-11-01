@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
-  const SearchBar({this.placeholder, this.onSearch, this.autofillHints});
+  const SearchBar({this.placeholder, this.onSearch});
   final String placeholder;
   final Function(String) onSearch;
-  final Iterable<String> autofillHints;
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -43,7 +42,6 @@ class _SearchBarState extends State<SearchBar> {
     return Container(
       child: TextField(
         controller: _controller,
-        autofillHints: widget.autofillHints,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           contentPadding:
