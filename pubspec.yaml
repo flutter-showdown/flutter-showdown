@@ -28,6 +28,7 @@ dependencies:
   provider: ^4.3.2+2
   super_enum: ^0.4.2
   web_socket_channel: ^1.1.0
+  speech_to_text: ^2.7.0
   cached_network_image: ^2.3.3
   json_annotation: ^3.1.0
 
