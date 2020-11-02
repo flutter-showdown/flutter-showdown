@@ -47,7 +47,7 @@ class _PokedexState extends State<Pokedex> {
             ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
     if (filters.sortBy != sorts.keys.first) {
-      res.sort(sorts[filters.sortBy]);
+      res.sort((l, r) => sorts[filters.sortBy](l, r));
     }
     return res;
   }

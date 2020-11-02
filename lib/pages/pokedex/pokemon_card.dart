@@ -48,7 +48,7 @@ class PokemonCard extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 65,
+                width: 68,
                 margin: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                 child: Column(
                   children: [
@@ -58,18 +58,15 @@ class PokemonCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/types/${pokemon.types[0]}.png',
-                          ),
-                          if (pokemon.types.length > 1)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(1, 0, 0, 0),
-                              child: Image.asset(
-                                'assets/types/${pokemon.types[1]}.png',
-                              ),
-                            )
-                        ],
+                        children: pokemon.types
+                            .map((t) => Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 1),
+                                  child: Image.asset(
+                                    'assets/types/$t.png',
+                                  ),
+                                ))
+                            .toList(),
                       ),
                     ),
                   ],
