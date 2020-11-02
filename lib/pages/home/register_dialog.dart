@@ -79,7 +79,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
                       obscureText: true,
                       textInputAction: TextInputAction.next,
                       decoration:
-                      const InputDecoration(labelText: 'Confirm Password'),
+                          const InputDecoration(labelText: 'Confirm Password'),
                       controller: _cpasswordController,
                       validator: (String value) {
                         if (value.length < 5) {

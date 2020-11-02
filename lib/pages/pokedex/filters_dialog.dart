@@ -38,25 +38,25 @@ Map<String, int Function(Pokemon, Pokemon)> sorts = {
 };
 
 const Map<String, bool> defaultTypesFilters = {
-  'Bird': true,
-  'Bug': true,
-  'Dark': true,
-  'Dragon': true,
-  'Electric': true,
-  'Fairy': true,
-  'Fighting': true,
-  'Fire': true,
-  'Flying': true,
-  'Ghost': true,
-  'Grass': true,
-  'Ground': true,
-  'Ice': true,
-  'Normal': true,
-  'Poison': true,
-  'Psychic': true,
-  'Rock': true,
-  'Steel': true,
-  'Water': true,
+  'Bird': false,
+  'Bug': false,
+  'Dark': false,
+  'Dragon': false,
+  'Electric': false,
+  'Fairy': false,
+  'Fighting': false,
+  'Fire': false,
+  'Flying': false,
+  'Ghost': false,
+  'Grass': false,
+  'Ground': false,
+  'Ice': false,
+  'Normal': false,
+  'Poison': false,
+  'Psychic': false,
+  'Rock': false,
+  'Steel': false,
+  'Water': false,
 };
 
 Filters defaultFilters =
@@ -226,18 +226,18 @@ class _FiltersDialogState extends State<FiltersDialog> {
                       ActionButton('Cancel', onPressed: () {
                         Navigator.of(context).pop();
                       }),
-                      ActionButton('Reset', onPressed: () {
+                      ActionButton('All', onPressed: () {
                         setState(() {
-                          filters = Filters.clone(defaultFilters);
+                          filters = Filters(
+                              filters.typesFilters
+                                  .map((key, value) => MapEntry(key, true)),
+                              tiers.first,
+                              sorts.keys.first);
                         });
                       }),
                       ActionButton('Clear', onPressed: () {
                         setState(() {
-                          filters = Filters(
-                              filters.typesFilters
-                                  .map((key, value) => MapEntry(key, false)),
-                              tiers.first,
-                              sorts.keys.first);
+                          filters = Filters.clone(defaultFilters);
                         });
                       }),
                       ActionButton('Save', onPressed: () {

@@ -4,6 +4,7 @@ import 'package:flutter_showdown/pages/pokedex/filters_dialog.dart';
 import 'package:flutter_showdown/pages/pokedex/search_bar.dart';
 import 'package:provider/provider.dart';
 import 'pokemon_card.dart';
+import '../components/input_speech_to_to_text.dart';
 
 class Pokedex extends StatefulWidget {
   @override
@@ -36,14 +37,17 @@ class _PokedexState extends State<Pokedex> {
         .where((p) => p.name.toLowerCase().contains(search))
         // Apply types filters
         .where((p) =>
-            filters.typesFilters.entries
-                .where((e) => e.value && p.types.contains(e.key))
-                .isNotEmpty &&
+            // Does nothing if all filters are unset
+            (filters.typesFilters.values.every((e) => e == false) ||
+                // Filter by pokemon containing specified types
+                filters.typesFilters.entries
+                    .where((e) => e.value && p.types.contains(e.key))
+                    .isNotEmpty) &&
             // Tier filter
             ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
     if (filters.sortBy != sorts.keys.first) {
-      res.sort(sorts[filters.sortBy]);
+      res.sort((l, r) => sorts[filters.sortBy](l, r));
     }
     return res;
   }
@@ -66,7 +70,6 @@ class _PokedexState extends State<Pokedex> {
                       child: SearchBar(
                         onSearch: _onSearch,
                         placeholder: 'Search pokemon here...',
-                        autofillHints: pokedex.map((p) => p.name),
                       ),
                     ),
                     Flexible(
@@ -88,10 +91,12 @@ class _PokedexState extends State<Pokedex> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                    controller: controller,
-                    itemCount: pokedex.length,
-                    itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
+                child: pokedex.isEmpty
+                    ? const Center(child: Text('No match found :('))
+                    : ListView.builder(
+                        controller: controller,
+                        itemCount: pokedex.length,
+                        itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
               ),
             ],
           ),
