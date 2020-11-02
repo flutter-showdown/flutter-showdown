@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/pages/pokedex/ability_details.dart';
 import 'package:flutter_showdown/parser.dart';
@@ -72,7 +71,6 @@ class StatBox extends StatelessWidget {
     if (width > 200) {
       width = 200;
     }
-    print(width);
     int color = (stat * 180 / 255).floor();
     if (color > 360) {
       color = 360;
