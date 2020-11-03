@@ -37,9 +37,10 @@ class TypeBox extends StatelessWidget {
         border: Border.all(color: typeColors[type][2]),
         borderRadius: BorderRadius.circular(4),
         gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [typeColors[type][0], typeColors[type][1]]),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [typeColors[type][0], typeColors[type][1]],
+        ),
       ),
       width: 72,
       height: 24,
@@ -154,15 +155,32 @@ class PokemonDetails extends StatelessWidget {
                 Container(
                   height: 116,
                   decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.black54),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: CachedNetworkImage(
-                    imageUrl:
+                    gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                      colors: [
+                        TypeBox.typeColors[pokemon.types[0]][0],
+                        TypeBox.typeColors[
+                            pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.all(2.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                      child: CachedNetworkImage(
+                        imageUrl:
                         'https://play.pokemonshowdown.com/sprites/gen5/$resourceId.png',
-                    placeholder: (context, url) => const Center(
-                        heightFactor: 0, child: CircularProgressIndicator()),
-                    errorWidget: (context, url, dynamic error) =>
+                        placeholder: (context, url) => const Center(
+                            heightFactor: 0, child: CircularProgressIndicator()),
+                        errorWidget: (context, url, dynamic error) =>
                         const Icon(Icons.error),
+                      ),
                   ),
                 ),
                 Container(
