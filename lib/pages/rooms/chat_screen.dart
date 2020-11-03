@@ -16,7 +16,7 @@ class ChatScreen extends StatefulWidget {
 
   final double offset;
   final List<Message> messages;
-  final void Function() onDrag;
+  final VoidCallback onDrag;
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -52,8 +52,7 @@ class _ChatScreenState extends State<ChatScreen>
 
     return Padding(
       padding: EdgeInsets.only(
-        left: 8,
-        right: 48,
+        right: 40,
         top: sameAsN ? 1 : 8,
         bottom: sameAsP ? 1 : 8,
       ),
@@ -137,6 +136,7 @@ class _ChatScreenState extends State<ChatScreen>
                   Color.fromARGB(255, 221, 221, 221), BlendMode.modulate)
               : const ColorFilter.mode(Colors.white, BlendMode.modulate),
           child: Scaffold(
+            backgroundColor: Colors.transparent,
             appBar: AppBar(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -145,18 +145,27 @@ class _ChatScreenState extends State<ChatScreen>
               ),
               leading: IconButton(
                 icon: Icon(
-                    closed ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
+                  closed ? Icons.arrow_back_ios : Icons.arrow_forward_ios,
+                ),
                 splashRadius: 24.0,
                 onPressed: () {
-                  const description =
-                      SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
+                  const description = SpringDescription(
+                    mass: 30,
+                    stiffness: 1.0,
+                    damping: 1.0,
+                  );
                   final simulation = SpringSimulation(
-                      description, _controller.value, 1.0, 1.0);
-
+                    description,
+                    _controller.value,
+                    1.0,
+                    1.0,
+                  );
+                  widget.onDrag();
+                  FocusScope.of(context).requestFocus(FocusNode());
                   _controller.animateWith(simulation).then<void>((_) {
                     setState(() {
                       closed = !closed;
-                      _isSwipingLeft = closed;
+                      _isSwipingLeft = !_isSwipingLeft;
                       _controller.value = 0.0;
                     });
                     _updateAnimation();
@@ -165,62 +174,44 @@ class _ChatScreenState extends State<ChatScreen>
               ),
               title: const Text('Lobby'),
             ),
-            body: SizedBox.expand(
-              child: Container(
-                child: ListView.builder(
-                  reverse: true,
-                  shrinkWrap: true,
-                  itemCount: widget.messages.length,
-                  itemBuilder: (BuildContext context, int idx) {
-                    final message = widget.messages[idx];
-                    if (message.type != MessageType.Message) {
-                      return const Text('Html');
-                    }
-                    /*if (message.type == MessageType.Greating) {
-                        return Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            children: [
-                              const Divider(indent: 16, endIndent: 16),
-                              Text(message.content),
-                              const Divider(indent: 16, endIndent: 16),
-                            ],
-                          )
-                        );
-                      } else if (message.type == MessageType.Named) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 8),
-                          child: RaisedButton(
-                            onPressed: () {
-                              showDialog<HtmlDialog>(context: context, builder: (_) => HtmlDialog(message.content));
-                            },
-                            child: Text(message.sender),
-                          ),
-                        );
-                      }*/
-                    /*if (widget.messages[idx].type != MessageType.Message) {
-                        return
-                        //return HtmlBuilder(widget.messages[idx].content);
-                      }*/
-                    bool sameAsP = false;
-                    bool sameAsN = false;
+            body: Container(
+              color: ThemeData.light().scaffoldBackgroundColor,
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      reverse: true,
+                      shrinkWrap: true,
+                      itemCount: widget.messages.length,
+                      itemBuilder: (BuildContext context, int idx) {
+                        bool sameAsP = false;
+                        bool sameAsN = false;
+                        final message = widget.messages[idx];
 
-                    if (widget.messages.length > 1) {
-                      if (idx > 0) {
-                        sameAsP =
-                            widget.messages[idx - 1].sender == message.sender;
-                      }
-                      if (idx + 1 != widget.messages.length) {
-                        sameAsN =
-                            widget.messages[idx + 1].sender == message.sender;
-                      }
-                    }
-                    return _buildUserMessage(message, sameAsP, sameAsN);
-                  },
-                ),
+                        if (message.type != MessageType.Message) {
+                          return const Center(child: Text('Html'));
+                        }
+
+                        if (widget.messages.length > 1) {
+                          if (idx > 0) {
+                            sameAsP = widget.messages[idx - 1].sender ==
+                                message.sender;
+                          }
+                          if (idx + 1 != widget.messages.length) {
+                            sameAsN = widget.messages[idx + 1].sender ==
+                                message.sender;
+                          }
+                        }
+                        return _buildUserMessage(message, sameAsP, sameAsN);
+                      },
+                    ),
+                  ),
+                  InputText()
+                ],
               ),
             ),
-            bottomNavigationBar: InputText(),
           ),
         ),
       ),
@@ -234,8 +225,7 @@ class _ChatScreenState extends State<ChatScreen>
 
   void _dragUpdate(DragUpdateDetails details) {
     final diff = details.localPosition.dx - _lastDragX;
-    final isSwipingLeft =
-        diff < 0; //(details.localPosition.dx - _dragStartX) < 0;
+    final isSwipingLeft = diff < 0;
 
     if (diff.abs() > 10) {
       _lastDragX = details.localPosition.dx;

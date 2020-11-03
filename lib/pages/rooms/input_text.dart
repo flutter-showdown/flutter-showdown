@@ -18,31 +18,33 @@ class _InputTextState extends State<InputText> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      color: ThemeData.light().scaffoldBackgroundColor,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MySpeechToText(
-            onResult: (String result) =>
-                setState(() => _inputController.text = result),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 241, 241, 241),
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              child: TextField(
-                controller: _inputController,
-                decoration: const InputDecoration(hintText: 'Enter Text...'),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        MySpeechToText(
+          onResult: (String result) => setState(() => _inputController.text = result),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 241, 241, 241),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
+            child: TextField(
+              minLines: 1,
+              maxLines: 3,
+              controller: _inputController,
+              textInputAction: TextInputAction.send,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter Text...',
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
