@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:super_enum/super_enum.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../parser.dart';
-
 
 part 'global_messages_enums.g.dart';
 
@@ -18,9 +19,11 @@ class UserDetails {
 
     final UserDetails details = _$UserDetailsFromJson(json);
 
-    (json['rooms'] as Map<String, dynamic>).keys.toList().forEach((room) {
-      details.rooms.add(room);
-    });
+    if (json['rooms'] is Map<String, dynamic>) {
+      (json['rooms'] as Map<String, dynamic>).keys.toList().forEach((room) {
+        details.rooms.add(room);
+      });
+    }
     return details;
   }
 
@@ -37,6 +40,15 @@ class UserDetails {
 }
 
 class User {
+  User(String fullName, this.named, this.avatar) {
+    final List<String> args = Parser.parseName(fullName);
+
+    name = args[0];
+    group = args[1];
+    userId = Parser.toId(name);
+    status = args[2];
+  }
+
   String name = 'Guest';
   String group = '';
   String userId = 'guest';
@@ -44,17 +56,6 @@ class User {
   String status = '';
   bool named = false;
   bool registered = false;
-
-  void setName(String fullName, bool newNamed, String newAvatar) {
-    final List<String> args = Parser.parseName(fullName);
-
-    name = args[0];
-    group = args[1];
-    userId = Parser.toId(name);
-    avatar = newAvatar;
-    status = args[2];
-    named = newNamed;
-  }
 }
 
 @superEnum
@@ -103,24 +104,43 @@ class RoomInfo {
 }
 
 class RoomUser{
-  RoomUser(this.name, this.group, this.status);
+  RoomUser(List<String> nameArgs) {
+    id = Parser.toId(nameArgs[0]);
+    name = nameArgs[0];
+    group = nameArgs[1];
+    status = nameArgs[2];
+  }
 
+  String id;
   String name;
   String group;
   String status;
 }
 
-class UserMessage {
+enum MessageType {
+  Named,
+  Message,
+  Greating,
+}
+
+class Message {
+  Message(this.time, this.sender, this.content, this.type);
+
   int time;
   String sender;
   String content;
+  MessageType type;
 }
+
+//https://pokemonshowdown.com/news.json
+//User private messages
 
 class Room {
   Room(this.info);
 
   RoomInfo info;
   int timeOffset = 0;
+  bool hasUpdates = false;
   List<RoomUser> users = [];
-  List<UserMessage> messages = [];
+  List<Message> messages = [];
 }

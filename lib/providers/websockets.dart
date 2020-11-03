@@ -64,7 +64,6 @@ class WebSocketsNotifications {
     _isOn = true;
     String msg = messageReceived.toString();
 
-    //log(msg, name: 'RECEIVED');
     msg = msg.endsWith('\n') ? msg.substring(0, msg.length - 1) : msg;
     for (final cb in _listeners) {
       cb(msg);
