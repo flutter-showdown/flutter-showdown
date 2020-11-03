@@ -4,7 +4,6 @@ import 'package:flutter_showdown/pages/pokedex/filters_dialog.dart';
 import 'package:flutter_showdown/pages/pokedex/search_bar.dart';
 import 'package:provider/provider.dart';
 import 'pokemon_card.dart';
-import '../components/input_speech_to_to_text.dart';
 
 class Pokedex extends StatefulWidget {
   @override

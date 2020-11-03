@@ -20,9 +20,8 @@ class _SpeechToTextState extends State<MySpeechToText> {
   double level = 0.0;
   double minSoundLevel = 50000;
   double maxSoundLevel = -50000;
-  String _lastError = '';
-  String _currentLocaleId = '';
-  List<LocaleName> _localeNames = [];
+  final String _currentLocaleId = '';
+  //List<LocaleName> _localeNames = [];
   final SpeechToText _speech = SpeechToText();
 
 
@@ -47,7 +46,6 @@ class _SpeechToTextState extends State<MySpeechToText> {
   }
 
   void startListening() {
-    _lastError = '';
     _speech.listen(
         onResult: resultListener,
         listenFor: const Duration(seconds: 10),
@@ -83,7 +81,7 @@ class _SpeechToTextState extends State<MySpeechToText> {
   }
 
   void errorListener(SpeechRecognitionError error) {
-    setState(() => _lastError = '${error.errorMsg} - ${error.permanent}');
+
   }
 
   void statusListener(String status) {
