@@ -15,8 +15,9 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> screens;
 
   void _onItemTapped(int index) {
-    if (!_closed)
+    if (!_closed) {
       setState(() => _selectedIndex = index);
+    }
   }
 
   @override
@@ -32,41 +33,39 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Startup(
-        child: Scaffold(
-          body: Stack(
-            children: [
-              FractionallySizedBox(
-                widthFactor: 1,
-                child: screens[_selectedIndex],
+    return Startup(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            FractionallySizedBox(
+              widthFactor: 1,
+              child: screens[_selectedIndex],
+            ),
+            AnimatedPositioned(
+              bottom: _closed ? -56 : 0,
+              duration: const Duration(milliseconds: 300),
+              width: MediaQuery.of(context).size.width,
+              child: BottomNavigationBar(
+                onTap: _onItemTapped,
+                currentIndex: _selectedIndex,
+                selectedItemColor: Colors.amber[800],
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(CustomIcons.battle),
+                    label: 'Arena',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(CustomIcons.pokeball),
+                    label: 'Pokedex',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                ],
               ),
-              AnimatedPositioned(
-                bottom: _closed ? -56 : 0,
-                duration: const Duration(milliseconds: 300),
-                width: MediaQuery.of(context).size.width,
-                child: BottomNavigationBar(
-                  onTap: _onItemTapped,
-                  currentIndex: _selectedIndex,
-                  selectedItemColor: Colors.amber[800],
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(CustomIcons.battle),
-                      label: 'Arena',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(CustomIcons.pokeball),
-                      label: 'Pokedex',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -13,7 +13,8 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(image: AssetImage('assets/icons/pokemonshowdownbeta.png')),
+            const Image(
+                image: AssetImage('assets/icons/pokemonshowdownbeta.png')),
             const SizedBox(height: 8),
             if (user != null)
               Text('Welcome ${user.name}')
@@ -22,7 +23,8 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () async {
-                final bool result = await showDialog(context: context, builder: (_) => LoginDialog());
+                final bool result = await showDialog(
+                    context: context, builder: (_) => LoginDialog());
 
                 if (result) {
                   Navigator.pushReplacementNamed(context, '/main');

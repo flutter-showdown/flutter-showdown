@@ -6,8 +6,7 @@ class InputText extends StatefulWidget {
   _InputTextState createState() => _InputTextState();
 }
 
-class _InputTextState extends State<InputText>
-    with SingleTickerProviderStateMixin {
+class _InputTextState extends State<InputText> {
   final _inputController = TextEditingController();
 
   @override
@@ -26,7 +25,8 @@ class _InputTextState extends State<InputText>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MySpeechToText(
-            onResult: (String result) => setState(() => _inputController.text = result),
+            onResult: (String result) =>
+                setState(() => _inputController.text = result),
           ),
           Expanded(
             child: Container(

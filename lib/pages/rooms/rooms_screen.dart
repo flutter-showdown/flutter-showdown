@@ -30,7 +30,9 @@ class RoomsScreen extends StatelessWidget {
                 children: [
                   ChatSelector(),
                   Expanded(
-                    child: currentRoom != null ? UserList(currentRoom) : const Text('Private'),
+                    child: currentRoom != null
+                        ? UserList(currentRoom)
+                        : const Text('Private'),
                   ),
                 ],
               ),

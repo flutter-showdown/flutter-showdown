@@ -22,7 +22,8 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateMixin {
+class _ChatScreenState extends State<ChatScreen>
+    with SingleTickerProviderStateMixin {
   double _lastDragX;
   double _dragStartX;
   bool closed = true;
@@ -62,9 +63,16 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
           if (details != null && !sameAsP)
             InkWell(
               onTap: () {
-                showDialog<UserDetailsDialog>(context: context, builder: (_) => UserDetailsDialog(nameArgs[1], details));
+                showDialog<UserDetailsDialog>(
+                    context: context,
+                    builder: (_) => UserDetailsDialog(nameArgs[1], details));
               },
-              child: CircleAvatar(radius: 16, backgroundColor: Colors.blue, backgroundImage: CachedNetworkImageProvider(getAvatarLink(details.avatar)),),
+              child: CircleAvatar(
+                radius: 16,
+                backgroundColor: Colors.blue,
+                backgroundImage:
+                    CachedNetworkImageProvider(getAvatarLink(details.avatar)),
+              ),
             )
           else
             SizedBox(
@@ -85,12 +93,14 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                       children: [
                         usernameTextColor(nameArgs[0], nameArgs[2]),
                         const SizedBox(width: 8),
-                        Text(Groups[nameArgs[1]], style: const TextStyle(color: Colors.grey)),
+                        Text(Groups[nameArgs[1]],
+                            style: const TextStyle(color: Colors.grey)),
                       ],
                     ),
                   ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 241, 241, 241),
                     borderRadius: BorderRadius.only(
@@ -122,9 +132,10 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
         onHorizontalDragUpdate: _dragUpdate,
         onHorizontalDragEnd: _dragEnd,
         child: ColorFiltered(
-          colorFilter: closed && _controller.value == 0 ?
-          const ColorFilter.mode(Color.fromARGB(255, 221, 221, 221), BlendMode.modulate) :
-          const ColorFilter.mode(Colors.white, BlendMode.modulate),
+          colorFilter: closed && _controller.value == 0
+              ? const ColorFilter.mode(
+                  Color.fromARGB(255, 221, 221, 221), BlendMode.modulate)
+              : const ColorFilter.mode(Colors.white, BlendMode.modulate),
           child: Scaffold(
             appBar: AppBar(
               shape: const RoundedRectangleBorder(
@@ -133,11 +144,14 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                 ),
               ),
               leading: IconButton(
-                icon: Icon(closed ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
+                icon: Icon(
+                    closed ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
                 splashRadius: 24.0,
                 onPressed: () {
-                  const description = SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
-                  final simulation = SpringSimulation(description, _controller.value, 1.0, 1.0);
+                  const description =
+                      SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
+                  final simulation = SpringSimulation(
+                      description, _controller.value, 1.0, 1.0);
 
                   _controller.animateWith(simulation).then<void>((_) {
                     setState(() {
@@ -163,40 +177,42 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                       return const Text('Html');
                     }
                     /*if (message.type == MessageType.Greating) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          children: [
-                            const Divider(indent: 16, endIndent: 16),
-                            Text(message.content),
-                            const Divider(indent: 16, endIndent: 16),
-                          ],
-                        )
-                      );
-                    } else if (message.type == MessageType.Named) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 8),
-                        child: RaisedButton(
-                          onPressed: () {
-                            showDialog<HtmlDialog>(context: context, builder: (_) => HtmlDialog(message.content));
-                          },
-                          child: Text(message.sender),
-                        ),
-                      );
-                    }*/
+                        return Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              const Divider(indent: 16, endIndent: 16),
+                              Text(message.content),
+                              const Divider(indent: 16, endIndent: 16),
+                            ],
+                          )
+                        );
+                      } else if (message.type == MessageType.Named) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 8),
+                          child: RaisedButton(
+                            onPressed: () {
+                              showDialog<HtmlDialog>(context: context, builder: (_) => HtmlDialog(message.content));
+                            },
+                            child: Text(message.sender),
+                          ),
+                        );
+                      }*/
                     /*if (widget.messages[idx].type != MessageType.Message) {
-                      return
-                      //return HtmlBuilder(widget.messages[idx].content);
-                    }*/
+                        return
+                        //return HtmlBuilder(widget.messages[idx].content);
+                      }*/
                     bool sameAsP = false;
                     bool sameAsN = false;
 
                     if (widget.messages.length > 1) {
                       if (idx > 0) {
-                        sameAsP = widget.messages[idx - 1].sender == message.sender;
+                        sameAsP =
+                            widget.messages[idx - 1].sender == message.sender;
                       }
                       if (idx + 1 != widget.messages.length) {
-                        sameAsN = widget.messages[idx + 1].sender == message.sender;
+                        sameAsN =
+                            widget.messages[idx + 1].sender == message.sender;
                       }
                     }
                     return _buildUserMessage(message, sameAsP, sameAsN);
@@ -218,21 +234,27 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
 
   void _dragUpdate(DragUpdateDetails details) {
     final diff = details.localPosition.dx - _lastDragX;
-    final isSwipingLeft = diff < 0;//(details.localPosition.dx - _dragStartX) < 0;
+    final isSwipingLeft =
+        diff < 0; //(details.localPosition.dx - _dragStartX) < 0;
 
-    if (diff.abs() > 10)
+    if (diff.abs() > 10) {
       _lastDragX = details.localPosition.dx;
+    }
     if (isSwipingLeft != _isSwipingLeft) {
       _isSwipingLeft = isSwipingLeft;
       widget.onDrag();
     }
-    setState(() => _controller.value = (details.localPosition.dx - _dragStartX).abs() / context.size.width);
+    setState(() => _controller.value =
+        (details.localPosition.dx - _dragStartX).abs() / context.size.width);
   }
 
   void _dragEnd(DragEndDetails details) {
-    const description = SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
-    final velocity = (details.velocity.pixelsPerSecond.dx / context.size.width).abs();
-    final simulation = SpringSimulation(description, _controller.value, _controller.value >= 0.4 ? 1 : 0, velocity);
+    const description =
+        SpringDescription(mass: 30, stiffness: 1.0, damping: 1.0);
+    final velocity =
+        (details.velocity.pixelsPerSecond.dx / context.size.width).abs();
+    final simulation = SpringSimulation(description, _controller.value,
+        _controller.value >= 0.4 ? 1 : 0, velocity);
 
     if (_controller.value < 0.4 && _isSwipingLeft == closed) {
       _isSwipingLeft = !_isSwipingLeft;
