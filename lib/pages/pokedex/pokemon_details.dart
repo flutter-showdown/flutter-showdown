@@ -39,7 +39,7 @@ class TypeBox extends StatelessWidget {
         gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [typeColors[type][0], typeColors[type][0]]),
+            colors: [typeColors[type][0], typeColors[type][1]]),
       ),
       width: 72,
       height: 24,
@@ -106,7 +106,7 @@ class StatBox extends StatelessWidget {
               top: 1,
               left: 1,
               child: Container(
-                height: 4,
+                height: 3.2,
                 width: width.toDouble() - (width < 2 ? width : 2),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -234,9 +234,9 @@ class PokemonDetails extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text('Abilities :')),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(top: 8),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         for (int i = 0; i < abilities.length; i++)
                           if (abilities[i] != null)

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/parser.dart';
+// import 'package:flutter_showdown/parser.dart';
 
 class AbilityDetails extends StatelessWidget {
   const AbilityDetails(this.ability);
@@ -8,7 +8,7 @@ class AbilityDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final abilityId = Parser.toId(ability);
+    // final abilityId = Parser.toId(ability);
     return Scaffold(
       appBar: AppBar(
         title: Text(ability),
