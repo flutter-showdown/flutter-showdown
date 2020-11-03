@@ -9,7 +9,7 @@ class TypeBox extends StatelessWidget {
   final String type;
 
   static Map<String, List<Color>> typeColors = {
-    'Bird': const [Color(0xff78C850), Color(0xff5CA935)],
+    'Bird': const [Color(0xffCBC9CB), Color(0xffAAA6AA), Color(0xffa99890)],
     'Bug': const [Color(0xffA8B820), Color(0xff8D9A1B), Color(0xff616B13)],
     'Dark': const [Color(0xff705848), Color(0xff513F34), Color(0xff362A23)],
     'Dragon': const [Color(0xff7038F8), Color(0xff4C08EF), Color(0xff3D07C0)],
@@ -135,7 +135,7 @@ class PokemonDetails extends StatelessWidget {
         ? '${Parser.toId(pokemon.baseSpecies)}${forme.isEmpty ? '' : '-'}${Parser.toId(forme)}'
         : Parser.toId(pokemon.name);
 
-    final abilities = [
+    final pokemonAbilities = [
       pokemon.abilities.first,
       pokemon.abilities.second,
       pokemon.abilities.hidden,
@@ -159,8 +159,12 @@ class PokemonDetails extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl:
                         'https://play.pokemonshowdown.com/sprites/gen5/$resourceId.png',
-                    placeholder: (context, url) => const Center(
-                        heightFactor: 0, child: CircularProgressIndicator()),
+                    placeholder: (context, url) => Container(
+                      height: 96,
+                      width: 96,
+                      child: const Center(
+                          heightFactor: 0, child: CircularProgressIndicator()),
+                    ),
                     errorWidget: (context, url, dynamic error) =>
                         const Icon(Icons.error),
                   ),
@@ -238,8 +242,8 @@ class PokemonDetails extends StatelessWidget {
                     child: Row(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (int i = 0; i < abilities.length; i++)
-                          if (abilities[i] != null)
+                        for (int i = 0; i < pokemonAbilities.length; i++)
+                          if (pokemonAbilities[i] != null)
                             Row(
                               children: [
                                 if (i != 0)
@@ -253,11 +257,12 @@ class PokemonDetails extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute<void>(
-                                          builder: (context) =>
-                                              AbilityDetails(abilities[i])),
+                                          builder: (context) => AbilityDetails(
+                                              pokemonAbilities[i])),
                                     );
                                   },
-                                  child: Text(abilities[i],
+                                  child: Text(
+                                      '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
                                       style: TextStyle(
                                           fontSize: 15,
                                           decoration: TextDecoration.underline,
