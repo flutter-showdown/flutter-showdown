@@ -6,10 +6,11 @@ import 'package:flutter_showdown/parser.dart';
 
 class TypeBox extends StatelessWidget {
   const TypeBox(this.type);
+
   final String type;
 
   static Map<String, List<Color>> typeColors = {
-    'Bird': const [Color(0xff78C850), Color(0xff5CA935)],
+    'Bird': const [Color(0xffCBC9CB), Color(0xffAAA6AA), Color(0xffa99890)],
     'Bug': const [Color(0xffA8B820), Color(0xff8D9A1B), Color(0xff616B13)],
     'Dark': const [Color(0xff705848), Color(0xff513F34), Color(0xff362A23)],
     'Dragon': const [Color(0xff7038F8), Color(0xff4C08EF), Color(0xff3D07C0)],
@@ -63,6 +64,7 @@ class TypeBox extends StatelessWidget {
 
 class StatBox extends StatelessWidget {
   const StatBox(this.label, this.stat);
+
   final String label;
   final int stat;
 
@@ -127,6 +129,7 @@ class StatBox extends StatelessWidget {
 
 class PokemonDetails extends StatelessWidget {
   const PokemonDetails(this.pokemon);
+
   final Pokemon pokemon;
 
   @override
@@ -136,7 +139,7 @@ class PokemonDetails extends StatelessWidget {
         ? '${Parser.toId(pokemon.baseSpecies)}${forme.isEmpty ? '' : '-'}${Parser.toId(forme)}'
         : Parser.toId(pokemon.name);
 
-    final abilities = [
+    final pokemonAbilities = [
       pokemon.abilities.first,
       pokemon.abilities.second,
       pokemon.abilities.hidden,
@@ -156,8 +159,8 @@ class PokemonDetails extends StatelessWidget {
                   height: 116,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                       colors: [
                         TypeBox.typeColors[pokemon.types[0]][0],
                         TypeBox.typeColors[
@@ -173,14 +176,19 @@ class PokemonDetails extends StatelessWidget {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                        'https://play.pokemonshowdown.com/sprites/gen5/$resourceId.png',
-                        placeholder: (context, url) => const Center(
-                            heightFactor: 0, child: CircularProgressIndicator()),
-                        errorWidget: (context, url, dynamic error) =>
-                        const Icon(Icons.error),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          'https://play.pokemonshowdown.com/sprites/gen5/$resourceId.png',
+                      placeholder: (context, url) => Container(
+                        height: 96,
+                        width: 96,
+                        child: const Center(
+                            heightFactor: 0,
+                            child: CircularProgressIndicator()),
                       ),
+                      errorWidget: (context, url, dynamic error) =>
+                          const Icon(Icons.error),
+                    ),
                   ),
                 ),
                 Container(
@@ -193,7 +201,9 @@ class PokemonDetails extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 4),
+                            vertical: 4,
+                            horizontal: 4,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -256,8 +266,8 @@ class PokemonDetails extends StatelessWidget {
                     child: Row(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (int i = 0; i < abilities.length; i++)
-                          if (abilities[i] != null)
+                        for (int i = 0; i < pokemonAbilities.length; i++)
+                          if (pokemonAbilities[i] != null)
                             Row(
                               children: [
                                 if (i != 0)
@@ -271,11 +281,12 @@ class PokemonDetails extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute<void>(
-                                          builder: (context) =>
-                                              AbilityDetails(abilities[i])),
+                                          builder: (context) => AbilityDetails(
+                                              pokemonAbilities[i])),
                                     );
                                   },
-                                  child: Text(abilities[i],
+                                  child: Text(
+                                      '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
                                       style: TextStyle(
                                           fontSize: 15,
                                           decoration: TextDecoration.underline,
