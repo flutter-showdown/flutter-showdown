@@ -170,7 +170,7 @@ class PokemonDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Container(
-                    margin: const EdgeInsets.all(2.0),
+                    margin: const EdgeInsets.all(2.5),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: Colors.white),
