@@ -4,7 +4,8 @@ class Parser {
   }
 
   static List<String> parseRoomMessage(String text) {
-    String roomId = '';
+    //if the room is lobby or global. MESSAGE cannot start with >
+    String roomId = 'lobby';
 
     if (text.startsWith('>')) {
       final int nlIdx = text.indexOf('\n');

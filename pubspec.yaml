@@ -24,9 +24,12 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.2
+  html: ^0.14.0+4
   image: ^2.1.18
   provider: ^4.3.2+2
   super_enum: ^0.4.2
+  url_launcher: ^5.7.8
+  webview_flutter: ^1.0.5
   web_socket_channel: ^1.1.0
   speech_to_text: ^2.7.0
   cached_network_image: ^2.3.3
@@ -47,8 +50,8 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path_android: "assets/icons/playstore.png"
   image_path_ios: "assets/icons/appstore.png"
+  image_path_android: "assets/icons/playstore.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,7 +71,11 @@ flutter:
     - assets/data/pokedex.json
     - assets/pokemon-icons/
     - assets/types/
+    - assets/icons/pokemonshowdownbeta.png
   fonts:
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/CustomIcons.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf

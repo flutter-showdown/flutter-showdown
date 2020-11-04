@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
@@ -28,9 +29,11 @@ class _RegisterDialogState extends State<RegisterDialog> {
 
   void _registerUser() {
     if (_formKey.currentState.validate()) {
-      setState(() {
+      */
+/*setState(() {
         _registerFuture = globalMessages.registerUser(widget._username, _passwordController.text, _captchaController.text.trim());
-      });
+      });*//*
+
     }
   }
 
@@ -119,3 +122,4 @@ class _RegisterDialogState extends State<RegisterDialog> {
     );
   }
 }
+*/

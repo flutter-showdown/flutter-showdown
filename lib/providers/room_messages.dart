@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:html/parser.dart';
 
 import '../constants.dart';
 import '../parser.dart';
@@ -13,16 +15,19 @@ class RoomMessages with ChangeNotifier {
   }
 
   String _from = '';
-  final rooms = <String, Room>{};
-  final _users = <String, UserDetails>{};
-  AvailableRooms availableRooms = AvailableRooms();
+  String current = '';
+  final Map<String, Room> rooms = {};
+  final List<String> _currentRooms = [];
+  final Map<String, UserDetails> _users = {};
+
+  Room get currentRoom => rooms[current];
 
   void _onMessageReceived(String message) {
-    final List<String> room = Parser.parseRoomMessage(message);
-    final List<String> lines = room[1].split('\n');
+    final List<String> roomMsg = Parser.parseRoomMessage(message);
+    final List<String> lines = roomMsg[1].split('\n');
 
-    if (room[0] != '') {
-      _from = room[0];
+    if (roomMsg[0] != '') {
+      _from = roomMsg[0];
     }
 
     for (final line in lines) {
@@ -41,52 +46,93 @@ class RoomMessages with ChangeNotifier {
           break;
 
         case ':':
-          rooms[_from].timeOffset =
-              (DateTime.now().millisecondsSinceEpoch / 1000).round() -
-                  (int.parse(args[1]));
+          rooms[_from].timeOffset = (DateTime.now().millisecondsSinceEpoch / 1000).round() - (int.parse(args[1]));
           break;
         case 'c:':
-          final message = UserMessage();
-
-          message.time = rooms[_from].timeOffset + int.parse(args[1]);
           if (RegExp(r'^[A-Za-z0-9]').firstMatch(args[2]) != null) {
             args[2] = ' ' + args[2];
           }
-          message.sender = args[2];
-          message.content = args[3];
+          final message = Message(rooms[_from].timeOffset + int.parse(args[1]), args[2], args[3], MessageType.Message);
+
+          if (_from != current) {
+            rooms[_from].hasUpdates = true;
+          }
           rooms[_from].messages.insert(0, message);
           notifyListeners();
           break;
 
+        case 'j':
+        case 'join':
+        case 'J':
+          //|join|USER, |j|USER, or |J|USER
+          rooms[_from].users.add(RoomUser(Parser.parseName(args[1])));
+
+          _sortUser();
+          notifyListeners();
+          break;
+
+        case 'l':
+        case 'leave':
+        case 'L':
+          //|leave|USER, |l|USER, or |L|USER
+          final nameArgs = Parser.parseName(args[1]);
+
+          rooms[_from].users.removeWhere((user) => user.id == Parser.toId(nameArgs[0]));
+
+          notifyListeners();
+          break;
+
+        case 'n':
+        case 'name':
+        case 'N':
+          //|name|USER|OLDID, |n|USER|OLDID, or |N|USER|OLDID
+          _users.remove(args[2]);
+          rooms[_from].users.removeWhere((user) => user.id == args[2]);
+          rooms[_from].users.add(RoomUser(Parser.parseName(args[1])));
+
+          notifyListeners();
+          break;
+
         case 'users':
-          final List<RoomUser> users = [];
+          //|users|USERLIST
           final List<String> usersArgs = args[1].split(',');
 
           usersArgs.removeAt(0);
-          for (final String user in usersArgs) {
-            final nameArgs = Parser.parseName(user);
+          for (final String user in usersArgs)
+            rooms[_from].users.add(RoomUser(Parser.parseName(user)));
+          rooms[_from].info.userCount = rooms[_from].users.length;
 
-            users.add(RoomUser(nameArgs[0], nameArgs[1], nameArgs[2]));
+          _sortUser();
+          notifyListeners();
+          break;
+
+        case 'html':
+          //|html|HTML
+          log(args[1], name: 'HTML');
+          break;
+        case 'uhtml':
+          //|uhtml|NAME|HTML
+          rooms[_from].messages.removeWhere((message) => message.sender == args[1]);
+          rooms[_from].messages.insert(0, Message(0, args[1], args[2], MessageType.Named));
+          notifyListeners();
+          /*log(args[1], name: 'UHTML');
+          log(args[2], name: 'UHTML');
+
+          //Si c'est un poll get tout les boutons
+          for (final strong in parse(args[2]).getElementsByTagName('strong')) {
+            log(strong.innerHtml, name:'Strong text');
+          }*/
+
+          break;
+        case 'raw':
+          final infobox = parse(args[1]).getElementsByClassName('infobox')[0];
+
+          if (infobox.children.isEmpty) {
+            rooms[_from].messages.insert(0, Message(0, 'Greatings', infobox.innerHtml, MessageType.Greating));
+          } else {
+            //"infobox infobox-roomintro"
+            rooms[_from].messages.insert(0, Message(0, 'Room Intro', args[1], MessageType.Named));
           }
-
-          users.sort((RoomUser l, RoomUser r) {
-            final leftGroup = GROUPS.keys.toList().indexOf(l.group);
-            final rightGroup = GROUPS.keys.toList().indexOf(r.group);
-            final groupCompare = leftGroup.compareTo(rightGroup);
-
-            if (groupCompare == 0) {
-              if (l.status.startsWith('!') && !r.status.startsWith('!')) {
-                return 1;
-              } else if (r.status.startsWith('!') &&
-                  !l.status.startsWith('!')) {
-                return -1;
-              }
-              return l.name.compareTo(r.name);
-            }
-            return groupCompare;
-          });
-          rooms[_from].users = users;
-          rooms[_from].info.userCount = users.length;
           notifyListeners();
           break;
 
@@ -95,17 +141,21 @@ class RoomMessages with ChangeNotifier {
 
           switch (args[0]) {
             case 'userdetails':
-              final newDetails = UserDetails.fromJson(
-                  jsonDecode(args[1]) as Map<String, dynamic>);
+              final newDetails = UserDetails.fromJson(jsonDecode(args[1]) as Map<String, dynamic>);
 
               _users[newDetails.id] = newDetails;
               notifyListeners();
               break;
             case 'rooms':
-              availableRooms = AvailableRooms.fromJson(
-                  jsonDecode(args[1]) as Map<String, dynamic>);
-              availableRooms.chat.sort((RoomInfo l, RoomInfo r) =>
-                  r.userCount.compareTo(l.userCount));
+              final availableRooms = AvailableRooms.fromJson(jsonDecode(args[1]) as Map<String, dynamic>);
+
+              availableRooms.chat.sort((RoomInfo l, RoomInfo r) => r.userCount.compareTo(l.userCount));
+              for (final roomInfo in availableRooms.official) {
+                rooms[roomInfo.id] = Room(roomInfo);
+              }
+              for (final roomInfo in availableRooms.chat) {
+                rooms[roomInfo.id] = Room(roomInfo);
+              }
               notifyListeners();
               break;
           }
@@ -114,13 +164,37 @@ class RoomMessages with ChangeNotifier {
     }
   }
 
-  void joinRoom(RoomInfo newRoomInfo) {
-    final String id = newRoomInfo.id;
+  void _sortUser() {
+    rooms[_from].users.sort((RoomUser l, RoomUser r) {
+      final leftGroup = Groups.keys.toList().indexOf(l.group);
+      final rightGroup = Groups.keys.toList().indexOf(r.group);
+      final groupCompare = leftGroup.compareTo(rightGroup);
 
-    if (!rooms.keys.contains(id)) {
-      rooms[id] = Room(newRoomInfo);
-      // TODO(renaud): join subRooms
+      if (groupCompare == 0) {
+        if (l.status.startsWith('!') && !r.status.startsWith('!')) {
+          return 1;
+        } else if (r.status.startsWith('!') &&
+            !l.status.startsWith('!')) {
+          return -1;
+        }
+        return l.name.compareTo(r.name);
+      }
+      return groupCompare;
+    });
+  }
+
+  void joinRoom(String id) {
+    current = id;
+
+    if (id.isEmpty)
+      return;
+    if (!_currentRooms.contains(id)) {
+      _currentRooms.add(id);
       sockets.send('|/join ' + id);
+    } else {
+      //Clear updates when entering the room
+      rooms[id].hasUpdates = false;
+      notifyListeners();
     }
   }
 

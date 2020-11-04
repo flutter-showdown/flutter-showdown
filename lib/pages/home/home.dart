@@ -1,9 +1,9 @@
+/*
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
 import 'package:flutter_showdown/providers/global_messages_enums.dart';
-
-import '../../constants.dart';
+import 'package:provider/provider.dart';
 import '../../utils.dart';
 import '../common/login_dialog.dart';
 import 'avatar_dialog.dart';
@@ -17,16 +17,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  User _user = User();
+  User _user; //= User();
 
   @override
   void initState() {
     super.initState();
 
-    globalMessages.addListener(_globalMessageReceived);
+    final oui = (context.read<GlobalMessages>().setAvatar);
+    //globalMessages.addListener(_globalMessageReceived);
   }
 
-  void _globalMessageReceived(GlobalMessage message) {
+
+  */
+/*void _globalMessageReceived(GlobalMessage message) {
     message.when(
       updateUser: (User newUser) {
         setState(() {
@@ -34,7 +37,8 @@ class _HomeState extends State<Home> {
         });
       },
     );
-  }
+  }*//*
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,7 @@ class _HomeState extends State<Home> {
                     final int newAvatar = await showDialog(context: context, builder: (_) => AvatarDialog());
 
                     if (newAvatar != null) {
-                      globalMessages.setAvatar(BATTLEAVATARNUMBERS[newAvatar.toString()]);
+                      //globalMessages.setAvatar(BATTLEAVATARNUMBERS[newAvatar.toString()]);
                     }
                   },
                   child: Container(
@@ -70,8 +74,7 @@ class _HomeState extends State<Home> {
                 const SizedBox(height: 10),
                 Text(_user.name),
                 FlatButton(
-                  onPressed: () => showDialog<LoginDialog>(
-                      context: context, builder: (_) => LoginDialog()),
+                  onPressed: () => showDialog<LoginDialog>(context: context, builder: (_) => LoginDialog()),
                   child: const Text('Change Name'),
                 ),
                 if (_user.named && _user.registered == null)
@@ -90,3 +93,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+*/

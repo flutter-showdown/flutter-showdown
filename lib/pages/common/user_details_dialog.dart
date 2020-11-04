@@ -1,23 +1,29 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_showdown/constants.dart';
 import 'package:flutter_showdown/utils.dart';
 import 'package:flutter_showdown/providers/global_messages_enums.dart';
 
-import '../../constants.dart';
-
-class UserDetailsDialog extends StatefulWidget {
+//https://pokemonshowdown.com/users/{name}
+class UserDetailsDialog extends StatelessWidget {
   const UserDetailsDialog(this._roomGroup, this._details);
 
   final String _roomGroup;
   final UserDetails _details;
 
-  @override
-  _UserDetailsDialogState createState() => _UserDetailsDialogState();
-}
+  Text displayStatus(String status) {
+    TextStyle style = const TextStyle(fontSize: 12, fontStyle: FontStyle.italic);
 
-//https://pokemonshowdown.com/users/{name}
-class _UserDetailsDialogState extends State<UserDetailsDialog> {
+    if (status.startsWith(':') || status.startsWith('!(Idle)')) {
+      status = '(Offline)';
+      style = const TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: Colors.red);
+    } else if (status.startsWith('!')) {
+      status = '(Idle)';
+    }
+    return Text(status, style: style);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -30,7 +36,7 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
             children: [
               CircleAvatar(
                 radius: 32,
-                backgroundImage: CachedNetworkImageProvider(getAvatarLink(widget._details.avatar)),
+                backgroundImage: CachedNetworkImageProvider(getAvatarLink(_details.avatar)),
               ),
               Expanded(
                 child: Padding(
@@ -39,42 +45,36 @@ class _UserDetailsDialogState extends State<UserDetailsDialog> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget._details.name,
-                          style: const TextStyle(fontSize: 20)),
-                      if (widget._details.status.length > 1)
-                        Text(widget._details.status,
-                            style: const TextStyle(
-                                fontSize: 12, fontStyle: FontStyle.italic)),
-                      if (widget._roomGroup != widget._details.group)
-                        Text(GROUPS[widget._roomGroup],
-                            style: const TextStyle(fontSize: 14)),
-                      if (widget._details.group != ' ')
-                        Text('Global ' + GROUPS[widget._details.group],
-                            style: const TextStyle(fontSize: 14)),
+                      Text(_details.name, style: const TextStyle(fontSize: 20)),
+                      displayStatus(_details.status),
+                      if (_roomGroup != _details.group)
+                        Text(Groups[_roomGroup], style: const TextStyle(fontSize: 14)),
+                      if (_details.group != ' ')
+                        Text('Global ' + Groups[_details.group], style: const TextStyle(fontSize: 14)),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-          const Divider(),
-          const Text('Battles:'),
-          const Divider(),
-          if (widget._details.rooms.isNotEmpty)
-            const Text('Chatrooms:'),
-          Container(
-            height: 18,
-            // TODO(anyone): Use the parent width
-            width: MediaQuery.of(context).size.width * 0.63,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget._details.rooms.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Text(widget._details.rooms[index] + '  ');
-              },
+          /*const Divider(),
+          const Text('Battles:'),*/
+          if (_details.rooms.isNotEmpty) const Divider(),
+          if (_details.rooms.isNotEmpty) const Text('Chatrooms:'),
+          if (_details.rooms.isNotEmpty)
+            Container(
+              height: 18,
+              // TODO(anyone): Use the parent width
+              width: MediaQuery.of(context).size.width * 0.63,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: _details.rooms.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Text(_details.rooms[index] + '  ');
+                },
+              ),
             ),
-          ),
         ],
       ),
     );
