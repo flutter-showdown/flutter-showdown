@@ -18,11 +18,13 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/icons/pokemonshowdownbeta.png',
-                      height: 70, fit: BoxFit.cover),
+                  Image.asset('assets/icons/showdown-title.png',
+                      height: 100, fit: BoxFit.cover),
                   const SizedBox(height: 8),
                   if (user != null)
-                    Text('Welcome ${user.name}')
+                    Text('Welcome ${user.name}',
+                        style: const TextStyle(
+                            fontFamily: 'Roboto', color: Colors.black45))
                   else
                     const CircularProgressIndicator(),
                   const SizedBox(height: 8),
@@ -41,6 +43,20 @@ class LoginScreen extends StatelessWidget {
               color: Colors.lightBlue[300].withOpacity(0.7),
             ),
           ),
+          Positioned(
+              left: 0.0,
+              right: 0.0,
+              bottom: 0.0,
+              child: Center(
+                child: Container(
+                  color: Colors.lightBlue[100].withOpacity(0.7),
+                  child: const Text(
+                    'Toutes les ressources de cette application viennent du site pokemon showdown',
+                    style: TextStyle(fontSize: 10, color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ))
         ]),
       ),
     );

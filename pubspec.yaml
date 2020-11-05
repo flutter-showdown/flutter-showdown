@@ -71,7 +71,7 @@ flutter:
     - assets/data/pokedex.json
     - assets/pokemon-icons/
     - assets/types/
-    - assets/icons/pokemonshowdownbeta.png
+    - assets/icons/showdown-title.png
     - assets/background-image/login-background.jpg
   fonts:
     - family: CustomIcons
