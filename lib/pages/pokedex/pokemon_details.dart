@@ -156,6 +156,7 @@ class PokemonDetails extends StatelessWidget {
             Row(
               children: [
                 Container(
+                  width: 116,
                   height: 116,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
