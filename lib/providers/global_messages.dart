@@ -14,7 +14,7 @@ class GlobalMessages with ChangeNotifier {
     sockets.addListener(_onMessageReceived);
   }
 
-  User user;
+  User user = User();
   String _challstr;
   static const String ActionUrl = ServerUrl + '/action.php';
 
@@ -25,6 +25,7 @@ class GlobalMessages with ChangeNotifier {
 
       switch (args[0]) {
         case 'challstr':
+          //|challstr|CHALLSTR
           final Map<String, String> body = {'act': 'upkeep', 'challstr': args[1]};
 
           _challstr = args[1];
@@ -40,7 +41,8 @@ class GlobalMessages with ChangeNotifier {
           });
           break;
         case 'updateuser':
-          user = User(args[1], args[2] == 'true', args[3]);
+          //|updateuser|USER|NAMED|AVATAR|SETTINGS
+          user.setName(args[1], args[2] == '1', args[3]);
 
           notifyListeners();
           break;
@@ -113,7 +115,7 @@ class GlobalMessages with ChangeNotifier {
   Future<String> registerUser(String username, String password, String captcha) async {
     final Map<String, String> body = {
       'act': 'register',
-      'username': username,
+      'username': Parser.toId(username),
       'password': password,
       'cpassword': password,
       'captcha': captcha,
@@ -128,10 +130,10 @@ class GlobalMessages with ChangeNotifier {
         user.registered = true;
 
         sockets.send('|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
-        return 'success';
+        return '';
       }
       return jsonResponse['actionerror'].toString();
     }
-    return 'error';
+    return 'Register Failed';
   }
 }

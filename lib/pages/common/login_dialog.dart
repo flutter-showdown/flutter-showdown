@@ -50,7 +50,7 @@ class _LoginDialogState extends State<LoginDialog> {
               _inputController.clear();
             } else
               //Success
-              Navigator.of(context).pop(true);
+              Navigator.of(context).pop();
           });
       });
     }
@@ -72,6 +72,7 @@ class _LoginDialogState extends State<LoginDialog> {
                 Form(
                   key: _formKey,
                   child: TextFormField(
+                    autofocus: true,
                     controller: _inputController,
                     onFieldSubmitted: (_) => _setUsername(),
                     decoration: const InputDecoration(labelText: 'Username'),
@@ -102,7 +103,7 @@ class _LoginDialogState extends State<LoginDialog> {
         _logFuture = context.read<GlobalMessages>().logUser(_username, password)
           ..then((result) {
             if (result) {
-              Navigator.of(context).pop(true);
+              Navigator.of(context).pop();
             }
           });
       });
@@ -125,6 +126,7 @@ class _LoginDialogState extends State<LoginDialog> {
                 Form(
                   key: _formKey,
                   child: TextFormField(
+                    autofocus: true,
                     controller: _inputController,
                     onFieldSubmitted: (_) => _setPassword(),
                     obscureText: true,
@@ -154,11 +156,12 @@ class _LoginDialogState extends State<LoginDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(_protected ? 'Enter Password': 'Enter Username'),
+      contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
       content: _protected ? _passwordBuilder() : _usernameBuilder(),
       actions: <Widget>[
         FlatButton(
           child: const Text('Close'),
-          onPressed: () => Navigator.of(context).pop(false),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         if (_protected)
           FlatButton(

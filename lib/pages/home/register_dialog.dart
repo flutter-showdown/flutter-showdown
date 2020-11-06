@@ -1,11 +1,11 @@
-/*
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
+import 'package:provider/provider.dart';
 
+import '../../constants.dart';
 
 class RegisterDialog extends StatefulWidget {
-  const RegisterDialog(this._username, {Key key}) : super(key: key);
+  const RegisterDialog(this._username);
 
   final String _username;
 
@@ -24,16 +24,22 @@ class _RegisterDialogState extends State<RegisterDialog> {
   void initState() {
     super.initState();
 
-    _registerFuture = Future<String>.value('');
+    _registerFuture = Future<String>.value(null);
   }
 
   void _registerUser() {
     if (_formKey.currentState.validate()) {
-      */
-/*setState(() {
-        _registerFuture = globalMessages.registerUser(widget._username, _passwordController.text, _captchaController.text.trim());
-      });*//*
-
+      setState(() {
+        _registerFuture = context.read<GlobalMessages>().registerUser(
+              widget._username,
+              _passwordController.text,
+              _captchaController.text,
+            )..then((result) {
+                if (result.isEmpty) {
+                  Navigator.of(context).pop();
+                }
+              });
+      });
     }
   }
 
@@ -48,29 +54,29 @@ class _RegisterDialogState extends State<RegisterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Register your account'),
+      title: Text('Register ${widget._username}'),
+      contentPadding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 0.0),
       content: FutureBuilder<String>(
         future: _registerFuture,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data != 'success') {
+            if (snapshot.data == null || snapshot.data.isNotEmpty) {
               return Form(
                 key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
-                      snapshot.data.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.redAccent,
+                    if (snapshot.data != null)
+                      Text(
+                        snapshot.data.toString(),
+                        style: const TextStyle(color: Colors.redAccent),
                       ),
-                    ),
                     TextFormField(
+                      autofocus: true,
                       obscureText: true,
                       textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(labelText: 'Password'),
                       controller: _passwordController,
+                      decoration: const InputDecoration(labelText: 'Password'),
                       validator: (String value) {
                         if (value.length < 5) {
                           return 'Must be at least 5 characters long';
@@ -81,23 +87,30 @@ class _RegisterDialogState extends State<RegisterDialog> {
                     TextFormField(
                       obscureText: true,
                       textInputAction: TextInputAction.next,
+                      controller: _cpasswordController,
                       decoration:
                           const InputDecoration(labelText: 'Confirm Password'),
-                      controller: _cpasswordController,
                       validator: (String value) {
                         if (value.length < 5) {
                           return 'Must be at least 5 characters long';
                         } else if (value != _passwordController.text) {
-                          return 'Your passwords do not match';
+                          return "Your passwords don't match";
                         }
                         return null;
                       },
                     ),
-                    Image.network('https://play.pokemonshowdown.com/sprites/gen5ani/pikachu.gif'),
+                    const SizedBox(height: 8),
+                    Image.network(ServerUrl + '/sprites/gen5ani/pikachu.gif'),
                     TextFormField(
-                      decoration: const InputDecoration(labelText: "Who's That Pokémon?"),
                       controller: _captchaController,
+                      decoration: const InputDecoration(labelText: "Who's That Pokémon?"),
                       onFieldSubmitted: (_) => _registerUser(),
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return 'You must provide a name';
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
@@ -106,20 +119,19 @@ class _RegisterDialogState extends State<RegisterDialog> {
               return const Text('Registered');
             }
           }
-          return const CircularProgressIndicator();
+          return Container(height: 250, child: const Center(child: CircularProgressIndicator()));
         },
       ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () => _registerUser(),
-          child: const Text('Register'),
-        ),
+      actions: [
         FlatButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('Close'),
         ),
+        FlatButton(
+          onPressed: () => _registerUser(),
+          child: const Text('Confirm'),
+        )
       ],
     );
   }
 }
-*/

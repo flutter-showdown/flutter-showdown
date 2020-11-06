@@ -24,14 +24,6 @@ class _SpeechToTextState extends State<MySpeechToText> {
   //List<LocaleName> _localeNames = [];
   final SpeechToText _speech = SpeechToText();
 
-
-  @override
-  void initState() {
-    super.initState();
-
-    initSpeechState();
-  }
-
   Future<void> initSpeechState() async {
     final bool hasSpeech = await _speech.initialize(onError: errorListener, onStatus: statusListener);
     /*if (hasSpeech) {
@@ -98,8 +90,11 @@ class _SpeechToTextState extends State<MySpeechToText> {
         child: const Icon(Icons.mic, color: Colors.blue, size: 32),
       ),
       onTapDown: (details) {
-        if (_hasSpeech && !_speech.isListening)
+        if (!_hasSpeech) {
+          initSpeechState();
+        } else if (!_speech.isListening) {
           startListening();
+        }
       },
       onLongPressEnd: (details) {
         if (_speech.isListening) {

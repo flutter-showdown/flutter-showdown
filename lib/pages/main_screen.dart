@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_showdown/pages/home/home_screen.dart';
 import 'package:flutter_showdown/pages/pokedex/pokedex.dart';
 import 'package:flutter_showdown/pages/rooms/rooms_screen.dart';
 import 'package:flutter_showdown/presentation/custom_icons_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_showdown/providers/global_messages.dart';
+import '../utils.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -26,41 +31,72 @@ class _MainScreenState extends State<MainScreen> {
     screens = [
       RoomsScreen(onChatChange: () => setState(() => _closed = !_closed)),
       Pokedex(),
-      const Center(child: Text('Home')),
+      HomeScreen(),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<GlobalMessages>().user;
+
     return Scaffold(
       body: Stack(
         children: [
-          FractionallySizedBox(
-            widthFactor: 1,
-            child: screens[_selectedIndex],
-          ),
-          AnimatedPositioned(
-            bottom: _closed ? -56 : 0,
-            duration: const Duration(milliseconds: 300),
-            width: MediaQuery.of(context).size.width,
-            child: BottomNavigationBar(
-              onTap: _onItemTapped,
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(CustomIcons.battle),
-                  label: 'Arena',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(CustomIcons.pokeball),
-                  label: 'Pokedex',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-              ],
+          SizedBox.expand(child: screens[_selectedIndex]),
+          Positioned(
+            bottom: 0,
+            child: AnimatedContainer(
+              height: _closed ? 0 : 56,
+              duration: const Duration(milliseconds: 300),
+              width: MediaQuery.of(context).size.width,
+              child: BottomNavigationBar(
+                onTap: _onItemTapped,
+                currentIndex: _selectedIndex,
+                selectedItemColor: Colors.amber[800],
+                items: [
+                  const BottomNavigationBarItem(
+                    label: 'Arena',
+                    icon: Icon(CustomIcons.battle),
+                  ),
+                  const BottomNavigationBarItem(
+                    label: 'Pokedex',
+                    icon: Icon(CustomIcons.pokeball),
+                  ),
+                  BottomNavigationBarItem(
+                    label: 'Home',
+                    icon: Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: ThemeData.light().scaffoldBackgroundColor,
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(
+                            getAvatarLink(user.avatar),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 1, color: Colors.grey[600]),
+                      ),
+                    ),
+                    activeIcon: Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: ThemeData.light().scaffoldBackgroundColor,
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(
+                            getAvatarLink(user.avatar),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 1, color: Colors.amber[800]),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

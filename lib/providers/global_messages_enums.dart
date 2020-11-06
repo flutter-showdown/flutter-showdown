@@ -40,22 +40,27 @@ class UserDetails {
 }
 
 class User {
-  User(String fullName, this.named, this.avatar) {
-    final List<String> args = Parser.parseName(fullName);
-
-    name = args[0];
-    group = args[1];
-    userId = Parser.toId(name);
-    status = args[2];
-  }
-
   String name = 'Guest';
-  String group = '';
+  String group = ' ';
   String userId = 'guest';
   String avatar = '1';
   String status = '';
   bool named = false;
   bool registered = false;
+
+  void setName(String fullName, bool named, String avatar) {
+    final List<String> args = Parser.parseName(fullName);
+
+    name = args[0];
+    group = args[1];
+    userId = Parser.toId(name);
+    this.avatar = avatar;
+    status = args[2];
+    this.named = named;
+    if (!named) {
+      registered = false;
+    }
+  }
 }
 
 @superEnum
