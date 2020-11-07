@@ -3,7 +3,7 @@ import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/pages/pokedex/filters_dialog.dart';
 import 'package:flutter_showdown/pages/pokedex/search_bar.dart';
 import 'package:provider/provider.dart';
-import 'pokemon_card.dart';
+import 'pokemon/pokemon_card.dart';
 
 class Pokedex extends StatefulWidget {
   @override
@@ -95,8 +95,12 @@ class _PokedexState extends State<Pokedex> {
                     : ListView.builder(
                         controller: controller,
                         itemCount: pokedex.length,
-                        itemBuilder: (_, idx) => PokemonCard(pokedex[idx])),
+                        itemBuilder: (_, idx) => PokemonCard(pokedex[idx]),
+                      ),
               ),
+              const SizedBox(
+                height: 56,
+              )
             ],
           ),
         ),

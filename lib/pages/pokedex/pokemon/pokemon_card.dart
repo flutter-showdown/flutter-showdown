@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_showdown/constants.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/parser.dart';
-import './pokemon_details.dart';
+import 'pokemon_details.dart';
 
 int getIconIndex(Pokemon pokemon) {
   // if (pokemon.id < 0 || pokemon.id > 893) {
@@ -26,6 +26,7 @@ class PokemonCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode()); //remove focus
           Navigator.push(
             context,
             MaterialPageRoute<void>(
@@ -163,7 +164,7 @@ class StatsBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 112,
+      width: 114,
       child: Row(
         children: [
           Column(
@@ -190,7 +191,6 @@ class StatsBox extends StatelessWidget {
             child: StatBox(
               'BST',
               stats.bst,
-              width: 26,
               labelColor: const Color(0xff666666),
             ),
           ),

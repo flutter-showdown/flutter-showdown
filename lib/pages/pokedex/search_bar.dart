@@ -49,7 +49,10 @@ class _SearchBarState extends State<SearchBar> {
           prefixIcon: const Icon(Icons.search),
           suffixIcon: IconButton(
             icon: const Icon(Icons.clear),
-            onPressed: () => _controller.clear(),
+            onPressed: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+              _controller.clear();
+            },
           ),
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[300], width: 1),

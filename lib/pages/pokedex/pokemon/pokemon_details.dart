@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
-import 'package:flutter_showdown/pages/pokedex/ability_details.dart';
+import 'package:flutter_showdown/pages/pokedex/ability/ability_details.dart';
+import 'package:flutter_showdown/pages/pokedex/moves/move_card.dart';
 import 'package:flutter_showdown/parser.dart';
+import 'package:flutter_showdown/constants.dart';
+import 'package:provider/provider.dart';
 
 class TypeBox extends StatelessWidget {
   const TypeBox(this.type);
@@ -135,9 +138,10 @@ class PokemonDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final forme = pokemon.forme?.replaceFirst('Totem', '');
+    final pokeId = Parser.toId(pokemon.name);
     final resourceId = pokemon.forme != null
         ? '${Parser.toId(pokemon.baseSpecies)}${forme.isEmpty ? '' : '-'}${Parser.toId(forme)}'
-        : Parser.toId(pokemon.name);
+        : pokeId;
 
     final pokemonAbilities = [
       pokemon.abilities.first,
@@ -145,6 +149,12 @@ class PokemonDetails extends StatelessWidget {
       pokemon.abilities.hidden,
       pokemon.abilities.special,
     ];
+
+    final learnsetId =
+        pokemon.forme != null ? Parser.toId(pokemon.baseSpecies) : pokeId;
+    final learnsets =
+        Provider.of<Map<String, List<String>>>(context, listen: false);
+    final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
     return Scaffold(
       appBar: AppBar(
         title: Text(pokemon.name),
@@ -152,6 +162,7 @@ class PokemonDetails extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -178,8 +189,7 @@ class PokemonDetails extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: CachedNetworkImage(
-                      imageUrl:
-                          'https://play.pokemonshowdown.com/sprites/gen5/$resourceId.png',
+                      imageUrl: '$ServerUrl/sprites/gen5/$resourceId.png',
                       placeholder: (context, url) => Container(
                         height: 96,
                         width: 96,
@@ -254,50 +264,41 @@ class PokemonDetails extends StatelessWidget {
                 )
               ],
             ),
+            const Padding(
+              padding: EdgeInsets.only(top: 16, left: 8),
+              child: Text('Abilities :'),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Abilities :')),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int i = 0; i < pokemonAbilities.length; i++)
-                          if (pokemonAbilities[i] != null)
-                            Row(
-                              children: [
-                                if (i != 0)
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text('|'),
-                                  ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute<void>(
-                                          builder: (context) => AbilityDetails(
-                                              pokemonAbilities[i])),
-                                    );
-                                  },
-                                  child: Text(
-                                      '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.blue[800])),
-                                ),
-                              ],
+                  for (int i = 0; i < pokemonAbilities.length; i++)
+                    if (pokemonAbilities[i] != null)
+                      Row(
+                        children: [
+                          if (i != 0)
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text('|'),
                             ),
-                      ],
-                    ),
-                  )
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                    builder: (context) =>
+                                        AbilityDetails(pokemonAbilities[i])),
+                              );
+                            },
+                            child: Text(
+                                '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.blue[800])),
+                          ),
+                        ],
+                      ),
                 ],
               ),
             ),
@@ -344,7 +345,17 @@ class PokemonDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            const Text('Moves: '),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ListView.builder(
+                  itemCount: learnset.length,
+                  itemBuilder: (_, idx) => MoveCard(learnset[idx]),
+                ),
+              ),
+            ),
           ],
         ),
       ),
