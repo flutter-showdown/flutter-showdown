@@ -50,7 +50,7 @@ class _LoginDialogState extends State<LoginDialog> {
               _inputController.clear();
             } else
               //Success
-              Navigator.of(context).pop(true);
+              Navigator.of(context).pop();
           });
       });
     }
@@ -63,34 +63,29 @@ class _LoginDialogState extends State<LoginDialog> {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null || snapshot.data.isNotEmpty) {
             //Ask for new username
-            return Container(
-              child: Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (snapshot.data != null)
-                      Text(snapshot.data.substring(1),
-                          style: const TextStyle(color: Colors.red)),
-                    Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        controller: _inputController,
-                        onFieldSubmitted: (_) => _setUsername(),
-                        decoration:
-                            const InputDecoration(labelText: 'Username'),
-                        validator: (String username) {
-                          if (Parser.toId(username).isEmpty) {
-                            return 'Must contain at least one letter.';
-                          }
-                          return null;
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (snapshot.data != null)
+                  Text(snapshot.data.substring(1),
+                      style: const TextStyle(color: Colors.red)),
+                Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    autofocus: true,
+                    controller: _inputController,
+                    onFieldSubmitted: (_) => _setUsername(),
+                    decoration: const InputDecoration(labelText: 'Username'),
+                    validator: (String username) {
+                      if (Parser.toId(username).isEmpty) {
+                        return 'Must contain at least one letter.';
+                      }
+                      return null;
+                    },
+                  ),
+                )
+              ],
             );
           }
           return Container(height: 0);
@@ -110,7 +105,7 @@ class _LoginDialogState extends State<LoginDialog> {
         _logFuture = context.read<GlobalMessages>().logUser(_username, password)
           ..then((result) {
             if (result) {
-              Navigator.of(context).pop(true);
+              Navigator.of(context).pop();
             }
           });
       });
@@ -124,37 +119,33 @@ class _LoginDialogState extends State<LoginDialog> {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null || !snapshot.data) {
-            return Container(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (snapshot.data == false)
-                      const Text('Wrong Password',
-                          style: TextStyle(color: Colors.red)),
-                    Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        controller: _inputController,
-                        onFieldSubmitted: (_) => _setPassword(),
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                          suffixIcon: Icon(Icons.visibility_off),
-                        ),
-                        validator: (String password) {
-                          if (password.isEmpty) {
-                            return 'Must contain at least one letter.';
-                          }
-                          return null;
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (snapshot.data == false)
+                  const Text('Wrong Password',
+                      style: TextStyle(color: Colors.red)),
+                Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    autofocus: true,
+                    controller: _inputController,
+                    onFieldSubmitted: (_) => _setPassword(),
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      suffixIcon: Icon(Icons.visibility_off),
+                    ),
+                    validator: (String password) {
+                      if (password.isEmpty) {
+                        return 'Must contain at least one letter.';
+                      }
+                      return null;
+                    },
+                  ),
+                )
+              ],
             );
           }
           return Container(height: 0);
@@ -167,37 +158,24 @@ class _LoginDialogState extends State<LoginDialog> {
 
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      return Colors.lightBlue.withOpacity(0.7);
-    }
-
-    return Column(
-      children: [
-        if (_protected) _passwordBuilder() else _usernameBuilder(),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith(getColor),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/main');
-                },
-                child: const Text('Continue as Guest'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _protected ? _setPassword() : _setUsername();
-                },
-                child: const Text('Login'),
-              ),
-            ]),
+    return AlertDialog(
+      title: Text(_protected ? 'Enter Password' : 'Enter Username'),
+      contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
+      content: _protected ? _passwordBuilder() : _usernameBuilder(),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Close'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        if (_protected)
+          FlatButton(
+            child: const Text('Change Name'),
+            onPressed: () => setState(() => _protected = false),
+          ),
+        FlatButton(
+          child: const Text('Confirm'),
+          onPressed: () => _protected ? _setPassword() : _setUsername(),
+        ),
       ],
     );
   }
