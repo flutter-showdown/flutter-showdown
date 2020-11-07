@@ -36,8 +36,6 @@ class Move {
 
   // Map<String, int> condition;
 
-  int critRatio;
-
   String target;
 
   String type;
