@@ -9,12 +9,12 @@ import 'package:flutter_showdown/providers/global_messages.dart';
 import 'package:flutter_showdown/providers/room_messages.dart';
 import 'package:provider/provider.dart';
 
-Future<List<Pokemon>> fetchDex() async {
+Future<Map<String, Pokemon>> fetchDex() async {
   final dexJson = await rootBundle.loadString('assets/data/pokedex.json');
-  final List<Pokemon> pokemons = [];
+  final Map<String, Pokemon> pokemons = {};
   final json = jsonDecode(dexJson) as Map<String, dynamic>;
   json.forEach((key, dynamic value) {
-    pokemons.add(Pokemon.fromJson(value as Map<String, dynamic>));
+    pokemons[key] = Pokemon.fromJson(value as Map<String, dynamic>);
   });
   return pokemons;
 }
@@ -95,13 +95,14 @@ class Startup extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          final pokedex = snapshot.data[0] as List<Pokemon>;
+          final pokedex = snapshot.data[0] as Map<String, Pokemon>;
           final abilities = snapshot.data[1] as Map<String, Ability>;
           final learnsets = snapshot.data[2] as Map<String, List<String>>;
           final moves = snapshot.data[3] as Map<String, Move>;
           return MultiProvider(
             providers: [
-              Provider<List<Pokemon>>(create: (_) => pokedex, lazy: false),
+              Provider<Map<String, Pokemon>>(
+                  create: (_) => pokedex, lazy: false),
               Provider<Map<String, Ability>>(
                   create: (_) => abilities, lazy: false),
               Provider<Map<String, List<String>>>(
