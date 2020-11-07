@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_showdown/pages/common/button_outline_color.dart';
+import 'package:flutter_showdown/pages/common/button_plain_color.dart';
 import 'package:flutter_showdown/parser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
 
-class LoginDialog extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
-  _LoginDialogState createState() => _LoginDialogState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginDialogState extends State<LoginDialog> {
+class _LoginFormState extends State<LoginForm> {
   String _username;
   bool _protected = false;
+  bool _loginAsUser = false;
   Future<bool> _logFuture;
   Future<String> _usernameFuture;
   final _formKey = GlobalKey<FormState>();
@@ -50,7 +53,8 @@ class _LoginDialogState extends State<LoginDialog> {
               _inputController.clear();
             } else
               //Success
-              Navigator.of(context).pop();
+
+              Navigator.pushReplacementNamed(context, '/main');
           });
       });
     }
@@ -73,7 +77,6 @@ class _LoginDialogState extends State<LoginDialog> {
                 Form(
                   key: _formKey,
                   child: TextFormField(
-                    autofocus: true,
                     controller: _inputController,
                     onFieldSubmitted: (_) => _setUsername(),
                     decoration: const InputDecoration(labelText: 'Username'),
@@ -101,11 +104,11 @@ class _LoginDialogState extends State<LoginDialog> {
       final password = _inputController.text;
 
       setState(() {
-        debugPrint('$_username => $password');
+        //debugPrint('$_username => $password');
         _logFuture = context.read<GlobalMessages>().logUser(_username, password)
           ..then((result) {
             if (result) {
-              Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(context, '/main');
             }
           });
       });
@@ -129,7 +132,6 @@ class _LoginDialogState extends State<LoginDialog> {
                 Form(
                   key: _formKey,
                   child: TextFormField(
-                    autofocus: true,
                     controller: _inputController,
                     onFieldSubmitted: (_) => _setPassword(),
                     obscureText: true,
@@ -156,27 +158,78 @@ class _LoginDialogState extends State<LoginDialog> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(_protected ? 'Enter Password' : 'Enter Username'),
-      contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
-      content: _protected ? _passwordBuilder() : _usernameBuilder(),
-      actions: <Widget>[
-        FlatButton(
-          child: const Text('Close'),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        if (_protected)
-          FlatButton(
-            child: const Text('Change Name'),
-            onPressed: () => setState(() => _protected = false),
+  void _setLoginAsUser(bool value) {
+    setState(() {
+      _loginAsUser = value;
+    });
+  }
+
+  void _pushMain() {
+    Navigator.pushReplacementNamed(context, '/main');
+  }
+
+  Widget _showInputs() {
+    return Center(
+        child: Column(
+      children: [
+        if (_protected) _passwordBuilder() else _usernameBuilder(),
+        Container(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ButtonOutlineColor(
+                    text: 'cancel',
+                    actionName: () => setState(() {
+                          _loginAsUser = false;
+                        })),
+              ),
+              const SizedBox(
+                width: 15.0,
+              ),
+              if (_protected)
+                Expanded(
+                    child: ButtonPlainColor(
+                        text: 'login', actionName: _setPassword))
+              else
+                Expanded(
+                    child: ButtonPlainColor(
+                        text: 'validate', actionName: _setUsername))
+            ],
           ),
-        FlatButton(
-          child: const Text('Confirm'),
-          onPressed: () => _protected ? _setPassword() : _setUsername(),
         ),
       ],
+    ));
+  }
+
+  Widget _chooseButton() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 55.0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        ButtonOutlineColor(text: 'Login as guest', actionName: _pushMain),
+        const SizedBox(
+          height: 15.0,
+        ),
+        ButtonPlainColor(
+            text: 'Login',
+            actionName: () => setState(() {
+                  _loginAsUser = true;
+                }))
+      ]),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [if (_loginAsUser) _showInputs() else _chooseButton()],
+        ),
+      ),
     );
   }
 }

@@ -1,47 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_showdown/pages/login/blue_wave.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_showdown/pages/common/login_dialog.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
+import 'login_form.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
+  final double startingHeight = 20.0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = context.watch<GlobalMessages>().user;
+    // final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Image(
-                image: AssetImage('assets/icons/pokemonshowdownbeta.png')),
-            const SizedBox(height: 8),
-            if (user != null)
-              Text('Welcome ${user.name}')
-            else
-              const CircularProgressIndicator(),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () async {
-                final bool result = await showDialog(
-                    context: context, builder: (_) => LoginDialog());
-
-                if (result) {
-                  Navigator.pushReplacementNamed(context, '/main');
-                }
-              },
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/main');
-              },
-              child: const Text('Continue as Guest'),
-            ),
-          ],
-        ),
-      ),
+      resizeToAvoidBottomPadding: false,
+      body: Stack(children: [
+        BottomWaveContainer(Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.center,
+                    colors: [Colors.blue, Colors.green])))),
+        LayoutBuilder(builder:
+            (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Image(
+                        image: AssetImage('assets/icons/pokemon2.png'),
+                        height: 200,
+                        width: 300,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      if (user == null) const CircularProgressIndicator(),
+                      LoginForm(),
+                    ],
+                  )));
+        }),
+        Positioned(
+            left: 0.0,
+            right: 0.0,
+            bottom: 0.0,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(6.0),
+                color: Colors.lightBlue[100].withOpacity(0.7),
+                child: const Text(
+                  'All ressources of this application belongs to the website pokemon showdown',
+                  style: TextStyle(fontSize: 10, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )),
+      ]),
     );
   }
 }
