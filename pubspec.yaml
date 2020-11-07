@@ -34,6 +34,8 @@ dependencies:
   speech_to_text: ^2.7.0
   cached_network_image: ^2.3.3
   json_annotation: ^3.1.0
+  outline_gradient_button: ^1.0.0+2
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -73,6 +75,8 @@ flutter:
     - assets/types/
     - assets/icons/showdown-title.png
     - assets/background-image/login-background.jpg
+    - assets/icons/pokemon.png
+    - assets/icons/pokemon2.png
   fonts:
     - family: CustomIcons
       fonts:
