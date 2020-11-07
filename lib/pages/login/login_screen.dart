@@ -28,8 +28,10 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     final user = context.watch<GlobalMessages>().user;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Stack(children: [
         BottomWaveContainer(Container(
             decoration: const BoxDecoration(
@@ -37,25 +39,34 @@ class _LoginScreenState extends State<LoginScreen>
                     begin: Alignment.topCenter,
                     end: Alignment.center,
                     colors: [Colors.blue, Colors.green])))),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Image(
-              image: AssetImage('assets/icons/pokemon2.png'),
-              height: 200,
-              width: 250,
-              fit: BoxFit.fitWidth,
-            ),
-            if (user == null) const CircularProgressIndicator(),
-            LoginForm(),
-          ],
-        ),
+        LayoutBuilder(builder:
+            (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Image(
+                        image: AssetImage('assets/icons/pokemon2.png'),
+                        height: 200,
+                        width: 300,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      if (user == null) const CircularProgressIndicator(),
+                      LoginForm(),
+                    ],
+                  )));
+        }),
         Positioned(
             left: 0.0,
             right: 0.0,
             bottom: 0.0,
             child: Center(
               child: Container(
+                padding: const EdgeInsets.all(6.0),
                 color: Colors.lightBlue[100].withOpacity(0.7),
                 child: const Text(
                   'All ressources of this application belongs to the website pokemon showdown',
