@@ -158,11 +158,11 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _setLoginAsUser(bool value) {
-    setState(() {
-      _loginAsUser = value;
-    });
-  }
+  // void _setLoginAsUser(bool value) {
+  //   setState(() {
+  //     _loginAsUser = value;
+  //   });
+  // }
 
   void _pushMain() {
     Navigator.pushReplacementNamed(context, '/main');
