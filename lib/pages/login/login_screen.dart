@@ -13,9 +13,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
-  Color MyOrange = const Color(0xFFFF881B);
-  Color MyPink = const Color(0xFFE62E6F);
-
   final double startingHeight = 20.0;
 
   @override
@@ -34,31 +31,25 @@ class _LoginScreenState extends State<LoginScreen>
 
     return Scaffold(
       body: Stack(children: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Image(
-                    image: AssetImage('assets/icons/pokemonshowdownbeta.png')),
-                const SizedBox(height: 8),
-                if (user != null)
-                  Text('Welcome ${user.name}')
-                else
-                  const CircularProgressIndicator(),
-                const SizedBox(height: 8),
-                LoginForm(),
-              ],
-            ),
-          ),
-        ),
         BottomWaveContainer(Container(
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFFF881B), Color(0xFFE62E6F)])))),
+                    end: Alignment.center,
+                    colors: [Colors.blue, Colors.green])))),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(
+              image: AssetImage('assets/icons/pokemon2.png'),
+              height: 200,
+              width: 250,
+              fit: BoxFit.fitWidth,
+            ),
+            if (user == null) const CircularProgressIndicator(),
+            LoginForm(),
+          ],
+        ),
         Positioned(
             left: 0.0,
             right: 0.0,
