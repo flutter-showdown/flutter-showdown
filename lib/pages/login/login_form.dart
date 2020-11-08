@@ -13,7 +13,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   String _username;
   bool _protected = false;
-  bool _loginAsUser = false;
+  bool _guest = true;
+  bool _obscure = true;
   Future<bool> _logFuture;
   Future<String> _usernameFuture;
   final _formKey = GlobalKey<FormState>();
@@ -30,7 +31,6 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     _inputController.dispose();
-
     super.dispose();
   }
 
@@ -77,9 +77,22 @@ class _LoginFormState extends State<LoginForm> {
                 Form(
                   key: _formKey,
                   child: TextFormField(
+                    onTap: () {
+                      setState(() {
+                        _guest = false;
+                      });
+                    },
                     controller: _inputController,
-                    onFieldSubmitted: (_) => _setUsername(),
-                    decoration: const InputDecoration(labelText: 'Username'),
+                    onFieldSubmitted: (_) {
+                      if (_guest)
+                        Navigator.pushReplacementNamed(context, '/main');
+                      else
+                        _setUsername();
+                      _inputController.clear();
+                    },
+                    decoration: InputDecoration(
+                      hintText: context.watch<GlobalMessages>().user.name,
+                    ),
                     validator: (String username) {
                       if (Parser.toId(username).isEmpty) {
                         return 'Must contain at least one letter.';
@@ -104,7 +117,6 @@ class _LoginFormState extends State<LoginForm> {
       final password = _inputController.text;
 
       setState(() {
-        //debugPrint('$_username => $password');
         _logFuture = context.read<GlobalMessages>().logUser(_username, password)
           ..then((result) {
             if (result) {
@@ -128,16 +140,25 @@ class _LoginFormState extends State<LoginForm> {
               children: [
                 if (snapshot.data == false)
                   const Text('Wrong Password',
-                      style: TextStyle(color: Colors.red)),
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.w600)),
                 Form(
                   key: _formKey,
                   child: TextFormField(
                     controller: _inputController,
                     onFieldSubmitted: (_) => _setPassword(),
-                    obscureText: true,
-                    decoration: const InputDecoration(
+                    obscureText: _obscure,
+                    decoration: InputDecoration(
                       labelText: 'Password',
-                      suffixIcon: Icon(Icons.visibility_off),
+                      suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscure = !_obscure;
+                            });
+                          },
+                          child: Icon(_obscure
+                              ? Icons.visibility_off
+                              : Icons.remove_red_eye)),
                     ),
                     validator: (String password) {
                       if (password.isEmpty) {
@@ -152,71 +173,52 @@ class _LoginFormState extends State<LoginForm> {
           }
           return Container(height: 0);
         }
-        return const Center(
-            heightFactor: 0, child: CircularProgressIndicator());
+        return const Padding(
+          padding: EdgeInsets.only(bottom: 16.0),
+          child: Center(heightFactor: 0, child: CircularProgressIndicator()),
+        );
       },
     );
-  }
-
-  // void _setLoginAsUser(bool value) {
-  //   setState(() {
-  //     _loginAsUser = value;
-  //   });
-  // }
-
-  void _pushMain() {
-    Navigator.pushReplacementNamed(context, '/main');
-  }
-
-  Widget _showInputs() {
-    return Center(
-        child: Column(
-      children: [
-        if (_protected) _passwordBuilder() else _usernameBuilder(),
-        Container(
-          padding: const EdgeInsets.only(top: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            //crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ButtonOutlineColor(
-                    text: 'cancel',
-                    actionName: () => setState(() {
-                          _loginAsUser = false;
-                        })),
-              ),
-              const SizedBox(
-                width: 15.0,
-              ),
-              if (_protected)
-                Expanded(
-                    child: ButtonPlainColor(
-                        text: 'login', actionName: _setPassword))
-              else
-                Expanded(
-                    child: ButtonPlainColor(
-                        text: 'validate', actionName: _setUsername))
-            ],
-          ),
-        ),
-      ],
-    ));
   }
 
   Widget _chooseButton() {
     return Container(
       margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 55.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        ButtonOutlineColor(text: 'Login as guest', actionName: _pushMain),
+        if (_protected) _passwordBuilder() else _usernameBuilder(),
         const SizedBox(
           height: 15.0,
         ),
-        ButtonPlainColor(
-            text: 'Login',
-            actionName: () => setState(() {
-                  _loginAsUser = true;
-                }))
+        if (_protected)
+          Row(
+            children: [
+              Expanded(
+                  child: ButtonOutlineColor(
+                      text: 'Cancel',
+                      actionName: () => setState(() {
+                            _logFuture = Future.value(null);
+                            _inputController.clear();
+                            _guest = true;
+                            _protected = false;
+                          }))),
+              const SizedBox(
+                width: 15.0,
+              ),
+              Expanded(
+                  child: ButtonPlainColor(
+                      text: 'Login', actionName: _setPassword)),
+            ],
+          )
+        else
+          ButtonPlainColor(
+              text: 'Continue${_guest ? ' as guest' : ''}',
+              actionName: () {
+                if (_guest)
+                  Navigator.pushReplacementNamed(context, '/main');
+                else
+                  _setUsername();
+                _inputController.clear();
+              })
       ]),
     );
   }
@@ -226,9 +228,7 @@ class _LoginFormState extends State<LoginForm> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [if (_loginAsUser) _showInputs() else _chooseButton()],
-        ),
+        child: _chooseButton(),
       ),
     );
   }

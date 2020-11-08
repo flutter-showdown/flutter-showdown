@@ -66,6 +66,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/showdown-title.png
+    - assets/images/flying-pikachu.png
     - assets/data/abilities.json
     - assets/data/learnset.json
     - assets/data/moves.json
@@ -73,8 +75,6 @@ flutter:
     - assets/pokemon-icons/
     - assets/types/
     - assets/categories/
-    - assets/icons/showdown-title.png
-    - assets/icons/sprite.png
   fonts:
     - family: CustomIcons
       fonts:

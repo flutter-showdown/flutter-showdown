@@ -15,8 +15,8 @@ class _PokemonAnimationState extends State<PokemonAnimation>
   void initState() {
     super.initState();
     controller =
-        AnimationController(duration: const Duration(seconds: 3), vsync: this);
-    animationBottom = Tween<double>(begin: 50, end: 100).animate(controller)
+        AnimationController(duration: const Duration(seconds: 5), vsync: this);
+    animationBottom = Tween<double>(begin: 50, end: 180).animate(controller)
       ..addListener(() {
         setState(() {});
       });
@@ -34,7 +34,7 @@ class _PokemonAnimationState extends State<PokemonAnimation>
   Widget build(BuildContext context) {
     return Positioned(
       top: animationBottom.value,
-      left: 50,
+      right: 30,
       child: Center(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
@@ -42,7 +42,8 @@ class _PokemonAnimationState extends State<PokemonAnimation>
           width: 120,
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/icons/sprite.png'), fit: BoxFit.fill),
+                image: AssetImage('assets/images/flying-pikachu.png'),
+                fit: BoxFit.fill),
           ),
         ),
       ),

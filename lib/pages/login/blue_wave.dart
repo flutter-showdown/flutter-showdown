@@ -35,6 +35,12 @@ class _BottomWaveContainerState extends State<BottomWaveContainer>
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       child: widget.child,
