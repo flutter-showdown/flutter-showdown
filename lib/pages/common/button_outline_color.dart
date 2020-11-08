@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
 
 class ButtonOutlineColor extends StatelessWidget {
-  const ButtonOutlineColor({@required this.text, @required this.actionName});
+  const ButtonOutlineColor({@required this.text, @required this.onTap});
 
-  final void Function() actionName;
+  final void Function() onTap;
   final String text;
 
   @override
@@ -14,7 +14,7 @@ class ButtonOutlineColor extends StatelessWidget {
       gradient: LinearGradient(
         colors: <Color>[Colors.lightBlue[200], Colors.lightBlue],
       ),
-      onTap: () => actionName(),
+      onTap: () => onTap(),
       child: Center(child: Text(text)),
       strokeWidth: 2,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

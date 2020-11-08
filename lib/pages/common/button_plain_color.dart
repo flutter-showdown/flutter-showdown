@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ButtonPlainColor extends StatelessWidget {
-  const ButtonPlainColor({@required this.text, @required this.actionName});
+  const ButtonPlainColor({@required this.text, @required this.onTap});
 
-  final void Function() actionName;
+  final void Function() onTap;
   final String text;
 
   @override
@@ -25,7 +25,7 @@ class ButtonPlainColor extends StatelessWidget {
         child: Material(
             color: Colors.transparent,
             child: InkWell(
-                onTap: () => actionName(),
+                onTap: () => onTap(),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
