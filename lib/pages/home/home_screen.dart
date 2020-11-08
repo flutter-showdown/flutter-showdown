@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/constants.dart';
+import 'package:flutter_showdown/pages/common/button_plain_color.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
 import 'package:provider/provider.dart';
 import '../../utils.dart';
@@ -7,12 +8,7 @@ import '../common/login_dialog.dart';
 import 'avatar_dialog.dart';
 import 'register_dialog.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<GlobalMessages>().user;
@@ -68,6 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (_) => RegisterDialog(user.name));
                 },
               ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ButtonPlainColor(
+                  onTap: () {
+                    context.read<GlobalMessages>().logout();
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  text: 'Logout'),
+            )
           ],
         ),
       ),

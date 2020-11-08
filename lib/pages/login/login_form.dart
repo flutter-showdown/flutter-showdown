@@ -193,26 +193,29 @@ class _LoginFormState extends State<LoginForm> {
           Row(
             children: [
               Expanded(
-                  child: ButtonOutlineColor(
-                      text: 'Cancel',
-                      actionName: () => setState(() {
-                            _logFuture = Future.value(null);
-                            _inputController.clear();
-                            _guest = true;
-                            _protected = false;
-                          }))),
+                child: ButtonOutlineColor(
+                  text: 'Cancel',
+                  onTap: () => setState(
+                    () {
+                      _logFuture = Future.value(null);
+                      _inputController.clear();
+                      _guest = true;
+                      _protected = false;
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(
                 width: 15.0,
               ),
               Expanded(
-                  child: ButtonPlainColor(
-                      text: 'Login', actionName: _setPassword)),
+                  child: ButtonPlainColor(text: 'Login', onTap: _setPassword)),
             ],
           )
         else
           ButtonPlainColor(
               text: 'Continue${_guest ? ' as guest' : ''}',
-              actionName: () {
+              onTap: () {
                 if (_guest)
                   Navigator.pushReplacementNamed(context, '/main');
                 else

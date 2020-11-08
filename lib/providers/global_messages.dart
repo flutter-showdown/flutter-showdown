@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
@@ -26,18 +27,26 @@ class GlobalMessages with ChangeNotifier {
       switch (args[0]) {
         case 'challstr':
           //|challstr|CHALLSTR
-          final Map<String, String> body = {'act': 'upkeep', 'challstr': args[1]};
+          final Map<String, String> body = {
+            'act': 'upkeep',
+            'challstr': args[1]
+          };
 
           _challstr = args[1];
           sockets.send('|/cmd rooms');
           sockets.send('|/autojoin');
           http.post(ActionUrl, body: body).then((http.Response response) {
-            if (response == null)
+            if (response == null) {
               return;
-            final body = jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
+            }
+            final body =
+                jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
 
             if (body['loggedin'] as bool)
-              sockets.send('/trn ' + body['username'].toString() + ',0,' + body['assertion'].toString());
+              sockets.send('/trn ' +
+                  body['username'].toString() +
+                  ',0,' +
+                  body['assertion'].toString());
           });
           break;
         case 'updateuser':
@@ -53,7 +62,8 @@ class GlobalMessages with ChangeNotifier {
 
           switch (args[0]) {
             case 'userdetails':
-              final UserDetails newDetails = UserDetails.fromJson(jsonDecode(args[1]) as Map<String, dynamic>);
+              final UserDetails newDetails = UserDetails.fromJson(
+                  jsonDecode(args[1]) as Map<String, dynamic>);
 
               if (newDetails.userid == user.userId) {
                 user.avatar = newDetails.avatar;
@@ -100,19 +110,27 @@ class GlobalMessages with ChangeNotifier {
     final response = await http.post(ActionUrl, body: body);
 
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body.substring(1)) as Map<String, dynamic>;
+      final jsonResponse =
+          json.decode(response.body.substring(1)) as Map<String, dynamic>;
 
       if (jsonResponse['actionsuccess'] as bool) {
         user.registered = true;
 
-        sockets.send('|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
+        sockets.send(
+            '|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
         return true;
       }
     }
     return false;
   }
 
-  Future<String> registerUser(String username, String password, String captcha) async {
+  void logout() {
+    // Reset websocket
+    sockets.initCommunication();
+  }
+
+  Future<String> registerUser(
+      String username, String password, String captcha) async {
     final Map<String, String> body = {
       'act': 'register',
       'username': Parser.toId(username),
@@ -124,12 +142,14 @@ class GlobalMessages with ChangeNotifier {
     final response = await http.post(ActionUrl, body: body);
 
     if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
+      final jsonResponse =
+          jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
 
       if (jsonResponse['actionsuccess'] != null) {
         user.registered = true;
 
-        sockets.send('|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
+        sockets.send(
+            '|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
         return '';
       }
       return jsonResponse['actionerror'].toString();
