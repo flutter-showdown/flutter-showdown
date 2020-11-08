@@ -1,16 +1,21 @@
+![Banner](assets/icons/showdown-title.png)
+
 # flutter_showdown
 
-A new Flutter project.
+[![Codemagic build status](https://api.codemagic.io/apps/5f805e26da6060b6f9aa21b9/5f85e7bfda606059e8fa3d76/status_badge.svg)](https://codemagic.io/apps/5f805e26da6060b6f9aa21b9/5f85e7bfda606059e8fa3d76/latest_build)
 
-## Getting Started
+> A [Pokemon showdown](https://pokemonshowdown.com) application written in Flutter.
 
-This project is a starting point for a Flutter application.
+## Build
 
-A few resources to get you started if this is your first Flutter project:
+Check that you have [Flutter](https://flutter.dev/docs/get-started/install) installed.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```sh
+flutter run
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Some files may need to be regenerated
+
+```sh
+flutter pub run build_runner build --delete-conflicting-outputs
+```
