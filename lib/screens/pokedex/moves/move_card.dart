@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/move.dart';
-import 'package:flutter_showdown/pages/pokedex/moves/move_details.dart';
+import 'package:flutter_showdown/screens/pokedex/moves/move_details.dart';
 import 'package:provider/provider.dart';
 
 class MoveCard extends StatelessWidget {

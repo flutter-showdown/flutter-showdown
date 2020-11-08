@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_showdown/pages/main_screen.dart';
+import 'package:flutter_showdown/screens/main_screen.dart';
 import 'package:flutter_showdown/startup.dart';
-import 'package:flutter_showdown/pages/login/login_screen.dart';
+import 'package:flutter_showdown/screens/login/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/pages/home/home_screen.dart';
-import 'package:flutter_showdown/pages/pokedex/pokedex.dart';
-import 'package:flutter_showdown/pages/rooms/rooms_screen.dart';
+import 'package:flutter_showdown/screens/home/home_screen.dart';
+import 'package:flutter_showdown/screens/pokedex/pokedex.dart';
+import 'package:flutter_showdown/screens/rooms/rooms_screen.dart';
 import 'package:flutter_showdown/presentation/custom_icons_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';

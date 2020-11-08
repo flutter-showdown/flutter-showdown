@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/pages/rooms/input_text.dart';
-import 'package:flutter_showdown/pages/rooms/message_builder.dart';
+import 'package:flutter_showdown/screens/rooms/input_text.dart';
+import 'package:flutter_showdown/screens/rooms/message_builder.dart';
 import 'package:flutter_showdown/providers/global_messages_enums.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -14,7 +14,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
   Widget _buildMessage(BuildContext context, int idx) {
     bool sameAsP = false;
     bool sameAsN = false;
@@ -53,7 +52,10 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
-      colorFilter: widget.closed ? const ColorFilter.mode(Color.fromARGB(255, 221, 221, 221), BlendMode.modulate) : const ColorFilter.mode(Colors.white, BlendMode.modulate),
+      colorFilter: widget.closed
+          ? const ColorFilter.mode(
+              Color.fromARGB(255, 221, 221, 221), BlendMode.modulate)
+          : const ColorFilter.mode(Colors.white, BlendMode.modulate),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(

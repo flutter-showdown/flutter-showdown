@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/pages/common/login_dialog.dart';
-import 'package:flutter_showdown/pages/common/speech_to_text.dart';
+import 'package:flutter_showdown/screens/common/login_dialog.dart';
+import 'package:flutter_showdown/screens/common/speech_to_text.dart';
 import 'package:flutter_showdown/providers/room_messages.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
 import 'package:provider/provider.dart';

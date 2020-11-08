@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
-import 'package:flutter_showdown/pages/pokedex/filters_dialog.dart';
-import 'package:flutter_showdown/pages/pokedex/search_bar.dart';
+import 'package:flutter_showdown/screens/pokedex/filters_dialog.dart';
+import 'package:flutter_showdown/screens/pokedex/search_bar.dart';
 import 'package:provider/provider.dart';
 import 'pokemon/pokemon_card.dart';
 

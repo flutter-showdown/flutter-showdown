@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter_showdown/pages/common/user_details_dialog.dart';
+import 'package:flutter_showdown/screens/common/user_details_dialog.dart';
 import 'package:flutter_showdown/providers/global_messages_enums.dart';
 import 'package:flutter_showdown/providers/room_messages.dart';
 import 'package:provider/provider.dart';

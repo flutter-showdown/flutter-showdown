@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/move.dart';
-import 'package:flutter_showdown/pages/pokedex/common/type_box.dart';
+import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
 
 class MoveDetails extends StatelessWidget {
   const MoveDetails(this.move);

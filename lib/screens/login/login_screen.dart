@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_showdown/pages/login/blue_wave.dart';
+import 'package:flutter_showdown/screens/login/blue_wave.dart';
 import 'login_form.dart';
 import 'moving_pokemon.dart';
 

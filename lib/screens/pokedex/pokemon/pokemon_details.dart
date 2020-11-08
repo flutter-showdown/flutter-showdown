@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
-import 'package:flutter_showdown/pages/pokedex/ability/ability_details.dart';
-import 'package:flutter_showdown/pages/pokedex/common/type_box.dart';
-import 'package:flutter_showdown/pages/pokedex/moves/move_card.dart';
+import 'package:flutter_showdown/screens/pokedex/ability/ability_details.dart';
+import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
+import 'package:flutter_showdown/screens/pokedex/moves/move_card.dart';
 import 'package:flutter_showdown/parser.dart';
 import 'package:flutter_showdown/constants.dart';
 import 'package:provider/provider.dart';

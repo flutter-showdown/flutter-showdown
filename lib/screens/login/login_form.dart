@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_showdown/pages/common/button_outline_color.dart';
-import 'package:flutter_showdown/pages/common/button_plain_color.dart';
+import 'package:flutter_showdown/screens/common/button_outline_color.dart';
+import 'package:flutter_showdown/screens/common/button_plain_color.dart';
 import 'package:flutter_showdown/parser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_showdown/providers/global_messages.dart';
