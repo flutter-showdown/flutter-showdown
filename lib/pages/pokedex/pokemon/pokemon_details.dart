@@ -316,16 +316,18 @@ class EvoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushReplacement(
-              context,
-              PageRouteBuilder<PokemonDetails>(
-                pageBuilder: (context, _, __) => PokemonDetails(pokemon),
-                transitionDuration: const Duration(seconds: 0),
-              ));
-        },
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushReplacement(
+            context,
+            PageRouteBuilder<PokemonDetails>(
+              pageBuilder: (context, _, __) => PokemonDetails(pokemon),
+              transitionDuration: const Duration(seconds: 0),
+            ));
+      },
+      child: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(
           children: [
             Image.asset('assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
@@ -335,7 +337,7 @@ class EvoBox extends StatelessWidget {
                   color: Colors.blue[800],
                   fontWeight: current ? FontWeight.bold : FontWeight.normal,
                   decoration: TextDecoration.underline),
-            ),
+            )
           ],
         ),
       ),
