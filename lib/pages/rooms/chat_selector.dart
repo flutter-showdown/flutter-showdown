@@ -3,6 +3,23 @@ import 'package:provider/provider.dart';
 import 'package:flutter_showdown/providers/room_messages.dart';
 
 class ChatSelector extends StatelessWidget {
+  String _getInitials(String name) {
+    String initials = '';
+
+    if (name.length <= 5)
+      return name;
+
+    for (final String word in name.split(' ')) {
+      initials += word[0];
+      for (int i = 1; i < word.length; i++) {
+        if (word[i] == word[i].toUpperCase()) {
+          initials += word[i];
+        }
+      }
+    }
+    return initials;
+  }
+
   @override
   Widget build(BuildContext context) {
     final current = context.watch<RoomMessages>().current;
@@ -37,16 +54,20 @@ class ChatSelector extends StatelessWidget {
 
                   return Padding(
                     padding: EdgeInsets.only(top: idx > 0 ? 8 : 0),
-                    child: RoundedSelector(
-                      hasUpdates: room.hasUpdates,
-                      isSelected: room.info.id == current,
-                      child: Center(
-                        child: Text(
-                          room.info.title,
-                          style: const TextStyle(color: Colors.white),
+                    child: Tooltip(
+                      message: room.info.title,
+                      preferBelow: false,
+                      child: RoundedSelector(
+                        hasUpdates: room.hasUpdates,
+                        isSelected: room.info.id == current,
+                        child: Center(
+                          child: Text(
+                            _getInitials(room.info.title),
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
+                        onTap: () => joinRoom(room.info.id),
                       ),
-                      onTap: () => joinRoom(room.info.id),
                     ),
                   );
                 },

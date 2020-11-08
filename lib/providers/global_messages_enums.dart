@@ -123,9 +123,10 @@ class RoomUser{
 }
 
 enum MessageType {
+  Intro,
   Named,
+  Error,
   Message,
-  Greating,
 }
 
 class Message {
@@ -137,15 +138,26 @@ class Message {
   MessageType type;
 }
 
-//https://pokemonshowdown.com/news.json
-//User private messages
-
 class Room {
   Room(this.info);
 
   RoomInfo info;
-  int timeOffset = 0;
   bool hasUpdates = false;
   List<RoomUser> users = [];
   List<Message> messages = [];
+}
+
+//https://pokemonshowdown.com/news.json
+@JsonSerializable()
+class News {
+  News();
+
+  factory News.fromJson(Map<String, dynamic> json) => _$NewsFromJson(json);
+
+  String id;
+  String title;
+  String author;
+  int date;
+  String summaryHTML;
+  String detailsHTML;
 }

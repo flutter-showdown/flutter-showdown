@@ -46,33 +46,33 @@ class UserList extends StatelessWidget {
           )
         ],
       ),
-      body: SizedBox.expand(
-        child: Container(
-          color: ThemeData.light().scaffoldBackgroundColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8, left: 16),
-                child: Text(
-                  'Users - ${currentRoom.users.length}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
+      body: Container(
+        color: ThemeData.light().scaffoldBackgroundColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16, left: 16),
+              child: Text(
+                'Users - ${currentRoom.users.length}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
                 ),
               ),
-              Flexible(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: currentRoom.users.length,
-                  itemBuilder: (BuildContext context, int idx) {
-                    final user = currentRoom.users[idx];
-                    final details =
-                        context.read<RoomMessages>().getUserDetails(user.name);
+            ),
+            Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: currentRoom.users.length,
+                itemBuilder: (BuildContext context, int idx) {
+                  final user = currentRoom.users[idx];
+                  final details =
+                      context.read<RoomMessages>().getUserDetails(user.name);
 
-                    return ListTile(
+                  return Material(
+                    child: ListTile(
                       title: usernameTextColor(user.name, user.status),
                       visualDensity: VisualDensity.compact,
                       subtitle: Text(Groups[user.group]),
@@ -88,16 +88,17 @@ class UserList extends StatelessWidget {
                           : const CircularProgressIndicator(),
                       onTap: () {
                         showDialog<UserDetailsDialog>(
-                            context: context,
-                            builder: (_) =>
-                                UserDetailsDialog(user.group, details));
+                          context: context,
+                          builder: (_) =>
+                              UserDetailsDialog(user.group, details),
+                        );
                       },
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

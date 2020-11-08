@@ -14,8 +14,8 @@ class GlobalMessages with ChangeNotifier {
     sockets.addListener(_onMessageReceived);
   }
 
-  User user = User();
   String _challstr;
+  User user = User();
   static const String ActionUrl = ServerUrl + '/action.php';
 
   // TODO(reno): put in cache userdetails [autojoin help,lobby] [ |/noreply /leave lobby]

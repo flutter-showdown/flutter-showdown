@@ -69,6 +69,25 @@ Map<String, dynamic> _$RoomInfoToJson(RoomInfo instance) => <String, dynamic>{
       'subRooms': instance.subRooms,
     };
 
+News _$NewsFromJson(Map<String, dynamic> json) {
+  return News()
+    ..id = json['id'] as String
+    ..title = json['title'] as String
+    ..author = json['author'] as String
+    ..date = json['date'] as int
+    ..summaryHTML = json['summaryHTML'] as String
+    ..detailsHTML = json['detailsHTML'] as String;
+}
+
+Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'author': instance.author,
+      'date': instance.date,
+      'summaryHTML': instance.summaryHTML,
+      'detailsHTML': instance.detailsHTML,
+    };
+
 // **************************************************************************
 // SuperEnumGenerator
 // **************************************************************************
