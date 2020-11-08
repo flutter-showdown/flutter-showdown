@@ -129,11 +129,12 @@ class _PokemonDetailsState extends State<PokemonDetails> {
             label: name,
             current: base.name == widget.pokemon.name,
           ),
-          ...base.otherFormes.map((f) {
-            final poke = dex[Parser.toId(f)];
-            return PokeBox(poke,
-                label: poke.forme, current: widget.pokemon.name == poke.name);
-          })
+          if (base.otherFormes != null)
+            ...base.otherFormes.map((f) {
+              final poke = dex[Parser.toId(f)];
+              return PokeBox(poke,
+                  label: poke.forme, current: widget.pokemon.name == poke.name);
+            })
         ],
       );
     }
@@ -258,36 +259,40 @@ class _PokemonDetailsState extends State<PokemonDetails> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    for (int i = 0; i < pokemonAbilities.length; i++)
-                      if (pokemonAbilities[i] != null)
-                        Row(
-                          children: [
-                            if (i != 0)
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text('|'),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < pokemonAbilities.length; i++)
+                        if (pokemonAbilities[i] != null)
+                          Row(
+                            children: [
+                              if (i != 0)
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Text('|'),
+                                ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                        builder: (context) => AbilityDetails(
+                                            pokemonAbilities[i])),
+                                  );
+                                },
+                                child: Text(
+                                    '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue[800])),
                               ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                      builder: (context) =>
-                                          AbilityDetails(pokemonAbilities[i])),
-                                );
-                              },
-                              child: Text(
-                                  '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.blue[800])),
-                            ),
-                          ],
-                        ),
-                  ],
+                            ],
+                          ),
+                    ],
+                  ),
                 ),
               ),
               Padding(

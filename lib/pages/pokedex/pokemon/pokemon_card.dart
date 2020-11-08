@@ -100,6 +100,11 @@ class PokemonCard extends StatelessWidget {
                               pokemon.abilities.hidden,
                               style: const TextStyle(fontSize: 10),
                             ),
+                          if (pokemon.abilities.special != null)
+                            Text(
+                              pokemon.abilities.special,
+                              style: const TextStyle(fontSize: 10),
+                            ),
                         ],
                       ),
                     ),
