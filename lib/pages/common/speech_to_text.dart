@@ -6,10 +6,11 @@ import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 
 class MySpeechToText extends StatefulWidget {
-  const MySpeechToText({this.onResult, this.onStatus});
+  const MySpeechToText({this.onResult, this.onStatus, this.unFocus});
 
   final void Function(String result) onResult;
   final void Function(String result) onStatus;
+  final void Function({UnfocusDisposition disposition}) unFocus;
 
   @override
   _SpeechToTextState createState() => _SpeechToTextState();
@@ -21,30 +22,29 @@ class _SpeechToTextState extends State<MySpeechToText> {
   double minSoundLevel = 50000;
   double maxSoundLevel = -50000;
   final String _currentLocaleId = '';
-  //List<LocaleName> _localeNames = [];
   final SpeechToText _speech = SpeechToText();
 
   Future<void> initSpeechState() async {
-    final bool hasSpeech = await _speech.initialize(onError: errorListener, onStatus: statusListener);
-    /*if (hasSpeech) {
-      _localeNames = await _speech.locales();
+    final bool hasSpeech = await _speech.initialize(
+      onError: errorListener,
+      onStatus: statusListener,
+    );
 
-      var systemLocale = await _speech.systemLocale();
-      _currentLocaleId = systemLocale.localeId;
-    }*/
-    if (!mounted)
+    if (!mounted) {
       return;
+    }
     setState(() => _hasSpeech = hasSpeech);
   }
 
   void startListening() {
     _speech.listen(
-        onResult: resultListener,
-        listenFor: const Duration(seconds: 10),
-        localeId: _currentLocaleId,
-        onSoundLevelChange: soundLevelListener,
-        cancelOnError: true,
-        listenMode: ListenMode.confirmation);
+      onResult: resultListener,
+      listenFor: const Duration(seconds: 10),
+      localeId: _currentLocaleId,
+      onSoundLevelChange: soundLevelListener,
+      cancelOnError: true,
+      listenMode: ListenMode.confirmation,
+    );
     setState(() {});
   }
 
@@ -72,9 +72,7 @@ class _SpeechToTextState extends State<MySpeechToText> {
     setState(() => level = newLevel);
   }
 
-  void errorListener(SpeechRecognitionError error) {
-
-  }
+  void errorListener(SpeechRecognitionError error) {}
 
   void statusListener(String status) {
     if (widget.onStatus != null) {
@@ -84,23 +82,33 @@ class _SpeechToTextState extends State<MySpeechToText> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: InkWell(
-        onTap: () {},
-        child: const Icon(Icons.mic, color: Colors.blue, size: 32),
+    return Material(
+      child: Ink(
+        child: GestureDetector(
+          child: IconButton(
+            icon: const Icon(Icons.mic, size: 30),
+            color: Colors.blue,
+            onPressed: () {
+              if (widget.unFocus != null) {
+                widget.unFocus();
+              }
+            },
+            tooltip: 'Listening',
+          ),
+          onTapDown: (details) {
+            if (!_hasSpeech) {
+              initSpeechState();
+            } else if (!_speech.isListening) {
+              startListening();
+            }
+          },
+          onLongPressEnd: (details) {
+            if (_speech.isListening) {
+              Future.delayed(const Duration(seconds: 1), () => stopListening());
+            }
+          },
+        ),
       ),
-      onTapDown: (details) {
-        if (!_hasSpeech) {
-          initSpeechState();
-        } else if (!_speech.isListening) {
-          startListening();
-        }
-      },
-      onLongPressEnd: (details) {
-        if (_speech.isListening) {
-          Future.delayed(const Duration(seconds: 2), () => stopListening());
-        }
-      },
     );
   }
 }

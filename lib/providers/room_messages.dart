@@ -35,30 +35,16 @@ class RoomMessages with ChangeNotifier {
 
       switch (args[0]) {
         case 'init':
+          //|init|ROOMTYPE
           //args[0] == chat | battle
           break;
         case 'title':
+          //|title|TITLE
           _from = Parser.toId(args[1]);
           break;
 
         case 'c':
         case 'chat':
-          break;
-
-        case ':':
-          rooms[_from].timeOffset = (DateTime.now().millisecondsSinceEpoch / 1000).round() - (int.parse(args[1]));
-          break;
-        case 'c:':
-          if (RegExp(r'^[A-Za-z0-9]').firstMatch(args[2]) != null) {
-            args[2] = ' ' + args[2];
-          }
-          final message = Message(rooms[_from].timeOffset + int.parse(args[1]), args[2], args[3], MessageType.Message);
-
-          if (_from != current) {
-            rooms[_from].hasUpdates = true;
-          }
-          rooms[_from].messages.insert(0, message);
-          notifyListeners();
           break;
 
         case 'j':
@@ -93,16 +79,39 @@ class RoomMessages with ChangeNotifier {
           notifyListeners();
           break;
 
-        case 'users':
-          //|users|USERLIST
-          final List<String> usersArgs = args[1].split(',');
+        case ':':
+          //|:|TIMESTAMP
+          break;
+        case 'c:':
+          //|c:|TIMESTAMP|USER|MESSAGE
+          if (RegExp(r'^[A-Za-z0-9]').firstMatch(args[2]) != null) {
+            args[2] = ' ' + args[2];
+          }
+          if (_from != current) {
+            rooms[_from].hasUpdates = true;
+          }
+          rooms[_from].messages.insert(
+                0,
+                Message(
+                  int.parse(args[1]),
+                  args[2],
+                  args[3],
+                  MessageType.Message,
+                ),
+              );
+          notifyListeners();
+          break;
 
-          usersArgs.removeAt(0);
-          for (final String user in usersArgs)
-            rooms[_from].users.add(RoomUser(Parser.parseName(user)));
-          rooms[_from].info.userCount = rooms[_from].users.length;
-
-          _sortUser();
+        case 'error':
+          rooms[_from].messages.insert(
+                0,
+                Message(
+                  null,
+                  null,
+                  args[1],
+                  MessageType.Error,
+                ),
+              );
           notifyListeners();
           break;
 
@@ -128,14 +137,25 @@ class RoomMessages with ChangeNotifier {
           final infobox = parse(args[1]).getElementsByClassName('infobox')[0];
 
           if (infobox.children.isEmpty) {
-            rooms[_from].messages.insert(0, Message(0, 'Greatings', infobox.innerHtml, MessageType.Greating));
+            rooms[_from].messages.insert(0, Message(0, '', infobox.innerHtml, MessageType.Intro));
           } else {
             //"infobox infobox-roomintro"
-            rooms[_from].messages.insert(0, Message(0, 'Room Intro', args[1], MessageType.Named));
+            rooms[_from].messages.insert(0, Message(0, '', args[1], MessageType.Named));
           }
           notifyListeners();
           break;
+        case 'users':
+        //|users|USERLIST
+          final List<String> usersArgs = args[1].split(',');
 
+          usersArgs.removeAt(0);
+          for (final String user in usersArgs)
+            rooms[_from].users.add(RoomUser(Parser.parseName(user)));
+          rooms[_from].info.userCount = rooms[_from].users.length;
+
+          _sortUser();
+          notifyListeners();
+          break;
         case 'queryresponse':
           args.removeAt(0);
 
@@ -164,6 +184,10 @@ class RoomMessages with ChangeNotifier {
     }
   }
 
+  void sendMessage(String message) {
+    sockets.send('$current|$message');
+  }
+
   void _sortUser() {
     rooms[_from].users.sort((RoomUser l, RoomUser r) {
       final leftGroup = Groups.keys.toList().indexOf(l.group);
@@ -186,9 +210,10 @@ class RoomMessages with ChangeNotifier {
   void joinRoom(String id) {
     current = id;
 
-    if (id.isEmpty)
+    if (id.isEmpty) {
+      notifyListeners();
       return;
-    if (!_currentRooms.contains(id)) {
+    } else if (!_currentRooms.contains(id)) {
       _currentRooms.add(id);
       sockets.send('|/join ' + id);
     } else {
