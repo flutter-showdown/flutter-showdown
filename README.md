@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/showdown-title.png">
+  <img src="assets/images/showdown-title.png">
 </p>
 
 # flutter_showdown
