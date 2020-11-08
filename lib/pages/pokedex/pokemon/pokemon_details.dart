@@ -55,7 +55,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
       final poke = dex[Parser.toId(pokeName)];
       return Row(
         children: [
-          EvoBox(poke, current: poke.name == widget.pokemon.name),
+          PokeBox(poke, current: poke.name == widget.pokemon.name),
           if (poke.evos != null)
             const Padding(
               padding: EdgeInsets.only(left: 8),
@@ -73,6 +73,31 @@ class _PokemonDetailsState extends State<PokemonDetails> {
       );
     }
 
+    String _getEvoMethod() {
+      final condition = widget.pokemon.evoCondition == null
+          ? ''
+          : ' ${widget.pokemon.evoCondition}';
+      final item = widget.pokemon.evoItem;
+      switch (widget.pokemon.evoType) {
+        case 'levelExtra':
+          return 'level-up$condition';
+        case 'levelFriendship':
+          return 'level-up with high Friendship$condition';
+        case 'levelHold':
+          return 'level-up holding $item$condition';
+        case 'levelMove':
+          return 'level-up with ${widget.pokemon.evoMove}$condition';
+        case 'useItem':
+          return item;
+        case 'trade':
+          return 'trade${item != null ? ' holding $item' : ''}';
+        case 'other':
+          return condition;
+        default:
+          return 'level ${widget.pokemon.evoLevel}';
+      }
+    }
+
     Widget _evoTree() {
       if (widget.pokemon.prevo == null && widget.pokemon.evos == null) {
         return const Text('Does not evolve',
@@ -87,6 +112,29 @@ class _PokemonDetailsState extends State<PokemonDetails> {
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: _getNextEvo(base.name),
+      );
+    }
+
+    Widget _formesList() {
+      final base = widget.pokemon.forme != null
+          ? dex[Parser.toId(widget.pokemon.baseSpecies)]
+          : widget.pokemon;
+      final name = base.baseForme ?? 'Base';
+      return Wrap(
+        direction: Axis.horizontal,
+        spacing: 8,
+        children: [
+          PokeBox(
+            base,
+            label: name,
+            current: base.name == widget.pokemon.name,
+          ),
+          ...base.otherFormes.map((f) {
+            final poke = dex[Parser.toId(f)];
+            return PokeBox(poke,
+                label: poke.forme, current: widget.pokemon.name == poke.name);
+          })
+        ],
       );
     }
 
@@ -288,17 +336,47 @@ class _PokemonDetailsState extends State<PokemonDetails> {
               ),
               const Text('Evolution: '),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.only(top: 8),
                 child: _evoTree(),
               ),
-              const Text('Moves: '),
+              if (widget.pokemon.prevo != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    'Evolves from ${widget.pokemon.prevo} (${_getEvoMethod()})',
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              if (widget.pokemon.otherFormes != null ||
+                  widget.pokemon.forme != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Formes:'),
+                      _formesList(),
+                    ],
+                  ),
+                ),
+              if (widget.pokemon.requiredItem != null)
+                Text(
+                  'Must hold ${widget.pokemon.requiredItem}',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              const Padding(
+                padding: EdgeInsets.only(top: 8),
+                child: Text('Moves: '),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: ListView.builder(
-                    itemCount: learnset.length,
-                    itemBuilder: (_, idx) => MoveCard(learnset[idx]),
-                  ),
+                  child: learnset != null
+                      ? ListView.builder(
+                          itemCount: learnset.length,
+                          itemBuilder: (_, idx) => MoveCard(learnset[idx]),
+                        )
+                      : const Text("This pokemon doesn't have a learnset"),
                 ),
               ),
             ],
@@ -309,10 +387,11 @@ class _PokemonDetailsState extends State<PokemonDetails> {
   }
 }
 
-class EvoBox extends StatelessWidget {
-  const EvoBox(this.pokemon, {this.current = false});
+class PokeBox extends StatelessWidget {
+  const PokeBox(this.pokemon, {this.label, this.current = false});
   final Pokemon pokemon;
   final bool current;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -325,20 +404,23 @@ class EvoBox extends StatelessWidget {
               transitionDuration: const Duration(seconds: 0),
             ));
       },
-      child: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Row(
-          children: [
-            Image.asset('assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
-            Text(
-              pokemon.name,
-              style: TextStyle(
-                  color: Colors.blue[800],
-                  fontWeight: current ? FontWeight.bold : FontWeight.normal,
-                  decoration: TextDecoration.underline),
-            )
-          ],
+      child: IntrinsicWidth(
+        child: Container(
+          color: Colors.transparent,
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Row(
+            children: [
+              Image.asset('assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
+              const VerticalDivider(width: 2),
+              Text(
+                label ?? pokemon.name,
+                style: TextStyle(
+                    color: Colors.blue[800],
+                    fontWeight: current ? FontWeight.bold : FontWeight.normal,
+                    decoration: TextDecoration.underline),
+              )
+            ],
+          ),
         ),
       ),
     );
