@@ -68,11 +68,12 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ButtonPlainColor(
-                  onTap: () {
-                    context.read<GlobalMessages>().logout();
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  text: 'Logout'),
+                onTap: () {
+                  context.read<GlobalMessages>().logout();
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                text: 'Logout',
+              ),
             )
           ],
         ),

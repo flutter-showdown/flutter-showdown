@@ -43,10 +43,7 @@ class GlobalMessages with ChangeNotifier {
                 jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
 
             if (body['loggedin'] as bool)
-              sockets.send('/trn ' +
-                  body['username'].toString() +
-                  ',0,' +
-                  body['assertion'].toString());
+              sockets.send('/trn ${body['username']},0,${body['assertion']}');
           });
           break;
         case 'updateuser':
@@ -77,8 +74,8 @@ class GlobalMessages with ChangeNotifier {
   }
 
   void setAvatar(String avatar) {
-    sockets.send('|/avatar ' + avatar);
-    sockets.send('|/cmd userdetails ' + user.userId);
+    sockets.send('|/avatar $avatar');
+    sockets.send('|/cmd userdetails ${user.userId}');
   }
 
   Future<String> setUsername(String username) async {
@@ -93,7 +90,7 @@ class GlobalMessages with ChangeNotifier {
       if (response.body.startsWith(';')) {
         return response.body.substring(response.body.lastIndexOf(';'));
       } else {
-        sockets.send('|/trn ' + username + ',0,' + response.body);
+        sockets.send('|/trn $username,0,${response.body}');
         return '';
       }
     }
@@ -116,8 +113,7 @@ class GlobalMessages with ChangeNotifier {
       if (jsonResponse['actionsuccess'] as bool) {
         user.registered = true;
 
-        sockets.send(
-            '|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
+        sockets.send('|/trn $username,0, ${jsonResponse['assertion']}');
         return true;
       }
     }
@@ -148,8 +144,7 @@ class GlobalMessages with ChangeNotifier {
       if (jsonResponse['actionsuccess'] != null) {
         user.registered = true;
 
-        sockets.send(
-            '|/trn ' + username + ',0,' + jsonResponse['assertion'].toString());
+        sockets.send('|/trn $username,0,${jsonResponse['assertion']}');
         return '';
       }
       return jsonResponse['actionerror'].toString();
