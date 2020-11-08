@@ -14,7 +14,7 @@ class ButtonOutlineColor extends StatelessWidget {
       gradient: LinearGradient(
         colors: <Color>[Colors.lightBlue[200], Colors.lightBlue],
       ),
-      onTap: () => {actionName()},
+      onTap: () => actionName(),
       child: Center(child: Text(text)),
       strokeWidth: 2,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),

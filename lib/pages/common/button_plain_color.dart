@@ -25,7 +25,7 @@ class ButtonPlainColor extends StatelessWidget {
         child: Material(
             color: Colors.transparent,
             child: InkWell(
-                onTap: () => {actionName()},
+                onTap: () => actionName(),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
