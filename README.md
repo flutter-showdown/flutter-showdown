@@ -1,4 +1,6 @@
-![Banner](assets/icons/showdown-title.png)
+<p align="center">
+  <img src="assets/icons/showdown-title.png">
+</p>
 
 # flutter_showdown
 
