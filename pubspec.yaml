@@ -73,11 +73,8 @@ flutter:
     - assets/pokemon-icons/
     - assets/types/
     - assets/categories/
-    - assets/icons/pokemonshowdownbeta.png
     - assets/icons/showdown-title.png
-    - assets/background-image/login-background.jpg
-    - assets/icons/pokemon.png
-    - assets/icons/pokemon2.png
+    - assets/icons/sprite.png
   fonts:
     - family: CustomIcons
       fonts:

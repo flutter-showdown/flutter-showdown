@@ -11,8 +11,8 @@ class ButtonOutlineColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineGradientButton(
-      gradient: const LinearGradient(
-        colors: <Color>[Colors.blue, Colors.green],
+      gradient: LinearGradient(
+        colors: <Color>[Colors.lightBlue[200], Colors.lightBlue],
       ),
       onTap: () => {actionName()},
       child: Center(child: Text(text)),

@@ -2,21 +2,49 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class BottomWaveContainer extends StatelessWidget {
+class BottomWaveContainer extends StatefulWidget {
   const BottomWaveContainer(this.child);
   final Widget child;
 
   @override
+  _BottomWaveContainerState createState() => _BottomWaveContainerState();
+}
+
+class _BottomWaveContainerState extends State<BottomWaveContainer>
+    with SingleTickerProviderStateMixin {
+  Animation<double> animationBottom;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: const Duration(seconds: 3), vsync: this);
+    animationBottom = Tween<double>(begin: -40.0, end: 0.0).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed)
+        controller.forward();
+      else if (status == AnimationStatus.completed) {
+        controller.reverse();
+      }
+    });
+    controller.forward();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      child: child,
+      child: widget.child,
       curve: Curves.elasticOut,
-      tween: Tween(begin: -50.0, end: 0.0),
-      duration: const Duration(seconds: 10),
+      tween: Tween(begin: -40.0, end: 0.0),
+      duration: const Duration(seconds: 3),
       builder: (BuildContext context, double size, Widget child) {
         return ClipPath(
           child: child,
-          clipper: BottomWaveClipper(value: size),
+          clipper: BottomWaveClipper(value: animationBottom.value),
         );
       },
     );

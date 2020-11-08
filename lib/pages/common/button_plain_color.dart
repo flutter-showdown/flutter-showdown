@@ -12,8 +12,8 @@ class ButtonPlainColor extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            gradient: const LinearGradient(
-              colors: <Color>[Colors.blue, Colors.green],
+            gradient: LinearGradient(
+              colors: <Color>[Colors.lightBlue[200], Colors.lightBlue],
             ),
             boxShadow: [
               BoxShadow(
