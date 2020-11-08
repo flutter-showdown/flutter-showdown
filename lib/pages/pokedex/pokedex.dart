@@ -11,7 +11,7 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexState extends State<Pokedex> {
-  List<Pokemon> fullPokedex;
+  Map<String, Pokemon> fullPokedex;
   List<Pokemon> pokedex;
   String currentSearch = '';
   Filters currentFilters = Filters.clone(defaultFilters);
@@ -20,8 +20,8 @@ class _PokedexState extends State<Pokedex> {
   @override
   void initState() {
     super.initState();
-    fullPokedex = context.read<List<Pokemon>>();
-    pokedex = fullPokedex;
+    fullPokedex = context.read<Map<String, Pokemon>>();
+    pokedex = fullPokedex.values.toList();
   }
 
   void _onSearch(String s) {
@@ -31,7 +31,8 @@ class _PokedexState extends State<Pokedex> {
   }
 
   List<Pokemon> _applyFilters(Filters filters, String search) {
-    final res = fullPokedex
+    final res = fullPokedex.values
+        .toList()
         // Apply search
         .where((p) => p.name.toLowerCase().contains(search))
         // Apply types filters

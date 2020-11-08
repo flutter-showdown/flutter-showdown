@@ -39,67 +39,70 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final user = context.watch<GlobalMessages>().user;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox.expand(child: screens[_selectedIndex]),
-          Positioned(
-            bottom: 0,
-            child: AnimatedContainer(
-              height: _closed ? 0 : 56,
-              duration: const Duration(milliseconds: 300),
-              width: MediaQuery.of(context).size.width,
-              child: BottomNavigationBar(
-                onTap: _onItemTapped,
-                currentIndex: _selectedIndex,
-                selectedItemColor: Colors.amber[800],
-                items: [
-                  const BottomNavigationBarItem(
-                    label: 'Arena',
-                    icon: Icon(CustomIcons.battle),
-                  ),
-                  const BottomNavigationBarItem(
-                    label: 'Pokedex',
-                    icon: Icon(CustomIcons.pokeball),
-                  ),
-                  BottomNavigationBarItem(
-                    label: 'Home',
-                    icon: Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: ThemeData.light().scaffoldBackgroundColor,
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                            getAvatarLink(user.avatar),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SizedBox.expand(child: screens[_selectedIndex]),
+            Positioned(
+              bottom: 0,
+              child: AnimatedContainer(
+                height: _closed ? 0 : 56,
+                duration: const Duration(milliseconds: 300),
+                width: MediaQuery.of(context).size.width,
+                child: BottomNavigationBar(
+                  onTap: _onItemTapped,
+                  currentIndex: _selectedIndex,
+                  selectedItemColor: Colors.amber[800],
+                  items: [
+                    const BottomNavigationBarItem(
+                      label: 'Arena',
+                      icon: Icon(CustomIcons.battle),
+                    ),
+                    const BottomNavigationBarItem(
+                      label: 'Pokedex',
+                      icon: Icon(CustomIcons.pokeball),
+                    ),
+                    BottomNavigationBarItem(
+                      label: 'Home',
+                      icon: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: ThemeData.light().scaffoldBackgroundColor,
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              getAvatarLink(user.avatar),
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
+                          shape: BoxShape.circle,
+                          border: Border.all(width: 1, color: Colors.grey[600]),
                         ),
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 1, color: Colors.grey[600]),
+                      ),
+                      activeIcon: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: ThemeData.light().scaffoldBackgroundColor,
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              getAvatarLink(user.avatar),
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(width: 1, color: Colors.amber[800]),
+                        ),
                       ),
                     ),
-                    activeIcon: Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: ThemeData.light().scaffoldBackgroundColor,
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                            getAvatarLink(user.avatar),
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 1, color: Colors.amber[800]),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
