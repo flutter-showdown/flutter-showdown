@@ -25,11 +25,11 @@ dependencies:
     sdk: flutter
   http: ^0.12.2
   html: ^0.14.0+4
+  flutter_html: ^1.0.2
   image: ^2.1.18
   provider: ^4.3.2+2
-  super_enum: ^0.4.2
   url_launcher: ^5.7.8
-  webview_flutter: ^1.0.5
+  #webview_flutter: ^1.0.5
   web_socket_channel: ^1.1.0
   speech_to_text: ^2.7.0
   cached_network_image: ^2.3.3
