@@ -6,7 +6,7 @@ import 'package:flutter_showdown/providers/room_messages.dart';
 import 'package:provider/provider.dart';
 
 import 'chat_screen.dart';
-import 'chat_selector.dart';
+import 'chat_selector/chat_selector.dart';
 import 'private_section/news_screen.dart';
 import 'private_section/private_channel_list.dart';
 import 'user_list.dart';
@@ -15,7 +15,7 @@ class RoomsScreen extends StatefulWidget {
   const RoomsScreen({this.onChatChange});
 
   final VoidCallback onChatChange;
-  static const double _widthFactor = 0.83;
+  static const double _widthFactor = 0.87;
 
   @override
   State<StatefulWidget> createState() => _RoomsScreenState();
@@ -56,7 +56,6 @@ class _RoomsScreenState extends State<RoomsScreen> with SingleTickerProviderStat
         color: const Color.fromARGB(255, 201, 201, 201),
         child: SafeArea(
           child: Stack(
-            overflow: Overflow.visible,
             children: [
               FractionallySizedBox(
                 widthFactor: RoomsScreen._widthFactor,
