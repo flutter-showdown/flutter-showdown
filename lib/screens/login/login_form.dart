@@ -53,7 +53,6 @@ class _LoginFormState extends State<LoginForm> {
               _inputController.clear();
             } else
               //Success
-
               Navigator.pushReplacementNamed(context, '/main');
           });
       });
@@ -139,9 +138,13 @@ class _LoginFormState extends State<LoginForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (snapshot.data == false)
-                  const Text('Wrong Password',
-                      style: TextStyle(
-                          color: Colors.red, fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Wrong Password',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 Form(
                   key: _formKey,
                   child: TextFormField(
@@ -151,14 +154,15 @@ class _LoginFormState extends State<LoginForm> {
                     decoration: InputDecoration(
                       labelText: 'Password',
                       suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _obscure = !_obscure;
-                            });
-                          },
-                          child: Icon(_obscure
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye)),
+                        onTap: () {
+                          setState(() {
+                            _obscure = !_obscure;
+                          });
+                        },
+                        child: Icon(_obscure
+                            ? Icons.visibility_off
+                            : Icons.remove_red_eye),
+                      ),
                     ),
                     validator: (String password) {
                       if (password.isEmpty) {
@@ -184,36 +188,36 @@ class _LoginFormState extends State<LoginForm> {
   Widget _chooseButton() {
     return Container(
       margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 55.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        if (_protected) _passwordBuilder() else _usernameBuilder(),
-        const SizedBox(
-          height: 15.0,
-        ),
-        if (_protected)
-          Row(
-            children: [
-              Expanded(
-                child: ButtonOutlineColor(
-                  text: 'Cancel',
-                  onTap: () => setState(
-                    () {
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (_protected) _passwordBuilder() else _usernameBuilder(),
+          const SizedBox(height: 15.0),
+          if (_protected)
+            Row(
+              children: [
+                Expanded(
+                  child: ButtonOutlineColor(
+                    text: 'Cancel',
+                    onTap: () => setState(() {
                       _logFuture = Future.value(null);
                       _inputController.clear();
                       _guest = true;
                       _protected = false;
-                    },
+                    }),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 15.0,
-              ),
-              Expanded(
-                  child: ButtonPlainColor(text: 'Login', onTap: _setPassword)),
-            ],
-          )
-        else
-          ButtonPlainColor(
+                const SizedBox(width: 15.0),
+                Expanded(
+                  child: ButtonPlainColor(
+                    text: 'Login',
+                    onTap: _setPassword,
+                  ),
+                ),
+              ],
+            )
+          else
+            ButtonPlainColor(
               text: 'Continue${_guest ? ' as guest' : ''}',
               onTap: () {
                 if (_guest)
@@ -221,8 +225,10 @@ class _LoginFormState extends State<LoginForm> {
                 else
                   _setUsername();
                 _inputController.clear();
-              })
-      ]),
+              },
+            ),
+        ],
+      ),
     );
   }
 
@@ -230,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(24.0),
         child: _chooseButton(),
       ),
     );
