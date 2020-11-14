@@ -14,8 +14,11 @@ class _PokemonAnimationState extends State<PokemonAnimation>
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(duration: const Duration(seconds: 5), vsync: this);
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    );
     animationBottom = Tween<double>(begin: 50, end: 180).animate(controller)
       ..addListener(() {
         setState(() {});
@@ -37,13 +40,14 @@ class _PokemonAnimationState extends State<PokemonAnimation>
       right: 30,
       child: Center(
         child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          height: 100,
           width: 120,
+          height: 100,
+          margin: const EdgeInsets.symmetric(vertical: 10),
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/flying-pikachu.png'),
-                fit: BoxFit.fill),
+              image: AssetImage('assets/images/flying-pikachu.png'),
+              fit: BoxFit.fill,
+            ),
           ),
         ),
       ),

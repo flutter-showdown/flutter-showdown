@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class BottomWaveContainer extends StatefulWidget {
   const BottomWaveContainer(this.child);
+
   final Widget child;
 
   @override
@@ -59,6 +60,7 @@ class _BottomWaveContainerState extends State<BottomWaveContainer>
 
 class BottomWaveClipper extends CustomClipper<Path> {
   BottomWaveClipper({this.value}) : super();
+
   final double value;
 
   @override
@@ -68,14 +70,21 @@ class BottomWaveClipper extends CustomClipper<Path> {
 
     final firstControlPoint = Offset(size.width / 4, (size.height / 3) - value);
     final firstEndPoint = Offset(size.width / 2, size.height / 3 - 60);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
+    path.quadraticBezierTo(
+      firstControlPoint.dx,
+      firstControlPoint.dy,
+      firstEndPoint.dx,
+      firstEndPoint.dy,
+    );
 
-    final secondControlPoint =
-        Offset(size.width - (size.width / 4), (size.height / 4 - 65) + value);
+    final secondControlPoint = Offset(size.width - (size.width / 4), (size.height / 4 - 65) + value);
     final secondEndPoint = Offset(size.width, (size.height / 3) - 40);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+    path.quadraticBezierTo(
+      secondControlPoint.dx,
+      secondControlPoint.dy,
+      secondEndPoint.dx,
+      secondEndPoint.dy,
+    );
 
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0.0);
@@ -84,6 +93,5 @@ class BottomWaveClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) =>
-      oldClipper is BottomWaveClipper && value != oldClipper.value;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => oldClipper is BottomWaveClipper && value != oldClipper.value;
 }

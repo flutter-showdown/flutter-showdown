@@ -1,6 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-import 'package:super_enum/super_enum.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../parser.dart';
@@ -61,12 +58,6 @@ class User {
       registered = false;
     }
   }
-}
-
-@superEnum
-enum _GlobalMessage {
-  @UseClass(User)
-  updateUser
 }
 
 // **************************************************************************
