@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../parser.dart';
@@ -20,40 +20,41 @@ class GlobalMessages with ChangeNotifier {
   static const String ActionUrl = ServerUrl + '/action.php';
 
   // TODO(reno): put in cache userdetails [autojoin help,lobby] [ |/noreply /leave lobby]
-  void _onMessageReceived(String message) {
+  Future<void> _onMessageReceived(String message) async {
     for (final String line in message.split('\n')) {
       final List<String> args = Parser.parseLine(line);
 
       switch (args[0]) {
         case 'challstr':
           //|challstr|CHALLSTR
-          final Map<String, String> body = {
-            'act': 'upkeep',
-            'challstr': args[1]
-          };
+          final prefs = await SharedPreferences.getInstance();
+          final body = {'act': 'upkeep', 'challstr': args[1]};
+          final headers = {'cookie': prefs.getString('AuthCookie') ?? ''};
 
           _challstr = args[1];
-          sockets.send('|/cmd rooms');
-          sockets.send('|/autojoin');
-          http.post(ActionUrl, body: body).then((http.Response response) {
+          post(ActionUrl, headers: headers, body: body).then((Response response) {
             if (response == null) {
               return;
             }
-            final body =
-                jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
+            final body =jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
 
-            if (body['loggedin'] as bool)
-              sockets.send('/trn ${body['username']},0,${body['assertion']}');
+            sockets.send('|/cmd rooms');
+            sockets.send('|/autojoin');
+            if (body['loggedin'] as bool) {
+              sockets.send('|/trn ${body['username']},0,${body['assertion']}');
+            }
           });
-          break;
+          return;
         case 'updateuser':
           //|updateuser|USER|NAMED|AVATAR|SETTINGS
+          user ??= User();
+
           user.setName(args[1], args[2] == '1', args[3]);
 
           notifyListeners();
-          break;
+          return;
         case 'updatechallenges':
-          break;
+          return;
         case 'queryresponse':
           args.removeAt(0);
 
@@ -66,15 +67,15 @@ class GlobalMessages with ChangeNotifier {
                 user.avatar = newDetails.avatar;
                 notifyListeners();
               }
-              break;
+              return;
           }
-          break;
+          return;
       }
     }
   }
 
   void setAvatar(String avatar) {
-    sockets.send('|/avatar $avatar');
+    sockets.send('|/avatar ' + avatar);
     sockets.send('|/cmd userdetails ${user.userId}');
   }
 
@@ -84,7 +85,7 @@ class GlobalMessages with ChangeNotifier {
       'userid': Parser.toId(username),
       'challstr': _challstr
     };
-    final response = await http.post(ActionUrl, body: body);
+    final response = await post(ActionUrl, body: body);
 
     if (response.statusCode == 200) {
       if (response.body.startsWith(';')) {
@@ -104,7 +105,7 @@ class GlobalMessages with ChangeNotifier {
       'pass': password,
       'challstr': _challstr
     };
-    final response = await http.post(ActionUrl, body: body);
+    final response = await post(ActionUrl, body: body);
 
     if (response.statusCode == 200) {
       final jsonResponse =
@@ -112,8 +113,17 @@ class GlobalMessages with ChangeNotifier {
 
       if (jsonResponse['actionsuccess'] as bool) {
         user.registered = true;
+        final rawCookie = response.headers['set-cookie'];
+        if (rawCookie != null) {
+          final sidIdx = rawCookie.indexOf('sid=');
+          final prefs = await SharedPreferences.getInstance();
 
-        sockets.send('|/trn $username,0, ${jsonResponse['assertion']}');
+          await prefs.setString(
+            'AuthCookie',
+            rawCookie.substring(sidIdx, rawCookie.indexOf(';', sidIdx)),
+          );
+        }
+        sockets.send('|/trn $username,0,${jsonResponse['assertion']}');
         return true;
       }
     }
@@ -135,7 +145,7 @@ class GlobalMessages with ChangeNotifier {
       'captcha': captcha,
       'challstr': _challstr
     };
-    final response = await http.post(ActionUrl, body: body);
+    final response = await post(ActionUrl, body: body);
 
     if (response.statusCode == 200) {
       final jsonResponse =

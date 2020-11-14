@@ -31,6 +31,7 @@ class WebSocketsNotifications {
       _channel.stream.listen(_onReceptionOfMessageFromServer);
     } catch (e) {
       // TODO(reno): Catch
+      log(e.toString(), name: 'ERROR');
     }
   }
 
