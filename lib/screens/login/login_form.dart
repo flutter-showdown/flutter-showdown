@@ -150,15 +150,12 @@ class _LoginFormState extends State<LoginForm> {
                   child: TextFormField(
                     controller: _inputController,
                     onFieldSubmitted: (_) => _setPassword(),
+                    autofocus: true,
                     obscureText: _obscure,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _obscure = !_obscure;
-                          });
-                        },
+                        onTap: () => setState(() => _obscure = !_obscure),
                         child: Icon(_obscure
                             ? Icons.visibility_off
                             : Icons.remove_red_eye),
@@ -171,7 +168,7 @@ class _LoginFormState extends State<LoginForm> {
                       return null;
                     },
                   ),
-                )
+                ),
               ],
             );
           }
@@ -185,59 +182,63 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget _chooseButton() {
-    return Container(
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 55.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (_protected) _passwordBuilder() else _usernameBuilder(),
-          const SizedBox(height: 15.0),
-          if (_protected)
-            Row(
-              children: [
-                Expanded(
-                  child: ButtonOutlineColor(
-                    text: 'Cancel',
-                    onTap: () => setState(() {
-                      _logFuture = Future.value(null);
-                      _inputController.clear();
-                      _guest = true;
-                      _protected = false;
-                    }),
-                  ),
-                ),
-                const SizedBox(width: 15.0),
-                Expanded(
-                  child: ButtonPlainColor(
-                    text: 'Login',
-                    onTap: _setPassword,
-                  ),
-                ),
-              ],
-            )
-          else
-            ButtonPlainColor(
-              text: 'Continue${_guest ? ' as guest' : ''}',
-              onTap: () {
-                if (_guest)
-                  Navigator.pushReplacementNamed(context, '/main');
-                else
-                  _setUsername();
-                _inputController.clear();
-              },
-            ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    //state ?
+    final user = context.watch<GlobalMessages>().user;
+
+    if (user != null && user.named) {
+      Future.microtask(() => Navigator.pushReplacementNamed(context, '/main'));
+    }
+
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: _chooseButton(),
+        padding: const EdgeInsets.all(24),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 56),
+          child: user != null
+              ? Column(
+                  children: [
+                    if (_protected) _passwordBuilder() else _usernameBuilder(),
+                    const SizedBox(height: 16),
+                    if (_protected)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ButtonOutlineColor(
+                              text: 'Cancel',
+                              onTap: () => setState(() {
+                                _logFuture = Future.value(null);
+                                _inputController.clear();
+                                _guest = true;
+                                _protected = false;
+                              }),
+                            ),
+                          ),
+                          const SizedBox(width: 15.0),
+                          Expanded(
+                            child: ButtonPlainColor(
+                              text: 'Login',
+                              onTap: _setPassword,
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      ButtonPlainColor(
+                        text: 'Continue${_guest ? ' as guest' : ''}',
+                        onTap: () {
+                          if (_guest)
+                            Navigator.pushReplacementNamed(context, '/main');
+                          else
+                            _setUsername();
+                          _inputController.clear();
+                        },
+                      ),
+                  ],
+                )
+              : const CircularProgressIndicator(),
+        ),
       ),
     );
   }
