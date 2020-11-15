@@ -18,12 +18,6 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   List<Widget> screens;
 
-  void _onItemTapped(int index) {
-    if (!_closed) {
-      setState(() => _selectedIndex = index);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -33,6 +27,12 @@ class _MainScreenState extends State<MainScreen> {
       Pokedex(),
       HomeScreen(),
     ];
+  }
+
+  void _onItemTapped(int index) {
+    if (!_closed) {
+      setState(() => _selectedIndex = index);
+    }
   }
 
   @override
@@ -71,10 +71,10 @@ class _MainScreenState extends State<MainScreen> {
                         decoration: BoxDecoration(
                           color: ThemeData.light().scaffoldBackgroundColor,
                           image: DecorationImage(
+                            fit: BoxFit.cover,
                             image: CachedNetworkImageProvider(
                               getAvatarLink(user.avatar),
                             ),
-                            fit: BoxFit.cover,
                           ),
                           shape: BoxShape.circle,
                           border: Border.all(width: 1, color: Colors.grey[600]),
@@ -92,8 +92,10 @@ class _MainScreenState extends State<MainScreen> {
                             fit: BoxFit.cover,
                           ),
                           shape: BoxShape.circle,
-                          border:
-                              Border.all(width: 1, color: Colors.amber[800]),
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.amber[800],
+                          ),
                         ),
                       ),
                     ),
