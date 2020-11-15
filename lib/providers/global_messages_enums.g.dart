@@ -13,7 +13,8 @@ UserDetails _$UserDetailsFromJson(Map<String, dynamic> json) {
     ..name = json['name'] as String
     ..avatar = json['avatar'] as String
     ..group = json['group'] as String
-    ..status = json['status'] as String;
+    ..status = json['status'] as String
+    ..autoconfirmed = json['autoconfirmed'] as bool;
 }
 
 Map<String, dynamic> _$UserDetailsToJson(UserDetails instance) =>
@@ -24,6 +25,7 @@ Map<String, dynamic> _$UserDetailsToJson(UserDetails instance) =>
       'avatar': instance.avatar,
       'group': instance.group,
       'status': instance.status,
+      'autoconfirmed': instance.autoconfirmed,
     };
 
 AvailableRooms _$AvailableRoomsFromJson(Map<String, dynamic> json) {

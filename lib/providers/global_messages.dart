@@ -13,44 +13,31 @@ class GlobalMessages with ChangeNotifier {
   GlobalMessages() {
     sockets.initCommunication();
     sockets.addListener(_onMessageReceived);
+
+    SharedPreferences.getInstance().then((value) => _prefs = value);
   }
 
+  User user;
   String _challstr;
-  User user = User();
+  SharedPreferences _prefs;
   static const String ActionUrl = ServerUrl + '/action.php';
 
-  // TODO(reno): put in cache userdetails [autojoin help,lobby] [ |/noreply /leave lobby]
-  Future<void> _onMessageReceived(String message) async {
+  void _onMessageReceived(String message) {
     for (final String line in message.split('\n')) {
       final List<String> args = Parser.parseLine(line);
 
       switch (args[0]) {
         case 'challstr':
           //|challstr|CHALLSTR
-          final prefs = await SharedPreferences.getInstance();
-          final body = {'act': 'upkeep', 'challstr': args[1]};
-          final headers = {'cookie': prefs.getString('AuthCookie') ?? ''};
-
           _challstr = args[1];
-          post(ActionUrl, headers: headers, body: body).then((Response response) {
-            if (response == null) {
-              return;
-            }
-            final body =jsonDecode(response.body.substring(1)) as Map<String, dynamic>;
 
-            sockets.send('|/cmd rooms');
-            sockets.send('|/autojoin');
-            if (body['loggedin'] as bool) {
-              sockets.send('|/trn ${body['username']},0,${body['assertion']}');
-            }
-          });
+          keepConnection();
           return;
         case 'updateuser':
           //|updateuser|USER|NAMED|AVATAR|SETTINGS
           user ??= User();
-
           user.setName(args[1], args[2] == '1', args[3]);
-
+          // TODO(renaud): If the avatar isn't a number. Put it in cache ?
           notifyListeners();
           return;
         case 'updatechallenges':
@@ -65,6 +52,9 @@ class GlobalMessages with ChangeNotifier {
 
               if (newDetails.userid == user.userId) {
                 user.avatar = newDetails.avatar;
+                if (newDetails.autoconfirmed) {
+                  user.registered = true;
+                }
                 notifyListeners();
               }
               return;
@@ -74,9 +64,37 @@ class GlobalMessages with ChangeNotifier {
     }
   }
 
+  void keepConnection() {
+    final body = {'act': 'upkeep', 'challstr': _challstr};
+    final headers = {'cookie': _prefs.getString('AuthCookie') ?? ''};
+
+    post(ActionUrl, headers: headers, body: body).then((Response res) {
+      final body = jsonDecode(res.body.substring(1)) as Map<String, dynamic>;
+      final avatar = _prefs.getString('UserAvatar') ?? '';
+
+      if (avatar.isNotEmpty) {
+        sockets.send('|/avatar $avatar');
+        sockets.send('|/cmd userdetails ${user.userId}');
+      }
+      sockets.send('|/cmd rooms');
+      sockets.send('|/autojoin');
+      //[autojoin help,lobby] [ |/noreply /leave lobby]
+      if (body['loggedin'] as bool) {
+        final username = body['username'].toString();
+
+        user ??= User();
+        user.setName(' $username', true, avatar);
+        sockets.send('|/trn $username,0,${body['assertion']}');
+        notifyListeners();
+      }
+    });
+  }
+
   void setAvatar(String avatar) {
     sockets.send('|/avatar ' + avatar);
     sockets.send('|/cmd userdetails ${user.userId}');
+
+    _prefs.setString('UserAvatar', avatar);
   }
 
   Future<String> setUsername(String username) async {
@@ -116,9 +134,8 @@ class GlobalMessages with ChangeNotifier {
         final rawCookie = response.headers['set-cookie'];
         if (rawCookie != null) {
           final sidIdx = rawCookie.indexOf('sid=');
-          final prefs = await SharedPreferences.getInstance();
 
-          await prefs.setString(
+          _prefs.setString(
             'AuthCookie',
             rawCookie.substring(sidIdx, rawCookie.indexOf(';', sidIdx)),
           );
@@ -131,6 +148,9 @@ class GlobalMessages with ChangeNotifier {
   }
 
   void logout() {
+    user = null;
+    // Clear user preferences
+    _prefs.remove('AuthCookie');
     // Reset websocket
     sockets.initCommunication();
   }

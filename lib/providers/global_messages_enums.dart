@@ -30,6 +30,7 @@ class UserDetails {
   String avatar;
   String group;
   String status;
+  bool autoconfirmed;
   @JsonKey(ignore: true)
   List<String> rooms = [];
   @JsonKey(ignore: true)
