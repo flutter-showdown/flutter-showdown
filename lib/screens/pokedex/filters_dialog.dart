@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
+import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
 
 const List<String> tiers = [
   'All',
@@ -146,13 +147,10 @@ class _FiltersDialogState extends State<FiltersDialog> {
                       Container(
                         width: 220,
                         padding: const EdgeInsets.all(8),
-                        child: GridView.count(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          crossAxisSpacing: 4,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 2,
-                          crossAxisCount: 4,
+                        child: Wrap(
+                          spacing: 4,
+                          runSpacing: 4,
+                          alignment: WrapAlignment.center,
                           children: filters.typesFilters.entries.map((e) {
                             return GestureDetector(
                               onTap: () {
@@ -161,21 +159,22 @@ class _FiltersDialogState extends State<FiltersDialog> {
                                       !filters.typesFilters[e.key];
                                 });
                               },
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: e.value
-                                        ? Colors.blue
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Image.asset(
-                                    'assets/types/${e.key}.png',
-                                    scale: 0.9,
-                                  )),
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                  e.value ? Colors.white : Colors.grey[600],
+                                  BlendMode.modulate,
+                                ),
+                                child: TypeBox(
+                                  e.key,
+                                  width: 56,
+                                  height: 28,
+                                  fontSize: 9,
+                                ),
+                              ),
                             );
                           }).toList(),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   Container(

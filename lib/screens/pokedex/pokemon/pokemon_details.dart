@@ -92,16 +92,18 @@ class _PokemonDetailsState extends State<PokemonDetails> {
         case 'trade':
           return 'trade${item != null ? ' holding $item' : ''}';
         case 'other':
-          return condition;
+          return condition.trim();
         default:
-          return 'level ${widget.pokemon.evoLevel}';
+          return 'level ${widget.pokemon.evoLevel}$condition';
       }
     }
 
     Widget _evoTree() {
       if (widget.pokemon.prevo == null && widget.pokemon.evos == null) {
-        return const Text('Does not evolve',
-            style: TextStyle(fontStyle: FontStyle.italic));
+        return const Text(
+          'Does not evolve',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        );
       }
       Pokemon current = widget.pokemon;
       while (current.prevo != null) {
@@ -255,7 +257,10 @@ class _PokemonDetailsState extends State<PokemonDetails> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 16, left: 8),
-                child: Text('Abilities :'),
+                child: Text(
+                  'Abilities :',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -339,9 +344,12 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                   ],
                 ),
               ),
-              const Text('Evolution: '),
+              const Text(
+                'Evolution: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: _evoTree(),
               ),
               if (widget.pokemon.prevo != null)
@@ -359,7 +367,10 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Formes:'),
+                      const Text(
+                        'Formes:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       _formesList(),
                     ],
                   ),
@@ -371,7 +382,10 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                 ),
               const Padding(
                 padding: EdgeInsets.only(top: 8),
-                child: Text('Moves: '),
+                child: Text(
+                  'Moves: ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               Expanded(
                 child: Padding(

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TypeBox extends StatelessWidget {
-  const TypeBox(this.type, {this.textColor = Colors.white});
+  const TypeBox(this.type,
+      {this.textColor = Colors.white,
+      this.width = 72,
+      this.height = 24,
+      this.fontSize = 13});
 
   final String type;
   final Color textColor;
+  final double width;
+  final double height;
+  final double fontSize;
 
   static const Map<String, List<Color>> typeColors = {
     'Bird': [Color(0xffCBC9CB), Color(0xffAAA6AA), Color(0xffa99890)],
@@ -43,21 +50,25 @@ class TypeBox extends StatelessWidget {
           colors: [typeColors[type][0], typeColors[type][1]],
         ),
       ),
-      width: 72,
-      height: 24,
+      width: width,
+      height: height,
       child: Center(
-          child: Text(
-        type.toUpperCase(),
-        style: TextStyle(
-          color: textColor,
-          fontWeight: FontWeight.w600,
-          fontSize: 13,
-          shadows: const [
-            Shadow(
-                offset: Offset(1, 1), blurRadius: 1, color: Color(0xff333333))
-          ],
+        child: Text(
+          type.toUpperCase(),
+          style: TextStyle(
+            color: textColor,
+            fontSize: fontSize,
+            fontWeight: FontWeight.w600,
+            shadows: const [
+              Shadow(
+                blurRadius: 1,
+                offset: Offset(1, 1),
+                color: Color(0xff333333),
+              )
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
