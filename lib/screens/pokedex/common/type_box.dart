@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_showdown/screens/pokedex/common/type_effectiveness.dart';
 
 class TypeBox extends StatelessWidget {
   const TypeBox(this.type,
       {this.textColor = Colors.white,
       this.width = 72,
       this.height = 24,
-      this.fontSize = 13});
+      this.fontSize = 13,
+      this.pressable = true});
 
   final String type;
   final Color textColor;
   final double width;
   final double height;
   final double fontSize;
+  final bool pressable;
 
   static const Map<String, List<Color>> typeColors = {
     'Bird': [Color(0xffCBC9CB), Color(0xffAAA6AA), Color(0xffa99890)],
@@ -40,7 +43,7 @@ class TypeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final Widget content = Container(
       decoration: BoxDecoration(
         border: Border.all(color: typeColors[type][2]),
         borderRadius: BorderRadius.circular(4),
@@ -70,5 +73,18 @@ class TypeBox extends StatelessWidget {
         ),
       ),
     );
+    return pressable
+        ? GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder<TypeEffectiveness>(
+                    pageBuilder: (context, _, __) => TypeEffectiveness(type),
+                    transitionDuration: const Duration(seconds: 0),
+                  ));
+            },
+            child: content,
+          )
+        : content;
   }
 }
