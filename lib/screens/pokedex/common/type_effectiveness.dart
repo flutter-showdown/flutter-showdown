@@ -10,6 +10,7 @@ class TypeEffectiveness extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chart = Typechart[type];
+    final spec = TypeSpec[type];
     final List<String> weakAgainst = [];
     final List<String> strongAgainst = [];
     final List<String> noEffectAgainst = [];
@@ -127,6 +128,11 @@ class TypeEffectiveness extends StatelessWidget {
               spacing: 4,
               runSpacing: 4,
             ),
+            if (spec != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(spec),
+              )
           ],
         ),
       ),

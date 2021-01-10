@@ -364,6 +364,29 @@ const Map<String, Map<String, Effectiveness>> Typechart = {
   }
 };
 
+const Map<String, String> TypeSpec = {
+  'Dark':
+      'Pokemon of this type are immune to Status moves used by a Pokemon with the Prankster Ability, unless the Pokemon is an ally. These Pokemon can be hit by Psychic-type attacks if they are under the effect of Miracle Eye.',
+  'Electric': 'Pokemon of this type cannot become paralyzed.',
+  'Fire': 'Pokemon of this type cannot become burned.',
+  'Flying':
+      'Pokemon of this type are airborne and lose their Flying type until the end of the turn they use Roost. These Pokemon can be hit by Thousand Arrows despite it being a Ground-type attack.',
+  'Ghost':
+      'Pokemon of this type cannot be prevented from switching out by any effect. These Pokemon can be hit by Normal- and Fighting-type attacks if they are under the effect of Foresight or Odor Sleuth, or if the attacker has the Scrappy Ability.',
+  'Grass':
+      'Pokemon of this type cannot become affected by Leech Seed and are immune to powder moves and the Effect Spore Ability.',
+  'Ground': 'Pokemon of this type are immune to damage from Sandstorm.',
+  'Ice':
+      'Pokemon of this type cannot become frozen and are immune to Sheer Cold and damage from Hail.',
+  'Poison':
+      'Pokemon of this type cannot become poisoned, except by a Pokemon with the Corrosion Ability, and remove Toxic Spikes from their side of the field if they are grounded as they switch in. These Pokemon cannot miss when using Toxic, even if the target is in the middle of a two-turn move.',
+  'Rock':
+      'Pokemon of this type are immune to damage from Sandstorm and have their Special Defense multiplied by 1.5 during Sandstorm.',
+  'Steel':
+      'Pokemon of this type cannot become poisoned, except by a Pokemon with the Corrosion Ability, and are immune to damage from Sandstorm.',
+  'Water': 'Freeze-Dry is super effective against this type.',
+};
+
 //https://github.com/smogon/pokemon-showdown-client/blob/master/website/pages/staff.md
 const Map<String, String> Groups = {
   '~': 'Administrator (~)',
