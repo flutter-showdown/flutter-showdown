@@ -169,6 +169,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                                   width: 56,
                                   height: 28,
                                   fontSize: 9,
+                                  pressable: false,
                                 ),
                               ),
                             );

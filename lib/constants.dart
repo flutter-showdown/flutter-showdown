@@ -361,7 +361,8 @@ const Map<String, Map<String, Effectiveness>> Typechart = {
     'Rock': Effectiveness.Neutral,
     'Steel': Effectiveness.Resist,
     'Water': Effectiveness.Resist
-  }
+  },
+  'Bird': {}
 };
 
 const Map<String, String> TypeSpec = {

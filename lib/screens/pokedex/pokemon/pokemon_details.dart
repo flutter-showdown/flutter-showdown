@@ -242,6 +242,8 @@ class _PokemonDetailsState extends State<PokemonDetails> {
     }
 
     return SafeArea(
+      bottom: false,
+      maintainBottomViewPadding: true,
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -563,7 +565,7 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                     const Text("This pokemon doesn't have a learnset"),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
