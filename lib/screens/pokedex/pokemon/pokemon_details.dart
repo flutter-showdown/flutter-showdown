@@ -19,12 +19,9 @@ class PokemonDetails extends StatefulWidget {
 }
 
 class _PokemonDetailsState extends State<PokemonDetails> {
-  ScrollController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = ScrollController();
   }
 
   @override
@@ -146,10 +143,9 @@ class _PokemonDetailsState extends State<PokemonDetails> {
         title: Text(widget.pokemon.name),
       ),
       body: SingleChildScrollView(
-        controller: _controller,
         child: Container(
           height: MediaQuery.of(context).size.height + 200,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -454,14 +450,8 @@ class StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int width = stat.floor();
-    if (width > 200) {
-      width = 200;
-    }
-    int color = (stat * 180 / 255).floor();
-    if (color > 360) {
-      color = 360;
-    }
+    final int width = stat.clamp(0, 200).toInt();
+    final int color = (stat * 180 / 255).clamp(0, 360).floor();
     return Row(
       children: [
         Container(
