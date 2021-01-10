@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/screens/pokedex/ability/ability_details.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
+import 'package:flutter_showdown/screens/pokedex/common/type_effectiveness.dart';
 import 'package:flutter_showdown/screens/pokedex/moves/move_card.dart';
 import 'package:flutter_showdown/parser.dart';
 import 'package:flutter_showdown/constants.dart';
@@ -229,7 +230,18 @@ class _PokemonDetailsState extends State<PokemonDetails> {
                                     .map((t) => Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 4),
-                                          child: TypeBox(t),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute<void>(
+                                                  builder: (context) =>
+                                                      TypeEffectiveness(t),
+                                                ),
+                                              );
+                                            },
+                                            child: TypeBox(t, pressable: false),
+                                          ),
                                         ))
                                     .toList(),
                               ),
