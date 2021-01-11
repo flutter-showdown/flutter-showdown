@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_effectiveness.dart';
 
 class TypeBox extends StatelessWidget {
-  const TypeBox(this.type,
-      {this.textColor = Colors.white,
-      this.width = 72,
-      this.height = 24,
-      this.fontSize = 13,
-      this.pressable = true});
+  const TypeBox(
+    this.type, {
+    this.textColor = Colors.white,
+    this.width = 72,
+    this.height = 24,
+    this.fontSize = 13,
+    this.pressable = true,
+  });
 
   final String type;
   final Color textColor;
@@ -36,14 +39,39 @@ class TypeBox extends StatelessWidget {
     'Rock': [Color(0xffB8A038), Color(0xff93802D), Color(0xff746523)],
     'Steel': [Color(0xffB8B8D0), Color(0xff9797BA), Color(0xff7A7AA7)],
     'Water': [Color(0xff6890F0), Color(0xff386CEB), Color(0xff1753E3)],
-    'Physical': [Color(0xffE39088), Color(0xffD65D51), Color(0xffA99890)],
-    'Special': [Color(0xffADB1BD), Color(0xff7D828D), Color(0xffA1A5AD)],
-    'Status': [Color(0xffCBC9CB), Color(0xffAAA6AA), Color(0xffA99890)],
+    'Physical': [Color(0xffdc7b69), Color(0xffD25640), Color(0xff73241f)],
+    'Special': [Color(0xff7590be), Color(0xff5274ae), Color(0xff4a3932)],
+    'Status': [Color(0xffc3bdb1), Color(0xffada594), Color(0xff525252)],
   };
 
   @override
   Widget build(BuildContext context) {
-    final Widget content = Container(
+    Widget content = Text(
+      type.toUpperCase(),
+      style: TextStyle(
+        color: textColor,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w600,
+        shadows: const [
+          Shadow(
+            blurRadius: 1,
+            offset: Offset(1, 1),
+            color: Color(0xff333333),
+          ),
+        ],
+      ),
+    );
+
+    if (type == 'Physical' || type == 'Special' || type == 'Status') {
+      content = Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: SvgPicture.asset('assets/categories/$type.svg'),
+      );
+    }
+
+    final Widget box = Container(
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         border: Border.all(color: typeColors[type][2]),
         borderRadius: BorderRadius.circular(4),
@@ -53,38 +81,23 @@ class TypeBox extends StatelessWidget {
           colors: [typeColors[type][0], typeColors[type][1]],
         ),
       ),
-      width: width,
-      height: height,
-      child: Center(
-        child: Text(
-          type.toUpperCase(),
-          style: TextStyle(
-            color: textColor,
-            fontSize: fontSize,
-            fontWeight: FontWeight.w600,
-            shadows: const [
-              Shadow(
-                blurRadius: 1,
-                offset: Offset(1, 1),
-                color: Color(0xff333333),
-              )
-            ],
-          ),
-        ),
-      ),
+      child: Center(child: content),
     );
-    return pressable
-        ? GestureDetector(
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder<TypeEffectiveness>(
-                    pageBuilder: (context, _, __) => TypeEffectiveness(type),
-                    transitionDuration: const Duration(seconds: 0),
-                  ));
-            },
-            child: content,
-          )
-        : content;
+
+    if (pressable) {
+      return GestureDetector(
+        child: box,
+        onTap: () {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder<TypeEffectiveness>(
+              pageBuilder: (context, _, __) => TypeEffectiveness(type),
+              transitionDuration: const Duration(seconds: 0),
+            ),
+          );
+        },
+      );
+    }
+    return box;
   }
 }
