@@ -7,17 +7,35 @@ import 'package:flutter_showdown/screens/pokedex/pokemon/pokemon_details.dart';
 import 'package:provider/provider.dart';
 
 class TypeEffectiveness extends StatelessWidget {
-  const TypeEffectiveness(this.type);
+  TypeEffectiveness(this.type) : spec = TypeSpec[type], chart = Typechart[type];
 
   final String type;
+  final String spec;
+  final Map<String, Effectiveness> chart;
+
+  Widget wrappedTypes(String title, List<String> types) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          child: Text(title),
+          padding: const EdgeInsets.only(top: 8, bottom: 4),
+        ),
+        Wrap(
+          spacing: 4,
+          runSpacing: 4,
+          children: types.map((e) => TypeBox(e)).toList(),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final chart = Typechart[type];
-    final spec = TypeSpec[type];
     final List<String> weakAgainst = [];
     final List<String> strongAgainst = [];
     final List<String> noEffectAgainst = [];
+
     final List<String> immuneTo = chart.entries
         .where((e) => e.value == Effectiveness.Immune)
         .map((e) => e.key)
@@ -25,6 +43,14 @@ class TypeEffectiveness extends StatelessWidget {
     final List<String> resists = chart.entries
         .where((e) => e.value == Effectiveness.Resist)
         .map((e) => e.key)
+        .toList();
+    final List<String> weakTo = chart.entries
+        .where((e) => e.value == Effectiveness.Effective)
+        .map((e) => e.key)
+        .toList();
+    final dex = Provider.of<Map<String, Pokemon>>(context, listen: false)
+        .values
+        .where((e) => e.types.contains(type))
         .toList();
 
     Typechart.forEach((key, value) {
@@ -43,128 +69,54 @@ class TypeEffectiveness extends StatelessWidget {
       });
     });
 
-    final dex = Provider.of<Map<String, Pokemon>>(context, listen: false)
-        .values
-        .where((e) => e.types.contains(type))
-        .toList();
-
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TypeBox.typeColors[type][0],
         title: Text(type),
+        backgroundColor: TypeBox.typeColors[type][0],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Offensive Effectiveness',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            if (noEffectAgainst.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 4),
-                    child: Text('No effect against:'),
-                  ),
-                  Wrap(
-                    children: noEffectAgainst.map((e) => TypeBox(e)).toList(),
-                    spacing: 4,
-                    runSpacing: 4,
-                  ),
-                ],
-              ),
-            const Padding(
-              padding: EdgeInsets.only(top: 8, bottom: 4),
-              child: Text('Weak against:'),
-            ),
-            Wrap(
-              children: weakAgainst.map((e) => TypeBox(e)).toList(),
-              spacing: 4,
-              runSpacing: 4,
-            ),
-            if (strongAgainst.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 4),
-                    child: Text('Strong against:'),
-                  ),
-                  Wrap(
-                    children: strongAgainst.map((e) => TypeBox(e)).toList(),
-                    spacing: 4,
-                    runSpacing: 4,
-                  ),
-                ],
-              ),
-            const Padding(
-              padding: EdgeInsets.only(top: 16, bottom: 4),
-              child: Text(
-                'Defensive Effectiveness',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Offensive Effectiveness',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ),
-            if (immuneTo.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 4),
-                    child: Text('Immune to:'),
-                  ),
-                  Wrap(
-                    children: immuneTo.map((e) => TypeBox(e)).toList(),
-                    spacing: 4,
-                    runSpacing: 4,
-                  ),
-                ],
+              if (noEffectAgainst.isNotEmpty)
+                wrappedTypes('No effect against:', noEffectAgainst),
+              wrappedTypes('Weak against:', weakAgainst),
+              wrappedTypes('Strong against:', strongAgainst),
+              const Padding(
+                padding: EdgeInsets.only(top: 16, bottom: 4),
+                child: Text(
+                  'Defensive Effectiveness',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
-            if (resists.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 4),
-                    child: Text('Resists'),
-                  ),
-                  Wrap(
-                    children: resists.map((e) => TypeBox(e)).toList(),
-                    spacing: 4,
-                    runSpacing: 4,
-                  ),
-                ],
-              ),
-            const Padding(
-              padding: EdgeInsets.only(top: 8, bottom: 4),
-              child: Text('Weak to:'),
-            ),
-            Wrap(
-              children: chart.entries
-                  .where((e) => e.value == Effectiveness.Effective)
-                  .map((e) => TypeBox(e.key))
-                  .toList(),
-              spacing: 4,
-              runSpacing: 4,
-            ),
-            if (spec != null)
+              if (immuneTo.isNotEmpty)
+                wrappedTypes('Immune to:', immuneTo),
+              wrappedTypes('Resists', resists),
+              wrappedTypes('Weak to:', weakTo),
+              if (spec != null)
+                Padding(
+                  child: Text(spec),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(spec),
+                padding: const EdgeInsets.only(top: 16, bottom: 8),
+                child: Text(
+                  '$type Pokemons',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 8),
-              child: Text(
-                '$type Pokemons',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: dex.length,
                 itemBuilder: (_, idx) => Container(
                   child: PokemonListChild(dex[idx]),
@@ -173,8 +125,8 @@ class TypeEffectiveness extends StatelessWidget {
                       : Colors.white,
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -194,7 +146,8 @@ class PokemonListChild extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
-              builder: (context) => PokemonDetails(pokemon)),
+            builder: (context) => PokemonDetails(pokemon),
+          ),
         ),
         child: Container(
           child: Row(
@@ -202,23 +155,38 @@ class PokemonListChild extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Image.asset(
-                    'assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
+                  'assets/pokemon-icons/${getIconIndex(pokemon)}.png',
+                ),
               ),
               Expanded(child: Text(pokemon.name)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Row(
-                  children: pokemon.types
-                      .map((t) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 2),
-                            child: TypeBox(
-                              t,
-                              width: 58,
-                              height: 16,
-                              fontSize: 9,
-                            ),
-                          ))
-                      .toList(),
+                  children: [
+                    TypeBox(
+                      pokemon.types[0],
+                      width: 48,
+                      height: 16,
+                      fontSize: 9,
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(4),
+                        bottomLeft: const Radius.circular(4),
+                        topRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                        bottomRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                      ),
+                    ),
+                    if (pokemon.types.length > 1)
+                      TypeBox(
+                        pokemon.types[1],
+                        width: 48,
+                        height: 16,
+                        fontSize: 9,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(4),
+                          bottomRight: Radius.circular(4),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ],
