@@ -48,7 +48,7 @@ class MoveDetails extends StatelessWidget {
                 children: [
                   TypeBox(move.type),
                   const VerticalDivider(width: 8),
-                  TypeBox(move.category),
+                  TypeBox(move.category, pressable: false),
                 ],
               ),
             ),
