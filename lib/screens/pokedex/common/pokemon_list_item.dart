@@ -25,8 +25,11 @@ class PokemonListItem extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                child: Image.asset(
-                  'assets/pokemon-icons/${getIconIndex(pokemon)}.png',
+                child: Container(
+                  height: 30,
+                  child: Image.asset(
+                    'assets/pokemon-icons/${getIconIndex(pokemon)}.png',
+                  ),
                 ),
               ),
               Expanded(child: Text(pokemon.name)),

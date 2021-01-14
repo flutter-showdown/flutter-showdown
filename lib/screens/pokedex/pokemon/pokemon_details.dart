@@ -31,17 +31,14 @@ class PokemonDetails extends StatelessWidget {
       pokemon.abilities.special,
     ];
 
-    final learnsetId =
-        pokemon.forme != null ? Parser.toId(pokemon.baseSpecies) : pokeId;
-    final learnsets =
-        Provider.of<Map<String, List<String>>>(context, listen: false);
+    final learnsetId = pokemon.forme != null ? Parser.toId(pokemon.baseSpecies) : pokeId;
+    final learnsets = Provider.of<Map<String, List<String>>>(context, listen: false);
     final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
 
     final dex = Provider.of<Map<String, Pokemon>>(context, listen: false);
 
     String _getEvoMethod() {
-      final condition =
-          pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
+      final condition = pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
       final item = pokemon.evoItem;
 
       switch (pokemon.evoType) {
@@ -79,8 +76,7 @@ class PokemonDetails extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (int i = 0; i < poke.evos.length; i++)
-                  _getNextEvo(poke.evos[i]),
+                for (int i = 0; i < poke.evos.length; i++) _getNextEvo(poke.evos[i]),
               ],
             ),
         ],
@@ -109,9 +105,7 @@ class PokemonDetails extends StatelessWidget {
     }
 
     Widget _formesList() {
-      final base = pokemon.forme != null
-          ? dex[Parser.toId(pokemon.baseSpecies)]
-          : pokemon;
+      final base = pokemon.forme != null ? dex[Parser.toId(pokemon.baseSpecies)] : pokemon;
       final name = base.baseForme ?? 'Base';
 
       return Wrap(
@@ -123,8 +117,7 @@ class PokemonDetails extends StatelessWidget {
             ...base.otherFormes.map((f) {
               final poke = dex[Parser.toId(f)];
 
-              return PokeBox(poke,
-                  label: poke.forme, current: pokemon.name == poke.name);
+              return PokeBox(poke, label: poke.forme, current: pokemon.name == poke.name);
             }),
         ],
       );
@@ -164,8 +157,7 @@ class PokemonDetails extends StatelessWidget {
                             colors: <Color>[
                               TypeBox.typeColors[pokemon.types[0]][0],
                               TypeBox.typeColors[pokemon.types[0]][0],
-                              TypeBox.typeColors[pokemon
-                                  .types[pokemon.types.length > 1 ? 1 : 0]][0]
+                              TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
                             ],
                           ),
                         ),
@@ -184,8 +176,7 @@ class PokemonDetails extends StatelessWidget {
                                 end: Alignment.bottomRight,
                                 colors: [
                                   TypeBox.typeColors[pokemon.types[0]][0],
-                                  TypeBox.typeColors[pokemon.types[
-                                      pokemon.types.length > 1 ? 1 : 0]][0]
+                                  TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -198,8 +189,7 @@ class PokemonDetails extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: CachedNetworkImage(
-                                imageUrl:
-                                    '$ServerUrl/sprites/gen5/$resourceId.png',
+                                imageUrl: '$ServerUrl/sprites/gen5/$resourceId.png',
                                 placeholder: (context, url) => Container(
                                   height: 96,
                                   width: 96,
@@ -208,8 +198,7 @@ class PokemonDetails extends StatelessWidget {
                                     child: CircularProgressIndicator(),
                                   ),
                                 ),
-                                errorWidget: (context, url, dynamic error) =>
-                                    const Icon(Icons.error),
+                                errorWidget: (context, url, dynamic error) => const Icon(Icons.error),
                               ),
                             ),
                           ),
@@ -218,8 +207,7 @@ class PokemonDetails extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
@@ -228,8 +216,7 @@ class PokemonDetails extends StatelessWidget {
                                       horizontal: 4,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         if (pokemon.id > 0)
                                           Text(
@@ -245,10 +232,8 @@ class PokemonDetails extends StatelessWidget {
                                             horizontal: 6,
                                           ),
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.grey[700]),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            border: Border.all(color: Colors.grey[700]),
+                                            borderRadius: BorderRadius.circular(5),
                                           ),
                                         ),
                                       ],
@@ -264,20 +249,17 @@ class PokemonDetails extends StatelessWidget {
                                         children: pokemon.types
                                             .map(
                                               (t) => Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                   horizontal: 4,
                                                 ),
                                                 child: GestureDetector(
                                                   onTap: () => Navigator.push(
                                                     context,
                                                     MaterialPageRoute<void>(
-                                                      builder: (context) =>
-                                                          TypeEffectiveness(t),
+                                                      builder: (context) => TypeEffectiveness(t),
                                                     ),
                                                   ),
-                                                  child: TypeBox(t,
-                                                      pressable: false),
+                                                  child: TypeBox(t, pressable: false),
                                                 ),
                                               ),
                                             )
@@ -293,8 +275,7 @@ class PokemonDetails extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                            '${pokemon.height} m, ${pokemon.weight} kg'),
+                                        child: Text('${pokemon.height} m, ${pokemon.weight} kg'),
                                       ),
                                     ],
                                   ),
@@ -313,8 +294,7 @@ class PokemonDetails extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8, left: 16, bottom: 8),
+                      padding: const EdgeInsets.only(top: 8, left: 16, bottom: 8),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -335,9 +315,9 @@ class PokemonDetails extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute<void>(
-                                            builder: (context) =>
-                                                AbilityDetails(
+                                            builder: (context) => AbilityDetails(
                                               pokemonAbilities[i],
+                                              appBarColor: TypeBox.typeColors[pokemon.types[0]][0],
                                             ),
                                           ),
                                         );
@@ -474,8 +454,7 @@ class PokemonDetails extends StatelessWidget {
             ),
             SliverPinnedHeader(
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 color: ThemeData.light().scaffoldBackgroundColor,
                 child: const Text(
                   'Moves: ',
@@ -491,9 +470,7 @@ class PokemonDetails extends StatelessWidget {
                     if (learnset != null)
                       for (int i = 0; i < learnset.length; i++)
                         Container(
-                          color: i % 2 == 0
-                              ? const Color(0xffebebf7)
-                              : Colors.white,
+                          color: i % 2 == 0 ? const Color(0xffebebf7) : Colors.white,
                           child: MoveCard(learnset[i]),
                         )
                     else
@@ -589,12 +566,10 @@ class StatBox extends StatelessWidget {
                 width: width.toDouble(),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.75, 0.35)
-                        .toColor(),
+                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.75, 0.35).toColor(),
                   ),
                   borderRadius: BorderRadius.circular(2),
-                  color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.45)
-                      .toColor(),
+                  color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.45).toColor(),
                 ),
               ),
               Positioned(
@@ -608,8 +583,7 @@ class StatBox extends StatelessWidget {
                       topLeft: Radius.circular(2),
                       topRight: Radius.circular(2),
                     ),
-                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.55)
-                        .toColor(),
+                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.55).toColor(),
                   ),
                 ),
               ),
