@@ -10,6 +10,7 @@ class TypeBox extends StatelessWidget {
     this.height = 24,
     this.fontSize = 13,
     this.pressable = true,
+    this.borderRadius = const BorderRadius.all(Radius.circular(4)),
   });
 
   final String type;
@@ -18,6 +19,7 @@ class TypeBox extends StatelessWidget {
   final double height;
   final double fontSize;
   final bool pressable;
+  final BorderRadiusGeometry borderRadius;
 
   static const Map<String, List<Color>> typeColors = {
     'Bird': [Color(0xffCBC9CB), Color(0xffAAA6AA), Color(0xffa99890)],
@@ -25,7 +27,7 @@ class TypeBox extends StatelessWidget {
     'Dark': [Color(0xff705848), Color(0xff513F34), Color(0xff362A23)],
     'Dragon': [Color(0xff7038F8), Color(0xff4C08EF), Color(0xff3D07C0)],
     'Electric': [Color(0xffF8D030), Color(0xffF0C108), Color(0xffC19B07)],
-    'Fairy': [Color(0xffF830D0), Color(0xffF008C1), Color(0xffC1079B)],
+    'Fairy': [Color(0xffF98CFF), Color(0xffF540FF), Color(0xffC1079B)],
     'Fighting': [Color(0xffC03028), Color(0xff9D2721), Color(0xff82211B)],
     'Fire': [Color(0xffF08030), Color(0xffDD6610), Color(0xffB4530D)],
     'Flying': [Color(0xffA890F0), Color(0xff9180C4), Color(0xff7762B6)],
@@ -74,7 +76,7 @@ class TypeBox extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         border: Border.all(color: typeColors[type][2]),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: borderRadius,
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
