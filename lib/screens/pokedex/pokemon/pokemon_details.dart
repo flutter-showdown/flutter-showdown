@@ -11,7 +11,7 @@ import 'package:flutter_showdown/screens/common/custom_slivers.dart';
 import 'package:provider/provider.dart';
 import '../common/get_icon_index.dart';
 
-class PokemonDetails extends StatelessWidget{
+class PokemonDetails extends StatelessWidget {
   const PokemonDetails(this.pokemon);
 
   final Pokemon pokemon;
@@ -31,14 +31,17 @@ class PokemonDetails extends StatelessWidget{
       pokemon.abilities.special,
     ];
 
-    final learnsetId = pokemon.forme != null ? Parser.toId(pokemon.baseSpecies) : pokeId;
-    final learnsets = Provider.of<Map<String, List<String>>>(context, listen: false);
+    final learnsetId =
+        pokemon.forme != null ? Parser.toId(pokemon.baseSpecies) : pokeId;
+    final learnsets =
+        Provider.of<Map<String, List<String>>>(context, listen: false);
     final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
 
     final dex = Provider.of<Map<String, Pokemon>>(context, listen: false);
 
     String _getEvoMethod() {
-      final condition = pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
+      final condition =
+          pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
       final item = pokemon.evoItem;
 
       switch (pokemon.evoType) {
@@ -106,7 +109,9 @@ class PokemonDetails extends StatelessWidget{
     }
 
     Widget _formesList() {
-      final base = pokemon.forme != null ? dex[Parser.toId(pokemon.baseSpecies)] : pokemon;
+      final base = pokemon.forme != null
+          ? dex[Parser.toId(pokemon.baseSpecies)]
+          : pokemon;
       final name = base.baseForme ?? 'Base';
 
       return Wrap(
@@ -118,7 +123,8 @@ class PokemonDetails extends StatelessWidget{
             ...base.otherFormes.map((f) {
               final poke = dex[Parser.toId(f)];
 
-              return PokeBox(poke, label: poke.forme, current: pokemon.name == poke.name);
+              return PokeBox(poke,
+                  label: poke.forme, current: pokemon.name == poke.name);
             }),
         ],
       );
@@ -132,7 +138,7 @@ class PokemonDetails extends StatelessWidget{
           slivers: [
             SliverFloatingHeader(
               child: Container(
-                //Trick to remove the 1px gap
+                // Trick to remove the 1px gap
                 decoration: BoxDecoration(
                   color: ThemeData.light().scaffoldBackgroundColor,
                   boxShadow: [
@@ -158,7 +164,8 @@ class PokemonDetails extends StatelessWidget{
                             colors: <Color>[
                               TypeBox.typeColors[pokemon.types[0]][0],
                               TypeBox.typeColors[pokemon.types[0]][0],
-                              TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
+                              TypeBox.typeColors[pokemon
+                                  .types[pokemon.types.length > 1 ? 1 : 0]][0]
                             ],
                           ),
                         ),
@@ -177,7 +184,8 @@ class PokemonDetails extends StatelessWidget{
                                 end: Alignment.bottomRight,
                                 colors: [
                                   TypeBox.typeColors[pokemon.types[0]][0],
-                                  TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
+                                  TypeBox.typeColors[pokemon.types[
+                                      pokemon.types.length > 1 ? 1 : 0]][0]
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -237,8 +245,10 @@ class PokemonDetails extends StatelessWidget{
                                             horizontal: 6,
                                           ),
                                           decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.grey[700]),
-                                            borderRadius: BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: Colors.grey[700]),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                         ),
                                       ],
@@ -254,13 +264,24 @@ class PokemonDetails extends StatelessWidget{
                                         children: pokemon.types
                                             .map(
                                               (t) => Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 4,),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 4,
+                                                ),
                                                 child: GestureDetector(
-                                                  onTap: () => Navigator.push(context, MaterialPageRoute<void>(builder: (context) => TypeEffectiveness(t),),),
-                                                  child: TypeBox(t, pressable: false),
+                                                  onTap: () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute<void>(
+                                                      builder: (context) =>
+                                                          TypeEffectiveness(t),
+                                                    ),
+                                                  ),
+                                                  child: TypeBox(t,
+                                                      pressable: false),
                                                 ),
                                               ),
-                                            ).toList(),
+                                            )
+                                            .toList(),
                                       ),
                                     ],
                                   ),
@@ -272,7 +293,8 @@ class PokemonDetails extends StatelessWidget{
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text('${pokemon.height} m, ${pokemon.weight} kg'),
+                                        child: Text(
+                                            '${pokemon.height} m, ${pokemon.weight} kg'),
                                       ),
                                     ],
                                   ),
@@ -291,7 +313,8 @@ class PokemonDetails extends StatelessWidget{
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 16, bottom: 8),
+                      padding:
+                          const EdgeInsets.only(top: 8, left: 16, bottom: 8),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -341,7 +364,7 @@ class PokemonDetails extends StatelessWidget{
             SliverPinnedHeader(
               child: Container(
                 padding: const EdgeInsets.only(left: 8),
-                //Trick to remove the 1px gap
+                // Trick to remove the 1px gap
                 decoration: BoxDecoration(
                   color: ThemeData.light().scaffoldBackgroundColor,
                   boxShadow: [
@@ -426,8 +449,7 @@ class PokemonDetails extends StatelessWidget{
                           style: const TextStyle(fontSize: 12),
                         ),
                       ),
-                    if (pokemon.otherFormes != null ||
-                        pokemon.forme != null)
+                    if (pokemon.otherFormes != null || pokemon.forme != null)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -452,7 +474,8 @@ class PokemonDetails extends StatelessWidget{
             ),
             SliverPinnedHeader(
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 color: ThemeData.light().scaffoldBackgroundColor,
                 child: const Text(
                   'Moves: ',
@@ -566,10 +589,12 @@ class StatBox extends StatelessWidget {
                 width: width.toDouble(),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.75, 0.35).toColor(),
+                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.75, 0.35)
+                        .toColor(),
                   ),
                   borderRadius: BorderRadius.circular(2),
-                  color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.45).toColor(),
+                  color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.45)
+                      .toColor(),
                 ),
               ),
               Positioned(
@@ -583,7 +608,8 @@ class StatBox extends StatelessWidget {
                       topLeft: Radius.circular(2),
                       topRight: Radius.circular(2),
                     ),
-                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.55).toColor(),
+                    color: HSLColor.fromAHSL(1, color.toDouble(), 0.85, 0.55)
+                        .toColor(),
                   ),
                 ),
               ),
