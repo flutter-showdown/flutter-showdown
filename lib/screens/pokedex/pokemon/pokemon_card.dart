@@ -16,8 +16,7 @@ class PokemonCard extends StatelessWidget {
           FocusScope.of(context).requestFocus(FocusNode()); //remove focus
           Navigator.push(
             context,
-            MaterialPageRoute<void>(
-                builder: (context) => PokemonDetails(pokemon)),
+            MaterialPageRoute<void>(builder: (context) => PokemonDetails(pokemon)),
           );
         },
         child: Padding(
@@ -30,8 +29,7 @@ class PokemonCard extends StatelessWidget {
                 child: Center(
                   child: Text(
                     pokemon.tier,
-                    style:
-                        const TextStyle(fontSize: 11, color: Color(0xff888888)),
+                    style: const TextStyle(fontSize: 11, color: Color(0xff888888)),
                   ),
                 ),
               ),
@@ -40,16 +38,14 @@ class PokemonCard extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                 child: Column(
                   children: [
-                    Image.asset(
-                        'assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
+                    Image.asset('assets/pokemon-icons/${getIconIndex(pokemon)}.png'),
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: pokemon.types
                             .map((t) => Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 1),
+                                  padding: const EdgeInsets.symmetric(horizontal: 1),
                                   child: Image.asset(
                                     'assets/types/$t.png',
                                   ),
@@ -121,8 +117,7 @@ class PokemonCard extends StatelessWidget {
 }
 
 class StatBox extends StatelessWidget {
-  const StatBox(this.label, this.stat,
-      {this.width = 28, this.labelColor = const Color(0xff888888)});
+  const StatBox(this.label, this.stat, {this.width = 28, this.labelColor = const Color(0xff888888)});
   final String label;
   final int stat;
   final double width;
@@ -163,11 +158,7 @@ class StatsBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: [
-                  StatBox('HP', stats.hp),
-                  StatBox('Atk', stats.atk),
-                  StatBox('Def', stats.def)
-                ],
+                children: [StatBox('HP', stats.hp), StatBox('Atk', stats.atk), StatBox('Def', stats.def)],
               ),
               Row(
                 children: [

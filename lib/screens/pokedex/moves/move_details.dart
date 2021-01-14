@@ -12,20 +12,22 @@ class MoveDetails extends StatelessWidget {
   final Move move;
 
   String getTargetDesc() {
-    if (move.target == 'allAdjacent')
+    if (move.target == 'allAdjacent') {
       return 'In Doubles, hits all adjacent Pokémon (including allies)';
-    if (move.target == 'allAdjacentFoes')
+    } else if (move.target == 'allAdjacentFoes') {
       return 'In Doubles, hits all adjacent foes';
+    }
     return null;
   }
 
   String getPriorityDesc() {
-    if (move.priority > 1)
+    if (move.priority > 1) {
       return 'Nearly always moves first (priority +${move.priority})';
-    if (move.priority <= -1)
+    } else if (move.priority <= -1) {
       return 'Nearly always moves last (priority ${move.priority})';
-    if (move.priority == 1)
+    } else if (move.priority == 1) {
       return 'Usually moves first (priority +${move.priority})';
+    }
     return null;
   }
 
@@ -34,12 +36,9 @@ class MoveDetails extends StatelessWidget {
     final String targetDesc = getTargetDesc();
     final String priorityDesc = getPriorityDesc();
 
-    final learnsets =
-        Provider.of<Map<String, List<String>>>(context, listen: false);
+    final learnsets = Provider.of<Map<String, List<String>>>(context, listen: false);
 
-    final dex = Provider.of<Map<String, Pokemon>>(context, listen: false)
-        .values
-        .where((e) {
+    final dex = Provider.of<Map<String, Pokemon>>(context, listen: false).values.where((e) {
       final pokeId = Parser.toId(e.name);
       final learnsetId = e.forme != null ? Parser.toId(e.baseSpecies) : pokeId;
       final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
@@ -89,8 +88,7 @@ class MoveDetails extends StatelessWidget {
                           ),
                           Text(
                             '${move.basePower}',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -119,16 +117,14 @@ class MoveDetails extends StatelessWidget {
                         ),
                         Text(
                           '(max: ${move.ppMax})',
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[600]),
+                          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              if (targetDesc != null)
-                Text(targetDesc, style: TextStyle(color: Colors.grey[600])),
+              if (targetDesc != null) Text(targetDesc, style: TextStyle(color: Colors.grey[600])),
               if (priorityDesc != null) Text(priorityDesc),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -138,8 +134,7 @@ class MoveDetails extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   'Pokemons that can learn ${move.name} :',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
               ListView.builder(
@@ -148,9 +143,7 @@ class MoveDetails extends StatelessWidget {
                 itemCount: dex.length,
                 itemBuilder: (_, idx) => Container(
                   child: PokemonListItem(dex[idx]),
-                  color: idx % 2 == 0
-                      ? TypeBox.typeColors[move.type][0].withOpacity(0.3)
-                      : Colors.white,
+                  color: idx % 2 == 0 ? TypeBox.typeColors[move.type][0].withOpacity(0.3) : Colors.white,
                 ),
               ),
             ],

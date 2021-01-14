@@ -40,9 +40,7 @@ class _PokedexState extends State<Pokedex> {
             // Does nothing if all filters are unset
             (filters.typesFilters.values.every((e) => e == false) ||
                 // Filter by pokemon containing specified types
-                filters.typesFilters.entries
-                    .where((e) => e.value && p.types.contains(e.key))
-                    .isNotEmpty) &&
+                filters.typesFilters.entries.where((e) => e.value && p.types.contains(e.key)).isNotEmpty) &&
             // Tier filter
             ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
@@ -73,20 +71,20 @@ class _PokedexState extends State<Pokedex> {
                       ),
                     ),
                     Flexible(
-                        flex: 1,
-                        child: FlatButton(
-                            onPressed: () async {
-                              final data = await showDialog<Filters>(
-                                  context: context,
-                                  builder: (_) =>
-                                      FiltersDialog(currentFilters));
-                              if (data != null) {
-                                setState(() {
-                                  currentFilters = data;
-                                });
-                              }
-                            },
-                            child: const Icon(Icons.filter_list)))
+                      flex: 1,
+                      child: FlatButton(
+                        onPressed: () async {
+                          final data = await showDialog<Filters>(
+                              context: context, builder: (_) => FiltersDialog(currentFilters));
+                          if (data != null) {
+                            setState(() {
+                              currentFilters = data;
+                            });
+                          }
+                        },
+                        child: const Icon(Icons.filter_list),
+                      ),
+                    )
                   ],
                 ),
               ),

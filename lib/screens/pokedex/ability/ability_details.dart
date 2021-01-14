@@ -14,17 +14,12 @@ class AbilityDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final abilityId = Parser.toId(abilityName);
-    final ability =
-        Provider.of<Map<String, Ability>>(context, listen: false)[abilityId];
+    final ability = Provider.of<Map<String, Ability>>(context, listen: false)[abilityId];
 
     final dex = Provider.of<Map<String, Pokemon>>(context, listen: false)
         .values
-        .where((e) => [
-              e.abilities.first,
-              e.abilities.second,
-              e.abilities.hidden,
-              e.abilities.special
-            ].contains(ability.name))
+        .where((e) =>
+            [e.abilities.first, e.abilities.second, e.abilities.hidden, e.abilities.special].contains(ability.name))
         .toList();
 
     return Scaffold(
@@ -49,8 +44,7 @@ class AbilityDetails extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   'Pokemons with ${ability.name} :',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
               ListView.builder(

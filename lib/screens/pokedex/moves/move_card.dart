@@ -11,8 +11,7 @@ class MoveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Move move =
-        Provider.of<Map<String, Move>>(context, listen: false)[moveId];
+    final Move move = Provider.of<Map<String, Move>>(context, listen: false)[moveId];
 
     return Tooltip(
       message: move.shortDesc,
@@ -67,8 +66,7 @@ class MoveCard extends StatelessWidget {
                         children: [
                           Text(
                             'Power',
-                            style:
-                                TextStyle(fontSize: 9, color: Colors.grey[600]),
+                            style: TextStyle(fontSize: 9, color: Colors.grey[600]),
                           ),
                           Text('${move.basePower}'),
                         ],

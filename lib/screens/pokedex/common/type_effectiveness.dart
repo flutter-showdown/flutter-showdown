@@ -37,22 +37,13 @@ class TypeEffectiveness extends StatelessWidget {
     final List<String> strongAgainst = [];
     final List<String> noEffectAgainst = [];
 
-    final List<String> immuneTo = chart.entries
-        .where((e) => e.value == Effectiveness.Immune)
-        .map((e) => e.key)
-        .toList();
-    final List<String> resists = chart.entries
-        .where((e) => e.value == Effectiveness.Resist)
-        .map((e) => e.key)
-        .toList();
-    final List<String> weakTo = chart.entries
-        .where((e) => e.value == Effectiveness.Effective)
-        .map((e) => e.key)
-        .toList();
-    final dex = Provider.of<Map<String, Pokemon>>(context, listen: false)
-        .values
-        .where((e) => e.types.contains(type))
-        .toList();
+    final List<String> immuneTo =
+        chart.entries.where((e) => e.value == Effectiveness.Immune).map((e) => e.key).toList();
+    final List<String> resists = chart.entries.where((e) => e.value == Effectiveness.Resist).map((e) => e.key).toList();
+    final List<String> weakTo =
+        chart.entries.where((e) => e.value == Effectiveness.Effective).map((e) => e.key).toList();
+    final dex =
+        Provider.of<Map<String, Pokemon>>(context, listen: false).values.where((e) => e.types.contains(type)).toList();
 
     Typechart.forEach((key, value) {
       value.forEach((k, value) {
@@ -85,8 +76,7 @@ class TypeEffectiveness extends StatelessWidget {
                 'Offensive Effectiveness',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              if (noEffectAgainst.isNotEmpty)
-                wrappedTypes('No effect against:', noEffectAgainst),
+              if (noEffectAgainst.isNotEmpty) wrappedTypes('No effect against:', noEffectAgainst),
               wrappedTypes('Weak against:', weakAgainst),
               wrappedTypes('Strong against:', strongAgainst),
               const Padding(
@@ -120,9 +110,7 @@ class TypeEffectiveness extends StatelessWidget {
                 itemCount: dex.length,
                 itemBuilder: (_, idx) => Container(
                   child: PokemonListItem(dex[idx]),
-                  color: idx % 2 == 0
-                      ? TypeBox.typeColors[type][0].withOpacity(0.3)
-                      : Colors.white,
+                  color: idx % 2 == 0 ? TypeBox.typeColors[type][0].withOpacity(0.3) : Colors.white,
                 ),
               ),
             ],

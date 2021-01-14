@@ -45,10 +45,8 @@ class PokemonListItem extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(4),
                         bottomLeft: const Radius.circular(4),
-                        topRight:
-                            Radius.circular(pokemon.types.length > 1 ? 0 : 4),
-                        bottomRight:
-                            Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                        topRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                        bottomRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
                       ),
                     ),
                     if (pokemon.types.length > 1)
