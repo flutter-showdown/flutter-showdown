@@ -6,29 +6,77 @@ import 'package:flutter_showdown/screens/pokedex/common/pokemon_list_item.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
 import 'package:provider/provider.dart';
 
-class MoveDetails extends StatelessWidget {
+class MoveDetails extends StatefulWidget {
   const MoveDetails(this.move);
 
   final Move move;
 
+  @override
+  _MoveDetailsState createState() => _MoveDetailsState();
+}
+
+class _MoveDetailsState extends State<MoveDetails> {
+  int i = 0;
+  final List<Pokemon> dex = [];
+  final List<Pokemon> pokemons = [];
+  final ScrollController _scrollController = ScrollController();
+
   String getTargetDesc() {
-    if (move.target == 'allAdjacent') {
+    if (widget.move.target == 'allAdjacent') {
       return 'In Doubles, hits all adjacent Pokémon (including allies)';
-    } else if (move.target == 'allAdjacentFoes') {
+    } else if (widget.move.target == 'allAdjacentFoes') {
       return 'In Doubles, hits all adjacent foes';
     }
     return null;
   }
 
   String getPriorityDesc() {
-    if (move.priority > 1) {
-      return 'Nearly always moves first (priority +${move.priority})';
-    } else if (move.priority <= -1) {
-      return 'Nearly always moves last (priority ${move.priority})';
-    } else if (move.priority == 1) {
-      return 'Usually moves first (priority +${move.priority})';
+    if (widget.move.priority > 1) {
+      return 'Nearly always moves first (priority +${widget.move.priority})';
+    } else if (widget.move.priority <= -1) {
+      return 'Nearly always moves last (priority ${widget.move.priority})';
+    } else if (widget.move.priority == 1) {
+      return 'Usually moves first (priority +${widget.move.priority})';
     }
     return null;
+  }
+
+  List<Pokemon> _fillDex(int count) {
+    final List<Pokemon> dex = [];
+    final learnsets = Provider.of<Map<String, List<String>>>(context, listen: false);
+
+    for (; i < pokemons.length; i++) {
+      final current = pokemons[i];
+      final pokeId = Parser.toId(current.name);
+      final learnsetId = current.forme != null ? Parser.toId(current.baseSpecies) : pokeId;
+      final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
+
+      if (learnset == null) {
+        continue;
+      } else if (learnset.contains(Parser.toId(widget.move.name))) {
+        dex.add(current);
+        if (count != null && dex.length >= count) {
+          break;
+        }
+      }
+    }
+    return dex;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    pokemons.addAll(Provider.of<Map<String, Pokemon>>(context, listen: false).values.toList());
+
+    dex.addAll(_fillDex(30));
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - _scrollController.position.viewportDimension / 2 && i < pokemons.length) {
+        setState(() {
+          dex.addAll(_fillDex(10));
+        });
+      }
+    });
   }
 
   @override
@@ -36,24 +84,13 @@ class MoveDetails extends StatelessWidget {
     final String targetDesc = getTargetDesc();
     final String priorityDesc = getPriorityDesc();
 
-    final learnsets = Provider.of<Map<String, List<String>>>(context, listen: false);
-
-    final dex = Provider.of<Map<String, Pokemon>>(context, listen: false).values.where((e) {
-      final pokeId = Parser.toId(e.name);
-      final learnsetId = e.forme != null ? Parser.toId(e.baseSpecies) : pokeId;
-      final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
-      if (learnset == null) {
-        return false;
-      }
-      return learnset.contains(Parser.toId(move.name));
-    }).toList();
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(move.name),
-        backgroundColor: TypeBox.typeColors[move.type][0],
+        title: Text(widget.move.name),
+        backgroundColor: TypeBox.typeColors[widget.move.type][0],
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,9 +103,9 @@ class MoveDetails extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: Row(
                 children: [
-                  TypeBox(move.type),
+                  TypeBox(widget.move.type),
                   const VerticalDivider(width: 8),
-                  TypeBox(move.category, pressable: false),
+                  TypeBox(widget.move.category, pressable: false),
                 ],
               ),
             ),
@@ -78,7 +115,7 @@ class MoveDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (move.basePower > 0)
+                  if (widget.move.basePower > 0)
                     Column(
                       children: [
                         const Text(
@@ -86,7 +123,7 @@ class MoveDetails extends StatelessWidget {
                           style: TextStyle(fontSize: 18),
                         ),
                         Text(
-                          '${move.basePower}',
+                          '${widget.move.basePower}',
                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -98,7 +135,7 @@ class MoveDetails extends StatelessWidget {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        move.accuracy != null ? '${move.accuracy}%' : '-',
+                        widget.move.accuracy != null ? '${widget.move.accuracy}%' : '-',
                         style: const TextStyle(fontSize: 18),
                       ),
                     ],
@@ -111,11 +148,11 @@ class MoveDetails extends StatelessWidget {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        '${move.pp}',
+                        '${widget.move.pp}',
                         style: const TextStyle(fontSize: 18),
                       ),
                       Text(
-                        '(max: ${move.ppMax})',
+                        '(max: ${widget.move.ppMax})',
                         style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                       ),
                     ],
@@ -127,12 +164,12 @@ class MoveDetails extends StatelessWidget {
             if (priorityDesc != null) Text(priorityDesc),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(move.desc),
+              child: Text(widget.move.desc),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
-                'Pokemons that can learn ${move.name} :',
+                'Pokemons that can learn ${widget.move.name} :',
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
@@ -142,7 +179,7 @@ class MoveDetails extends StatelessWidget {
               itemCount: dex.length,
               itemBuilder: (_, idx) => Container(
                 child: PokemonListItem(dex[idx]),
-                color: idx % 2 == 0 ? TypeBox.typeColors[move.type][0].withOpacity(0.3) : Colors.white,
+                color: idx % 2 == 0 ? TypeBox.typeColors[widget.move.type][0].withOpacity(0.3) : Colors.transparent,
               ),
             ),
           ],
