@@ -8,6 +8,7 @@ import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_effectiveness.dart';
 import 'package:flutter_showdown/screens/pokedex/moves/move_card.dart';
 import 'package:flutter_showdown/screens/common/custom_slivers.dart';
+import 'package:flutter_showdown/screens/pokedex/pokemon/tier_details.dart';
 import 'package:provider/provider.dart';
 import '../common/get_icon_index.dart';
 
@@ -225,15 +226,23 @@ class PokemonDetails extends StatelessWidget {
                                               color: Colors.grey[600],
                                             ),
                                           ),
-                                        Container(
-                                          child: Text(pokemon.tier),
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 4,
-                                            horizontal: 6,
+                                        GestureDetector(
+                                          onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute<void>(
+                                              builder: (context) => TierDetails(pokemon.tier),
+                                            ),
                                           ),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.grey[700]),
-                                            borderRadius: BorderRadius.circular(5),
+                                          child: Container(
+                                            child: Text(pokemon.tier),
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 4,
+                                              horizontal: 6,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.grey[700]),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
                                           ),
                                         ),
                                       ],
