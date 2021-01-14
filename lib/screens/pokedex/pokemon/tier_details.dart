@@ -13,33 +13,29 @@ class TierDetails extends StatelessWidget {
     final dex = Provider.of<Map<String, Pokemon>>(context, listen: false).values.where((e) => tier == e.tier).toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(tier),
-      ),
-      body: Padding(
+      appBar: AppBar(title: Text(tier)),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Pokemons included in $tier :',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'Pokemons included in $tier :',
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: dex.length,
-                itemBuilder: (_, idx) => Container(
-                  child: PokemonListItem(dex[idx]),
-                  color: idx % 2 == 0 ? const Color(0xffebebf7) : Colors.white,
-                ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: dex.length,
+              itemBuilder: (_, idx) => Container(
+                child: PokemonListItem(dex[idx]),
+                color: idx % 2 == 0 ? const Color(0xffebebf7) : Colors.transparent,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

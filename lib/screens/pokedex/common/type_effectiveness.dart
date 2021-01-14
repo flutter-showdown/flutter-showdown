@@ -67,54 +67,52 @@ class TypeEffectiveness extends StatelessWidget {
         backgroundColor: TypeBox.typeColors[type][0],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Offensive Effectiveness',
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Offensive Effectiveness',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            if (noEffectAgainst.isNotEmpty) wrappedTypes('No effect against:', noEffectAgainst),
+            wrappedTypes('Weak against:', weakAgainst),
+            wrappedTypes('Strong against:', strongAgainst),
+            const Padding(
+              padding: EdgeInsets.only(top: 16, bottom: 4),
+              child: Text(
+                'Defensive Effectiveness',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              if (noEffectAgainst.isNotEmpty) wrappedTypes('No effect against:', noEffectAgainst),
-              wrappedTypes('Weak against:', weakAgainst),
-              wrappedTypes('Strong against:', strongAgainst),
-              const Padding(
-                padding: EdgeInsets.only(top: 16, bottom: 4),
-                child: Text(
-                  'Defensive Effectiveness',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              if (immuneTo.isNotEmpty) wrappedTypes('Immune to:', immuneTo),
-              wrappedTypes('Resists', resists),
-              wrappedTypes('Weak to:', weakTo),
-              if (spec != null)
-                Padding(
-                  child: Text(spec),
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                ),
+            ),
+            if (immuneTo.isNotEmpty) wrappedTypes('Immune to:', immuneTo),
+            wrappedTypes('Resists', resists),
+            wrappedTypes('Weak to:', weakTo),
+            if (spec != null)
               Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 8),
-                child: Text(
-                  '$type Pokemons',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Text(spec),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 8),
+              child: Text(
+                '$type Pokemons',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: dex.length,
-                itemBuilder: (_, idx) => Container(
-                  child: PokemonListItem(dex[idx]),
-                  color: idx % 2 == 0 ? TypeBox.typeColors[type][0].withOpacity(0.3) : Colors.white,
-                ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: dex.length,
+              itemBuilder: (_, idx) => Container(
+                child: PokemonListItem(dex[idx]),
+                color: idx % 2 == 0 ? TypeBox.typeColors[type][0].withOpacity(0.3) : Colors.transparent,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
