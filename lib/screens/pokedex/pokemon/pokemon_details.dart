@@ -124,372 +124,367 @@ class PokemonDetails extends StatelessWidget {
       );
     }
 
-    return SafeArea(
-      bottom: false,
-      maintainBottomViewPadding: true,
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverFloatingHeader(
-              child: Container(
-                // Trick to remove the 1px gap
-                decoration: BoxDecoration(
-                  color: ThemeData.light().scaffoldBackgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: ThemeData.light().scaffoldBackgroundColor,
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppBar(
-                      title: Text(pokemon.name),
-                      flexibleSpace: Container(
-                        height: kToolbarHeight,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topRight,
-                            colors: <Color>[
-                              TypeBox.typeColors[pokemon.types[0]][0],
-                              TypeBox.typeColors[pokemon.types[0]][0],
-                              TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
-                            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(pokemon.name),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                TypeBox.typeColors[pokemon.types[0]][0],
+                TypeBox.typeColors[pokemon.types[0]][0],
+                TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverFloatingHeader(
+            child: Container(
+              // Trick to remove the 1px gap
+              decoration: BoxDecoration(
+                color: ThemeData.light().scaffoldBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: ThemeData.light().scaffoldBackgroundColor,
+                    blurRadius: 0.0,
+                    spreadRadius: 0.0,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 116,
+                          height: 116,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                TypeBox.typeColors[pokemon.types[0]][0],
+                                TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            margin: const EdgeInsets.all(2.5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: '$ServerUrl/sprites/gen5/$resourceId.png',
+                              placeholder: (context, url) => Container(
+                                height: 96,
+                                width: 96,
+                                child: const Center(
+                                  heightFactor: 0,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              errorWidget: (context, url, dynamic error) => const Icon(Icons.error),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 116,
-                            height: 116,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  TypeBox.typeColors[pokemon.types[0]][0],
-                                  TypeBox.typeColors[pokemon.types[pokemon.types.length > 1 ? 1 : 0]][0]
-                                ],
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Container(
-                              margin: const EdgeInsets.all(2.5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.white),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl: '$ServerUrl/sprites/gen5/$resourceId.png',
-                                placeholder: (context, url) => Container(
-                                  height: 96,
-                                  width: 96,
-                                  child: const Center(
-                                    heightFactor: 0,
-                                    child: CircularProgressIndicator(),
+                        Container(
+                          width: 232,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                    horizontal: 4,
                                   ),
-                                ),
-                                errorWidget: (context, url, dynamic error) => const Icon(Icons.error),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 232,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 4,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        if (pokemon.id > 0)
-                                          Text(
-                                            '#${pokemon.id}',
-                                            style: TextStyle(
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
-                                        GestureDetector(
-                                          onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute<void>(
-                                              builder: (context) => TierDetails(pokemon.tier),
-                                            ),
-                                          ),
-                                          child: Container(
-                                            child: Text(pokemon.tier),
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 4,
-                                              horizontal: 6,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.grey[700]),
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if (pokemon.id > 0)
+                                        Text(
+                                          '#${pokemon.id}',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 64,
-                                        child: const Text('Types :'),
-                                      ),
-                                      Row(
-                                        children: pokemon.types
-                                            .map(
-                                              (t) => Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                  horizontal: 4,
-                                                ),
-                                                child: GestureDetector(
-                                                  onTap: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute<void>(
-                                                      builder: (context) => TypeEffectiveness(t),
-                                                    ),
-                                                  ),
-                                                  child: TypeBox(t, pressable: false),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 64,
-                                        child: const Text('Size :'),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text('${pokemon.height} m, ${pokemon.weight} kg'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8, left: 16),
-                      child: Text(
-                        'Abilities :',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 16, bottom: 8),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (int i = 0; i < pokemonAbilities.length; i++)
-                              if (pokemonAbilities[i] != null)
-                                Row(
-                                  children: [
-                                    if (i != 0)
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.0,
-                                        ),
-                                        child: Text('|'),
-                                      ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
+                                      GestureDetector(
+                                        onTap: () => Navigator.push(
                                           context,
                                           MaterialPageRoute<void>(
-                                            builder: (context) => AbilityDetails(
-                                              pokemonAbilities[i],
-                                              appBarColor: TypeBox.typeColors[pokemon.types[0]][0],
-                                            ),
+                                            builder: (context) => TierDetails(pokemon.tier),
                                           ),
-                                        );
-                                      },
-                                      child: Text(
-                                        '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.blue[800],
+                                        ),
+                                        child: Container(
+                                          child: Text(pokemon.tier),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 4,
+                                            horizontal: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(color: Colors.grey[700]),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
                                         ),
                                       ),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 64,
+                                      child: const Text('Types :'),
+                                    ),
+                                    Row(
+                                      children: pokemon.types
+                                          .map(
+                                            (t) => Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 4,
+                                              ),
+                                              child: GestureDetector(
+                                                onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute<void>(
+                                                    builder: (context) => TypeEffectiveness(t),
+                                                  ),
+                                                ),
+                                                child: TypeBox(t, pressable: false),
+                                              ),
+                                            ),
+                                          )
+                                          .toList(),
                                     ),
                                   ],
                                 ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SliverPinnedHeader(
-              child: Container(
-                padding: const EdgeInsets.only(left: 8),
-                // Trick to remove the 1px gap
-                decoration: BoxDecoration(
-                  color: ThemeData.light().scaffoldBackgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: ThemeData.light().scaffoldBackgroundColor,
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Base stats :',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          StatBox('HP', pokemon.baseStats.hp),
-                          StatBox('Attack', pokemon.baseStats.atk),
-                          StatBox('Defense', pokemon.baseStats.def),
-                          StatBox('Sp. Atk', pokemon.baseStats.spa),
-                          StatBox('Sp. Def', pokemon.baseStats.spd),
-                          StatBox('Speed', pokemon.baseStats.spe),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 70,
-                                  margin: const EdgeInsets.only(right: 8),
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    'Total :',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 64,
+                                      child: const Text('Size :'),
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 32,
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    '${pokemon.baseStats.bst}',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w600,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('${pokemon.height} m, ${pokemon.weight} kg'),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            SliverFloatingHeader(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, left: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Evolution: ',
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8, left: 16),
+                    child: Text(
+                      'Abilities :',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    _evoTree(),
-                    if (pokemon.prevo != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text(
-                          'Evolves from ${pokemon.prevo} (${_getEvoMethod()})',
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    if (pokemon.otherFormes != null || pokemon.forme != null)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 16, bottom: 8),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         children: [
-                          const Text(
-                            'Formes:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          _formesList(),
+                          for (int i = 0; i < pokemonAbilities.length; i++)
+                            if (pokemonAbilities[i] != null)
+                              Row(
+                                children: [
+                                  if (i != 0)
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 8.0,
+                                      ),
+                                      child: Text('|'),
+                                    ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute<void>(
+                                          builder: (context) => AbilityDetails(
+                                            pokemonAbilities[i],
+                                            appBarColor: TypeBox.typeColors[pokemon.types[0]][0],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      '${pokemonAbilities[i]}${i == 2 ? ' (H)' : i == 3 ? ' (S)' : ''}',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue[800],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                         ],
                       ),
-                    if (pokemon.requiredItem != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text(
-                          'Must hold ${pokemon.requiredItem}',
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SliverPinnedHeader(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+          ),
+          SliverPinnedHeader(
+            child: Container(
+              padding: const EdgeInsets.only(left: 8),
+              // Trick to remove the 1px gap
+              decoration: BoxDecoration(
                 color: ThemeData.light().scaffoldBackgroundColor,
-                child: const Text(
-                  'Moves: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: ThemeData.light().scaffoldBackgroundColor,
+                    blurRadius: 0.0,
+                    spreadRadius: 0.0,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Base stats :',
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                        StatBox('HP', pokemon.baseStats.hp),
+                        StatBox('Attack', pokemon.baseStats.atk),
+                        StatBox('Defense', pokemon.baseStats.def),
+                        StatBox('Sp. Atk', pokemon.baseStats.spa),
+                        StatBox('Sp. Def', pokemon.baseStats.spd),
+                        StatBox('Speed', pokemon.baseStats.spe),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 70,
+                                margin: const EdgeInsets.only(right: 8),
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'Total :',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 32,
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '${pokemon.baseStats.bst}',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    if (learnset != null)
-                      for (int i = 0; i < learnset.length; i++)
-                        Container(
-                          color: i % 2 == 0 ? const Color(0xffebebf7) : Colors.white,
-                          child: MoveCard(learnset[i]),
-                        )
-                    else
-                      const Text("This pokemon doesn't have a learnset"),
-                  ],
-                ),
+          ),
+          SliverFloatingHeader(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8, left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Evolution: ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  _evoTree(),
+                  if (pokemon.prevo != null)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        'Evolves from ${pokemon.prevo} (${_getEvoMethod()})',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  if (pokemon.otherFormes != null || pokemon.forme != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Formes:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        _formesList(),
+                      ],
+                    ),
+                  if (pokemon.requiredItem != null)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        'Must hold ${pokemon.requiredItem}',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SliverPinnedHeader(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+              color: ThemeData.light().scaffoldBackgroundColor,
+              child: const Text(
+                'Moves: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  if (learnset != null)
+                    for (int i = 0; i < learnset.length; i++)
+                      Container(
+                        color: i % 2 == 0 ? const Color(0xffebebf7) : Colors.white,
+                        child: MoveCard(learnset[i]),
+                      )
+                  else
+                    const Text("This pokemon doesn't have a learnset"),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
