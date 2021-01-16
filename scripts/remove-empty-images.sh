@@ -5,7 +5,7 @@
 
 for img in $(ls)
 do
-  if [[ $(file $img) == *"grayscale"* ]]
+  if [[ $(wc -c < $img) == *"274"* ]]
   then
     rm $img
   fi

@@ -12,7 +12,7 @@
 # pokemon icons images are 30*40
 
 i=0
-for img in $(ls)
+for img in $(exa)
 do
  mv $img $i.png; ((i++))
 done
