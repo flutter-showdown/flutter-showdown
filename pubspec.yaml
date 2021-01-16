@@ -73,7 +73,9 @@ flutter:
     - assets/data/learnset.json
     - assets/data/moves.json
     - assets/data/pokedex.json
+    - assets/data/items.json
     - assets/pokemon-icons/
+    - assets/item-icons/
     - assets/types/
     - assets/categories/
   fonts:

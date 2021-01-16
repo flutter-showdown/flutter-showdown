@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/screens/pokedex/filters_dialog.dart';
+import 'package:flutter_showdown/screens/pokedex/items/item_list.dart';
 import 'package:flutter_showdown/screens/pokedex/search_bar.dart';
 import 'package:flutter_showdown/presentation/custom_icons_icons.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +40,7 @@ class _PokedexState extends State<Pokedex> {
             // Does nothing if all filters are unset
             (filters.typesFilters.values.every((e) => e == false) ||
                 // Filter by pokemon containing specified types
-                filters.typesFilters.entries
-                    .where((e) => e.value && p.types.contains(e.key))
-                    .isNotEmpty) &&
+                filters.typesFilters.entries.where((e) => e.value && p.types.contains(e.key)).isNotEmpty) &&
             // Tier filter
             ((filters.tier == tiers.first) || p.tier == filters.tier))
         .toList();
@@ -105,7 +104,12 @@ class _PokedexState extends State<Pokedex> {
                 icon: const Icon(CustomIcons.pokeball),
                 onPressed: () {
                   Navigator.pop(context);
-                  // TODO(Adrien): Open pokemon list page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const ItemList(),
+                    ),
+                  );
                 },
               ),
               const Text('Items', style: TextStyle(fontSize: 16)),
@@ -114,7 +118,6 @@ class _PokedexState extends State<Pokedex> {
                 padding: const EdgeInsets.only(top: 8),
                 icon: const Icon(CustomIcons.pokeball),
                 onPressed: () {
-                  Navigator.pop(context);
                   // TODO(Adrien): Open pokemon list page
                 },
               ),
