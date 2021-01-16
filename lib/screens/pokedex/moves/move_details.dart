@@ -17,8 +17,8 @@ class MoveDetails extends StatefulWidget {
 
 class _MoveDetailsState extends State<MoveDetails> {
   int i = 0;
+  List<Pokemon> pokemons = [];
   final List<Pokemon> dex = [];
-  final List<Pokemon> pokemons = [];
   final ScrollController _scrollController = ScrollController();
 
   String getTargetDesc() {
@@ -42,10 +42,10 @@ class _MoveDetailsState extends State<MoveDetails> {
   }
 
   List<Pokemon> _fillDex(int count) {
-    final List<Pokemon> dex = [];
+    final List<Pokemon> list = [];
     final learnsets = Provider.of<Map<String, List<String>>>(context, listen: false);
 
-    for (; i < pokemons.length; i++) {
+    for (; i < pokemons.length && list.length < count; i++) {
       final current = pokemons[i];
       final pokeId = Parser.toId(current.name);
       final learnsetId = current.forme != null ? Parser.toId(current.baseSpecies) : pokeId;
@@ -54,26 +54,25 @@ class _MoveDetailsState extends State<MoveDetails> {
       if (learnset == null) {
         continue;
       } else if (learnset.contains(Parser.toId(widget.move.name))) {
-        dex.add(current);
-        if (count != null && dex.length >= count) {
-          break;
-        }
+        list.add(current);
       }
     }
-    return dex;
+    return list;
   }
 
   @override
   void initState() {
     super.initState();
 
-    pokemons.addAll(Provider.of<Map<String, Pokemon>>(context, listen: false).values.toList());
+    pokemons = Provider.of<Map<String, Pokemon>>(context, listen: false).values.toList();
 
     dex.addAll(_fillDex(30));
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - _scrollController.position.viewportDimension / 2 && i < pokemons.length) {
+      if (i < pokemons.length &&
+          _scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent - _scrollController.position.viewportDimension / 2) {
         setState(() {
-          dex.addAll(_fillDex(10));
+          dex.addAll(_fillDex(5));
         });
       }
     });
