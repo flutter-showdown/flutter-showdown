@@ -17,8 +17,14 @@ class ItemDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 1),
+                    borderRadius: const BorderRadius.all(Radius.circular(6))),
+                padding: const EdgeInsets.all(8),
+                child: Image.asset('assets/item-icons/${item.spriteNum}.png')),
             Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 item.desc,
                 style: const TextStyle(fontSize: 16),
