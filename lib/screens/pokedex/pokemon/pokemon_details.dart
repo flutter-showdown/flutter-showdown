@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/constants.dart';
+import 'package:flutter_showdown/models/item.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/parser.dart';
+import 'package:flutter_showdown/screens/pokedex/items/item_details.dart';
 import 'package:flutter_showdown/screens/pokedex/ability/ability_details.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_effectiveness.dart';
@@ -37,30 +39,6 @@ class PokemonDetails extends StatelessWidget {
     final learnset = learnsets[pokeId] ?? learnsets[learnsetId];
 
     final dex = Provider.of<Map<String, Pokemon>>(context, listen: false);
-
-    String _getEvoMethod() {
-      final condition = pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
-      final item = pokemon.evoItem;
-
-      switch (pokemon.evoType) {
-        case 'levelExtra':
-          return 'level-up$condition';
-        case 'levelFriendship':
-          return 'level-up with high Friendship$condition';
-        case 'levelHold':
-          return 'level-up holding $item$condition';
-        case 'levelMove':
-          return 'level-up with ${pokemon.evoMove}$condition';
-        case 'useItem':
-          return item;
-        case 'trade':
-          return 'trade${item != null ? ' holding $item' : ''}';
-        case 'other':
-          return condition.trim();
-        default:
-          return 'level ${pokemon.evoLevel}$condition';
-      }
-    }
 
     Widget _getNextEvo(String pokeName) {
       final poke = dex[Parser.toId(pokeName)];
@@ -416,7 +394,8 @@ class PokemonDetails extends StatelessWidget {
             ),
           ),
           SliverFloatingHeader(
-            child: Padding(
+            child: Container(
+              color: ThemeData.light().scaffoldBackgroundColor,
               padding: const EdgeInsets.only(top: 8, left: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -428,11 +407,8 @@ class PokemonDetails extends StatelessWidget {
                   _evoTree(),
                   if (pokemon.prevo != null)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text(
-                        'Evolves from ${pokemon.prevo} (${_getEvoMethod()})',
-                        style: const TextStyle(fontSize: 12),
-                      ),
+                      padding: const EdgeInsets.only(top: 4, bottom: 4, right: 16),
+                      child: EvoText(pokemon),
                     ),
                   if (pokemon.otherFormes != null || pokemon.forme != null)
                     Column(
@@ -447,10 +423,12 @@ class PokemonDetails extends StatelessWidget {
                     ),
                   if (pokemon.requiredItem != null)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text(
-                        'Must hold ${pokemon.requiredItem}',
-                        style: const TextStyle(fontSize: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          const Text('Must hold:'),
+                          ItemLink(pokemon.requiredItem),
+                        ],
                       ),
                     ),
                 ],
@@ -459,7 +437,7 @@ class PokemonDetails extends StatelessWidget {
           ),
           SliverPinnedHeader(
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+              padding: const EdgeInsets.only(left: 16, bottom: 4),
               color: ThemeData.light().scaffoldBackgroundColor,
               child: const Text(
                 'Moves: ',
@@ -487,6 +465,92 @@ class PokemonDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ItemLink extends StatelessWidget {
+  const ItemLink(this.requiredItem);
+
+  final String requiredItem;
+
+  @override
+  Widget build(BuildContext context) {
+    if (requiredItem == null) {
+      return Container();
+    }
+
+    final items = Provider.of<Map<String, Item>>(context, listen: false);
+    final item = items[Parser.toId(requiredItem)];
+
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute<void>(builder: (context) => ItemDetails(item)),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 2),
+          Image(
+            height: 16,
+            image: AssetImage('assets/item-icons/${item.spriteNum}.png'),
+          ),
+          const SizedBox(width: 2),
+          Text(
+            item.name,
+            style: TextStyle(
+              color: Colors.blue[800],
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class EvoText extends StatelessWidget {
+  const EvoText(this.pokemon);
+
+  final Pokemon pokemon;
+
+  String _evoMethod(String condition) {
+    switch (pokemon.evoType) {
+      case 'levelExtra':
+        return 'level-up$condition';
+      case 'levelFriendship':
+        return 'level-up with high Friendship$condition';
+      case 'levelMove':
+        return 'level-up with ${pokemon.evoMove}$condition';
+      case 'other':
+        return condition.trim();
+      default:
+        return 'level ${pokemon.evoLevel}$condition';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final condition = pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
+
+    if (['trade', 'levelHold', 'useItem'].contains(pokemon.evoType)) {
+      String evoType = '';
+
+      if (pokemon.evoType == 'levelHold') {
+        evoType = 'level-up holding';
+      } else if (pokemon.evoType == 'trade') {
+        evoType = 'trade holding';
+      }
+
+      return Row(
+        children: [
+          Text('Evolves from ${pokemon.prevo}($evoType'),
+          ItemLink(pokemon.evoItem),
+          const Text(')')
+        ],
+      );
+    } else {
+      return Text('Evolves from ${pokemon.prevo}(${_evoMethod(condition)})');
+    }
   }
 }
 

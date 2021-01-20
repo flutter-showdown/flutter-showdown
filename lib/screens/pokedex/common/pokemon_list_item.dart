@@ -20,51 +20,49 @@ class PokemonListItem extends StatelessWidget {
             builder: (context) => PokemonDetails(pokemon),
           ),
         ),
-        child: Container(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                child: Container(
-                  height: 30,
-                  child: Image.asset(
-                    'assets/pokemon-icons/${getIconIndex(pokemon)}.png',
-                  ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 2, bottom: 2, left: 2, right: 4),
+              child: Container(
+                height: 30,
+                child: Image.asset(
+                  'assets/pokemon-icons/${getIconIndex(pokemon)}.png',
                 ),
               ),
-              Expanded(child: Text(pokemon.name)),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Row(
-                  children: [
+            ),
+            Expanded(child: Text(pokemon.name)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Row(
+                children: [
+                  TypeBox(
+                    pokemon.types[0],
+                    width: 48,
+                    height: 16,
+                    fontSize: 9,
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(4),
+                      bottomLeft: const Radius.circular(4),
+                      topRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                      bottomRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                    ),
+                  ),
+                  if (pokemon.types.length > 1)
                     TypeBox(
-                      pokemon.types[0],
+                      pokemon.types[1],
                       width: 48,
                       height: 16,
                       fontSize: 9,
-                      borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(4),
-                        bottomLeft: const Radius.circular(4),
-                        topRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
-                        bottomRight: Radius.circular(pokemon.types.length > 1 ? 0 : 4),
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(4),
+                        bottomRight: Radius.circular(4),
                       ),
                     ),
-                    if (pokemon.types.length > 1)
-                      TypeBox(
-                        pokemon.types[1],
-                        width: 48,
-                        height: 16,
-                        fontSize: 9,
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(4),
-                          bottomRight: Radius.circular(4),
-                        ),
-                      ),
-                  ],
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
