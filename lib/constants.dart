@@ -377,8 +377,7 @@ const Map<String, String> TypeSpec = {
   'Grass':
       'Pokemon of this type cannot become affected by Leech Seed and are immune to powder moves and the Effect Spore Ability.',
   'Ground': 'Pokemon of this type are immune to damage from Sandstorm.',
-  'Ice':
-      'Pokemon of this type cannot become frozen and are immune to Sheer Cold and damage from Hail.',
+  'Ice': 'Pokemon of this type cannot become frozen and are immune to Sheer Cold and damage from Hail.',
   'Poison':
       'Pokemon of this type cannot become poisoned, except by a Pokemon with the Corrosion Ability, and remove Toxic Spikes from their side of the field if they are grounded as they switch in. These Pokemon cannot miss when using Toxic, even if the target is in the middle of a two-turn move.',
   'Rock':
@@ -1811,4 +1810,23 @@ const Map<String, int> BattlePokemonIconIndexes = {
   'coribalis': 1332 + 29,
   'justyke': 1332 + 30,
   'solotl': 1332 + 31,
+  // ---- Manually added
+  'miasmaw': 0,
+  'pokestarsmeargle': 0,
+  'pokestarufo': 0,
+  'pokestarufo2': 0,
+  'pokestarbrycenman': 0,
+  'pokestarmt': 0,
+  'pokestarmt2': 0,
+  'pokestartransport': 0,
+  'pokestargiant': 0,
+  'pokestarhumanoid': 0,
+  'pokestarmonster': 0,
+  'pokestarf00': 0,
+  'pokestarf002': 0,
+  'pokestarspirit': 0,
+  'pokestarblackdoor': 0,
+  'pokestarwhitedoor': 0,
+  'pokestarblackbelt': 0,
+  'pokestarufopropu2': 0,
 };
