@@ -8,11 +8,11 @@ import 'package:flutter_showdown/screens/pokedex/items/item_details.dart';
 import 'package:flutter_showdown/screens/pokedex/ability/ability_details.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_effectiveness.dart';
+import 'package:flutter_showdown/screens/pokedex/common/pokemon_icon.dart';
 import 'package:flutter_showdown/screens/pokedex/moves/move_card.dart';
-import 'package:flutter_showdown/screens/common/custom_slivers.dart';
 import 'package:flutter_showdown/screens/pokedex/pokemon/tier_details.dart';
+import 'package:flutter_showdown/screens/common/custom_slivers.dart';
 import 'package:provider/provider.dart';
-import '../common/get_icon_index.dart';
 
 class PokemonDetails extends StatelessWidget {
   const PokemonDetails(this.pokemon);
@@ -467,10 +467,7 @@ class ItemLink extends StatelessWidget {
       child: Row(
         children: [
           const SizedBox(width: 2),
-          Image(
-            height: 16,
-            image: AssetImage('assets/item-icons/${item.spriteNum}.png'),
-          ),
+          Image.asset('assets/item-icons/${item.spriteNum}.png', height: 16),
           const SizedBox(width: 2),
           Text(
             item.name,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
 import 'package:flutter_showdown/screens/pokedex/common/type_box.dart';
-import 'package:flutter_showdown/screens/pokedex/common/get_icon_index.dart';
+import 'package:flutter_showdown/screens/pokedex/common/pokemon_icon.dart';
 import 'package:flutter_showdown/screens/pokedex/pokemon/pokemon_details.dart';
 
 class PokemonListItem extends StatelessWidget {

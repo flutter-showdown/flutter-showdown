@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_showdown/models/pokemon.dart';
-import '../common/get_icon_index.dart';
+import 'package:flutter_showdown/screens/pokedex/common/pokemon_icon.dart';
 import 'pokemon_details.dart';
 
 class PokemonCard extends StatelessWidget {
