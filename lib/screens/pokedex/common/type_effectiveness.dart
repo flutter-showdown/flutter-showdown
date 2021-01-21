@@ -86,7 +86,7 @@ class TypeEffectiveness extends StatelessWidget {
               ),
             ),
             if (immuneTo.isNotEmpty) wrappedTypes('Immune to:', immuneTo),
-            wrappedTypes('Resists', resists),
+            if (resists.isNotEmpty) wrappedTypes('Resists:', resists),
             wrappedTypes('Weak to:', weakTo),
             if (spec != null)
               Padding(
