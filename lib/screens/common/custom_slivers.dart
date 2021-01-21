@@ -85,29 +85,23 @@ class _RenderSliverFloatingHeader extends RenderSliverSingleBoxAdapter {
     final double layoutExtent = maxExtent - constraints.scrollOffset;
 
     if (_lastActualScrollOffset != null &&
-        (constraints.scrollOffset < _lastActualScrollOffset ||
-            _effectiveScrollOffset < maxExtent)) {
+        (constraints.scrollOffset < _lastActualScrollOffset || _effectiveScrollOffset < maxExtent)) {
       double delta = _lastActualScrollOffset - constraints.scrollOffset;
-      final bool allowFloatingExpansion =
-          constraints.userScrollDirection == ScrollDirection.forward;
+      final bool allowFloatingExpansion = constraints.userScrollDirection == ScrollDirection.forward;
       if (allowFloatingExpansion) {
         _effectiveScrollOffset = min(_effectiveScrollOffset, maxExtent);
       } else {
         delta = min(delta, 0);
       }
-      _effectiveScrollOffset = (_effectiveScrollOffset - delta)
-          .clamp(0.0, constraints.scrollOffset)
-          .toDouble();
+      _effectiveScrollOffset = (_effectiveScrollOffset - delta).clamp(0.0, constraints.scrollOffset).toDouble();
     } else {
       _effectiveScrollOffset = constraints.scrollOffset;
     }
-    excludeFromSemanticsScrolling =
-        _effectiveScrollOffset <= constraints.scrollOffset;
+    excludeFromSemanticsScrolling = _effectiveScrollOffset <= constraints.scrollOffset;
     geometry = SliverGeometry(
       scrollExtent: maxExtent,
       paintOrigin: min(constraints.overlap, 0),
-      paintExtent:
-          paintExtent.clamp(0.0, constraints.remainingPaintExtent).toDouble(),
+      paintExtent: paintExtent.clamp(0.0, constraints.remainingPaintExtent).toDouble(),
       layoutExtent: min(
         paintExtent.clamp(0.0, constraints.remainingPaintExtent).toDouble(),
         layoutExtent.clamp(0.0, constraints.remainingPaintExtent).toDouble(),
@@ -222,8 +216,7 @@ class _RenderSliverFloatingHeader extends RenderSliverSingleBoxAdapter {
         DoubleProperty('effective scroll offset', _effectiveScrollOffset),
       )
       ..add(
-        DoubleProperty.lazy(
-            'child position', () => childMainAxisPosition(child)),
+        DoubleProperty.lazy('child position', () => childMainAxisPosition(child)),
       );
   }
 }
@@ -246,8 +239,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => max(maxHeight, minHeight);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return SizedBox.expand(child: child);
   }
 

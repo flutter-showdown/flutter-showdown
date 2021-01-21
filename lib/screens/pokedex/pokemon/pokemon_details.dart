@@ -66,9 +66,12 @@ class PokemonDetails extends StatelessWidget {
       Pokemon current = pokemon;
 
       if (current.prevo == null && current.evos == null) {
-        return const Text(
-          'Does not evolve',
-          style: TextStyle(fontStyle: FontStyle.italic),
+        return const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text(
+            'Does not evolve',
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
         );
       }
       while (current.prevo != null) {
@@ -124,6 +127,7 @@ class PokemonDetails extends StatelessWidget {
           SliverFloatingHeader(
             child: Container(
               // Trick to remove the 1px gap
+              padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
               decoration: BoxDecoration(
                 color: ThemeData.light().scaffoldBackgroundColor,
                 boxShadow: [
@@ -138,13 +142,12 @@ class PokemonDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                  Container(
+                    height: 116,
                     child: Row(
                       children: [
                         Container(
                           width: 116,
-                          height: 116,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
@@ -177,107 +180,86 @@ class PokemonDetails extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          width: 232,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                    horizontal: 4,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      if (pokemon.id > 0)
-                                        Text(
-                                          '#${pokemon.id}',
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                      GestureDetector(
-                                        onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute<void>(
-                                            builder: (context) => TierDetails(pokemon.tier),
-                                          ),
-                                        ),
-                                        child: Container(
-                                          child: Text(pokemon.tier),
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 4,
-                                            horizontal: 6,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.grey[700]),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '#${pokemon.id > 0 ? pokemon.id : '?'}',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute<void>(
+                                          builder: (context) => TierDetails(pokemon.tier),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 64,
-                                      child: const Text('Types :'),
+                                      child: Container(
+                                        child: Text(pokemon.tier),
+                                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.grey[700]),
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                      ),
                                     ),
-                                    Row(
-                                      children: pokemon.types
-                                          .map(
-                                            (t) => Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 4,
-                                              ),
-                                              child: GestureDetector(
-                                                onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute<void>(
-                                                    builder: (context) => TypeEffectiveness(t),
-                                                  ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Types :'),
+                                  Row(
+                                    children: pokemon.types
+                                        .map(
+                                          (t) => Padding(
+                                            padding: const EdgeInsets.only(left: 8),
+                                            child: GestureDetector(
+                                              onTap: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute<void>(
+                                                  builder: (context) => TypeEffectiveness(t),
                                                 ),
-                                                child: TypeBox(t, pressable: false),
                                               ),
+                                              child: TypeBox(t, pressable: false),
                                             ),
-                                          )
-                                          .toList(),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 64,
-                                      child: const Text('Size :'),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('${pokemon.height} m, ${pokemon.weight} kg'),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Size :'),
+                                  Text('${pokemon.height} m, ${pokemon.weight} kg'),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8, left: 16),
-                    child: Text(
-                      'Abilities :',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Abilities :',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 16, bottom: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -288,9 +270,7 @@ class PokemonDetails extends StatelessWidget {
                                 children: [
                                   if (i != 0)
                                     const Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8.0,
-                                      ),
+                                      padding: EdgeInsets.symmetric(horizontal: 8),
                                       child: Text('|'),
                                     ),
                                   GestureDetector(
@@ -326,7 +306,7 @@ class PokemonDetails extends StatelessWidget {
           ),
           SliverPinnedHeader(
             child: Container(
-              padding: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               // Trick to remove the 1px gap
               decoration: BoxDecoration(
                 color: ThemeData.light().scaffoldBackgroundColor,
@@ -342,48 +322,40 @@ class PokemonDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Base stats :',
+                    style: TextStyle(color: Colors.grey[700]),
+                  ),
+                  StatBox('HP', pokemon.baseStats.hp),
+                  StatBox('Attack', pokemon.baseStats.atk),
+                  StatBox('Defense', pokemon.baseStats.def),
+                  StatBox('Sp. Atk', pokemon.baseStats.spa),
+                  StatBox('Sp. Def', pokemon.baseStats.spd),
+                  StatBox('Speed', pokemon.baseStats.spe),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Row(
                       children: [
-                        Text(
-                          'Base stats :',
-                          style: TextStyle(color: Colors.grey[700]),
+                        Container(
+                          width: 70,
+                          margin: const EdgeInsets.only(right: 8),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'Total :',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
+                          ),
                         ),
-                        StatBox('HP', pokemon.baseStats.hp),
-                        StatBox('Attack', pokemon.baseStats.atk),
-                        StatBox('Defense', pokemon.baseStats.def),
-                        StatBox('Sp. Atk', pokemon.baseStats.spa),
-                        StatBox('Sp. Def', pokemon.baseStats.spd),
-                        StatBox('Speed', pokemon.baseStats.spe),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 70,
-                                margin: const EdgeInsets.only(right: 8),
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  'Total :',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 32,
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '${pokemon.baseStats.bst}',
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        Container(
+                          width: 32,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '${pokemon.baseStats.bst}',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
@@ -396,7 +368,7 @@ class PokemonDetails extends StatelessWidget {
           SliverFloatingHeader(
             child: Container(
               color: ThemeData.light().scaffoldBackgroundColor,
-              padding: const EdgeInsets.only(top: 8, left: 16),
+              padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -407,23 +379,26 @@ class PokemonDetails extends StatelessWidget {
                   _evoTree(),
                   if (pokemon.prevo != null)
                     Padding(
-                      padding: const EdgeInsets.only(top: 4, bottom: 4, right: 16),
+                      padding: const EdgeInsets.only(top: 4),
                       child: EvoText(pokemon),
                     ),
                   if (pokemon.otherFormes != null || pokemon.forme != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Formes:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        _formesList(),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Formes:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          _formesList(),
+                        ],
+                      ),
                     ),
                   if (pokemon.requiredItem != null)
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.only(top: 4),
                       child: Row(
                         children: [
                           const Text('Must hold:'),
@@ -437,27 +412,33 @@ class PokemonDetails extends StatelessWidget {
           ),
           SliverPinnedHeader(
             child: Container(
-              padding: const EdgeInsets.only(left: 16, bottom: 4),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               color: ThemeData.light().scaffoldBackgroundColor,
-              child: const Text(
-                'Moves: ',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  'Moves: ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
                   if (learnset != null)
                     for (int i = 0; i < learnset.length; i++)
                       Container(
-                        color: i % 2 == 0 ? const Color(0xffebebf7) : Colors.white,
+                        color: i % 2 == 0 ? const Color(0xffebebf7) : Colors.transparent,
                         child: MoveCard(learnset[i]),
                       )
                   else
-                    const Text("This pokemon doesn't have a learnset"),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Text("This pokemon doesn't have a learnset"),
+                    ),
                 ],
               ),
             ),

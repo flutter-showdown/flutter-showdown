@@ -60,8 +60,7 @@ const Map<String, bool> defaultTypesFilters = {
   'Water': false,
 };
 
-Filters defaultFilters =
-    Filters(defaultTypesFilters, tiers.first, sorts.keys.first);
+Filters defaultFilters = Filters(defaultTypesFilters, tiers.first, sorts.keys.first);
 
 class Filters {
   Filters(this.typesFilters, this.tier, this.sortBy);
@@ -124,18 +123,14 @@ class _FiltersDialogState extends State<FiltersDialog> {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        // height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.all(8),
         height: 580,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.white),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.white),
         child: LayoutBuilder(
-          builder: (_, BoxConstraints viewportConstraints) =>
-              SingleChildScrollView(
+          builder: (_, BoxConstraints viewportConstraints) => SingleChildScrollView(
             child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(minHeight: viewportConstraints.maxHeight),
+              constraints: BoxConstraints(minHeight: viewportConstraints.maxHeight),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,8 +140,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                     children: [
                       const Text('Types :'),
                       Container(
-                        width: 220,
-                        padding: const EdgeInsets.all(8),
+                        width: 214,
                         child: Wrap(
                           spacing: 4,
                           runSpacing: 4,
@@ -155,8 +149,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  filters.typesFilters[e.key] =
-                                      !filters.typesFilters[e.key];
+                                  filters.typesFilters[e.key] = !filters.typesFilters[e.key];
                                 });
                               },
                               child: ColorFiltered(
@@ -188,8 +181,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                             icon: const Icon(Icons.arrow_downward),
                             iconSize: 18,
                             items: tiers.map((value) {
-                              return DropdownMenuItem<String>(
-                                  value: value, child: Text(value));
+                              return DropdownMenuItem<String>(value: value, child: Text(value));
                             }).toList(),
                             onChanged: (newValue) {
                               setState(() {
@@ -209,8 +201,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                             icon: const Icon(Icons.arrow_downward),
                             iconSize: 18,
                             items: sorts.keys.map((value) {
-                              return DropdownMenuItem<String>(
-                                  value: value, child: Text(value));
+                              return DropdownMenuItem<String>(value: value, child: Text(value));
                             }).toList(),
                             onChanged: (newValue) {
                               setState(() {
@@ -228,10 +219,7 @@ class _FiltersDialogState extends State<FiltersDialog> {
                       }),
                       ActionButton('All', onPressed: () {
                         setState(() {
-                          filters = Filters(
-                              filters.typesFilters
-                                  .map((key, value) => MapEntry(key, true)),
-                              tiers.first,
+                          filters = Filters(filters.typesFilters.map((key, value) => MapEntry(key, true)), tiers.first,
                               sorts.keys.first);
                         });
                       }),
