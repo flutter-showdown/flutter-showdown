@@ -469,18 +469,14 @@ class PokemonDetails extends StatelessWidget {
 }
 
 class ItemLink extends StatelessWidget {
-  const ItemLink(this.requiredItem);
+  const ItemLink(this.itemName);
 
-  final String requiredItem;
+  final String itemName;
 
   @override
   Widget build(BuildContext context) {
-    if (requiredItem == null) {
-      return Container();
-    }
-
     final items = Provider.of<Map<String, Item>>(context, listen: false);
-    final item = items[Parser.toId(requiredItem)];
+    final item = items[Parser.toId(itemName)];
 
     return GestureDetector(
       onTap: () => Navigator.push(
@@ -513,7 +509,9 @@ class EvoText extends StatelessWidget {
 
   final Pokemon pokemon;
 
-  String _evoMethod(String condition) {
+  String _evoMethod() {
+    final condition = pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
+
     switch (pokemon.evoType) {
       case 'levelExtra':
         return 'level-up$condition';
@@ -523,6 +521,12 @@ class EvoText extends StatelessWidget {
         return 'level-up with ${pokemon.evoMove}$condition';
       case 'other':
         return condition.trim();
+      case 'levelHold':
+        return 'level-up holding';
+      case 'trade':
+        return 'trade${pokemon.evoItem != null ? ' holding' : ''}';
+      case 'useItem':
+        return '';
       default:
         return 'level ${pokemon.evoLevel}$condition';
     }
@@ -530,27 +534,15 @@ class EvoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final condition = pokemon.evoCondition == null ? '' : ' ${pokemon.evoCondition}';
-
-    if (['trade', 'levelHold', 'useItem'].contains(pokemon.evoType)) {
-      String evoType = '';
-
-      if (pokemon.evoType == 'levelHold') {
-        evoType = 'level-up holding';
-      } else if (pokemon.evoType == 'trade') {
-        evoType = 'trade holding';
-      }
-
-      return Row(
-        children: [
-          Text('Evolves from ${pokemon.prevo}($evoType'),
-          ItemLink(pokemon.evoItem),
-          const Text(')')
-        ],
-      );
-    } else {
-      return Text('Evolves from ${pokemon.prevo}(${_evoMethod(condition)})');
-    }
+    return (['trade', 'levelHold', 'useItem'].contains(pokemon.evoType)) && pokemon.evoItem != null
+        ? Row(
+            children: [
+              Text('Evolves from ${pokemon.prevo} (${_evoMethod()}'),
+              if (['trade', 'levelHold', 'useItem'].contains(pokemon.evoType)) ItemLink(pokemon.evoItem),
+              const Text(')'),
+            ],
+          )
+        : Text('Evolves from ${pokemon.prevo} (${_evoMethod()})');
   }
 }
 
